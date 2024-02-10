@@ -14,6 +14,8 @@ use App\Http\Controllers\Admin\CommonController;
 use App\Http\Controllers\Admin\ContentManagementController;
 use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\BrandController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -77,4 +79,7 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::post('orders/addproduct', [OrderController::class,'addProductToCart'])->name('orders.addproduct');
     Route::get('/index_product', [OrderController::class, 'index_product'])->name('orders.index_product');
     Route::resource('orders',OrderController::class);
+
+    /* Brands */
+    Route::resource('brand', BrandController::class);
 });

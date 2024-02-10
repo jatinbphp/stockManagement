@@ -98,6 +98,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{ route('brand.index') }}" class="nav-link @if(isset($menu) && $menu=='Brand') active @endif">
+                            <i class="nav-icon fa fa-sitemap"></i>
+                            <p>Brands</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ route('products.index') }}" class="nav-link @if(isset($menu) && $menu=='Products') active @endif">
                             <i class="nav-icon fa fa-list"></i>
                             <p>Products</p>

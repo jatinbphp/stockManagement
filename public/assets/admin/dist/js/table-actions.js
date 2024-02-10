@@ -131,6 +131,24 @@ $(function () {
         ]
     });
 
+    //Brand Table
+    var brand_table = $('#brandTable').DataTable({
+        processing: true,
+        serverSide: true,
+        pageLength: 100,
+        lengthMenu: [ 100, 200, 300, 400, 500 ],
+        ajax: $("#route_name").val(),
+        columns: [
+            {data: 'name', "width": "55%", name: 'name'},
+            {data: 'image', "width": "15%", name: 'image', orderable: false, searchable: false, render: function (data,type,row){
+                    return '<img src="'+data+'" height="50" alt="Image"/>';
+                }
+            },
+            {data: 'status',  name: 'status', orderable: false},
+            {data: 'action',  name: 'action', orderable: false},
+        ]
+    });
+
     //Delete Record
     $('.datatable-dynamic tbody').on('click', '.deleteRecord', function (event) {
         event.preventDefault();
@@ -168,6 +186,8 @@ $(function () {
                             contactus_table.row('.selected').remove().draw(false);   
                         } else if (section == 'orders_table') {
                             orders_table.row('.selected').remove().draw(false);
+                        } else if (section == 'brand_table'){
+                            brand_table.row('.selected').remove().draw(false);
                         }
                  
                         swal("Deleted", "Your data successfully deleted!", "success");

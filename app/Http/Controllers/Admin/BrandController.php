@@ -3,111 +3,86 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
-use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\BrandRequest;
 
 class BrandController extends Controller
 {
     public function index(Request $request)
     {
-        $data['menu'] = 'Category';
+        $data['menu'] = 'Brand';
         if ($request->ajax()) {
-            return Datatables::of(Category::with('parent')->orderBy('name','ASC')->get())
+            return Datatables::of(Brand::all())
                 ->addIndexColumn()
-                ->addColumn('categoryName', function($row){
-                    if(!empty($row['parent'])){
-                        return $row->parent->name." -> ".$row->name;
-                    } else {
-                        return $row->name;
-                    }
-                })
                 ->addColumn('image', function($row){
                     if (!empty($row['image']) && file_exists($row['image'])) {
                         return url($row['image']);
                     } else {
-                        return url('uploads/categories/default-category-image.jpeg');
+                        return url('uploads/brands/default-brand-image.jpeg');
                     }
                 })
                 ->addColumn('status', function($row){
-                    $row['table_name'] = 'categories';
+                    $row['table_name'] = 'brands';
                     return view('admin.status-buttons', $row);
                 })
                 ->addColumn('action', function($row){
-                    $row['section_name'] = 'category';
-                    $row['section_title'] = 'Category';
+                    $row['section_name'] = 'brand';
+                    $row['section_title'] = 'Brand';
                     return view('admin.action-buttons', $row);
                 })
                 ->make(true);
         }
 
-        return view('admin.category.index', $data);
+        return view('admin.brand.index', $data);
     }
 
-    public function create($pcid = null)
-    {
-        $data['menu'] = 'Category';
-        $data['categories'] = Category::where('status', 'active')->where('parent_category_id', 0)->pluck('name', 'id')->prepend('Please Select', '0');
-
-        return view("admin.category.create",$data);
+    public function create(){
+        $data['menu'] = 'Brand';
+        return view("admin.brand.create",$data);
     }
 
-    public function store(CategoryRequest $request, $pcid = null)
-    {
-        $input = $request->all();
-        $input['user_id'] = Auth::user()->id;
-
+    public function store(BrandRequest $request){
+        $input   = $request->all();
         if($file = $request->file('image')){
-            $input['image'] = $this->fileMove($file,'categories');
+            $input['image'] = $this->fileMove($file,'brands');
         }
-        Category::create($input);
-
-        \Session::flash('success', 'Category has been inserted successfully!');
-        return redirect()->route('category.index');
+        Brand::create($input);
+        \Session::flash('success', 'Brand has been inserted successfully!');
+        return redirect()->route('brand.index');
     }
 
-    public function show(Request $request, string $id)
-    {
-        //
+    public function edit(string $id){        
+        $data['menu']       = 'Brand';
+        $data['brand']      = Brand::where('id',$id)->first();
+        return view('admin.brand.edit',$data);
     }
 
-    public function edit(string $id, $pcid = null)
-    {        
-        $data['menu'] = 'Category';
-        $data['category'] = Category::where('id',$id)->first();
-        $data['categories'] = Category::where('status', 'active')->where('parent_category_id', 0)->where('id', '!=', $id)->pluck('name', 'id')->prepend('Please Select', '0');
-        return view('admin.category.edit',$data);
-    }
-
-    public function update(CategoryRequest $request, string $id, $pcid = null)
-    {
+    public function update(BrandRequest $request, string $id){
         $input = $request->all();
-        $category = Category::findorFail($id);
-
+        $brand = Brand::findorFail($id);
         if($file = $request->file('image')){
-            if (!empty($category['image']) && file_exists($category['image'])) {
-                unlink($category['image']);
+            if (!empty($brand['image']) && file_exists($brand['image'])) {
+                unlink($brand['image']);
             }
-            $input['image'] = $this->fileMove($file,'categories');
+            $input['image'] = $this->fileMove($file,'brands');
         }
-        $category->update($input);
-
-        \Session::flash('success','Category has been updated successfully!');
-        return redirect()->route('category.index');
+        $brand->update($input);
+        \Session::flash('success','Brand has been updated successfully!');
+        return redirect()->route('brand.index');
     }
 
-    public function destroy(string $id)
-    {
-        $categorys = Category::findOrFail($id);
-        if(!empty($categorys)){
-            if (!empty($categorys['image']) && file_exists($categorys['image'])) {
-                unlink($categorys['image']);
+    public function destroy(string $id){
+        $brand = Brand::findOrFail($id);
+        if(!empty($brand)){
+            if (!empty($brand['image']) && file_exists($brand['image'])) {
+                unlink($brand['image']);
             }
-            $categorys->delete();
+            $brand->delete();
             return 1;
-        }else{
+        }else{  
             return 0;
         }
     }
