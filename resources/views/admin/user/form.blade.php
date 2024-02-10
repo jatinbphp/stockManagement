@@ -16,7 +16,7 @@
                 <div class="card-body">
                     
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                 <label class="control-label" for="name">Name :<span class="text-red">*</span></label>
                                 {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Enter Name', 'id' => 'name']) !!}
@@ -28,7 +28,20 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-6">
+                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                                <label class="control-label" for="email">Role :<span class="text-red">*</span></label>
+                                {!! Form::select('role', \App\Models\User::$roles, null, ['class' => 'form-control', 'placeholder' => 'Select Role', 'id' => 'role']) !!}
+                                @if ($errors->has('role'))
+                                    <span class="text-danger">
+                                        <strong>{{ $errors->first('role') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label class="control-label" for="email">Email :<span class="text-red">*</span></label>
                                 {!! Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Enter Email', 'id' => 'email']) !!}
@@ -39,8 +52,7 @@
                                 @endif
                             </div>
                         </div>
-
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
                                 <label class="control-label" for="phone">Phone :<span class="text-red">*</span></label>
                                 {!! Form::text('phone', null, ['class' => 'form-control', 'placeholder' => 'Enter Phone', 'id' => 'phone']) !!}

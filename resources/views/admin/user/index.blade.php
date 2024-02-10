@@ -36,6 +36,7 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
+                                        <th>Role</th>
                                         <th>Email</th>
                                         <th>Phone</th>
                                         <th>Image</th>

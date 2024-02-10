@@ -13,10 +13,15 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $data['menu'] = 'Users';
+        $data['menu']  = 'Users';
+
         if ($request->ajax()) {
 
-            $user = User::all()->where('role', 'user');
+            $user = User::selectRaw('*, LCASE(REPLACE(role, "_", " ")) as role')
+                ->where('role', '!=', 'admin')
+                ->where('deleted_at', null)
+                ->get();
+        
             return Datatables::of($user)
                 ->addIndexColumn()
                 ->addColumn('image', function($row){
@@ -43,15 +48,13 @@ class UserController extends Controller
 
     public function create()
     {
-        $data['menu'] = 'Users';
+        $data['menu']           = 'Users';
         $data['user_addresses'] = [];
         return view("admin.user.create",$data);
     }
 
-    public function store(UserRequest $request)
-    {
+    public function store(UserRequest $request){
         $input = $request->all();
-        $input['role'] = 'user';
         if($file = $request->file('image')){
             $input['image'] = $this->fileMove($file,'users');
         }
@@ -73,7 +76,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $data['menu'] = 'Users';
+        $data['menu']  = 'Users';
         $data['users'] = User::where('id',$id)->first();
         $data['user_addresses'] = UserAddresses::where('user_id',$id)->get();
         return view('admin.user.edit',$data);

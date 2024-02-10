@@ -8,6 +8,7 @@ $(function () {
         ajax: $("#route_name").val(),
         columns: [
             {data: 'name', "width": "15%", name: 'name'},
+            {data: 'role',  name: 'role'},
             {data: 'email',  name: 'email'},
             {data: 'phone',  name: 'phone'},
             {data: 'image',  name: 'image', orderable: false, searchable: false, render: function (data,type,row){
