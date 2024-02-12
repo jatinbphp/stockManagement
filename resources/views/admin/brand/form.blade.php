@@ -12,8 +12,21 @@
         </div>
     </div>
     <div class="col-md-6">
+        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+            <label class="control-label" for="email">Supplier :<span class="text-red">*</span></label>
+            {!! Form::select('supplier_id', empty($supplier) ? [] : $supplier, null, ['class' => 'form-control', 'placeholder' => 'Select Supplier', 'id' => 'supplier_id']) !!}
+            @if ($errors->has('supplier_id'))
+                <span class="text-danger">
+                    <strong>{{ $errors->first('supplier_id') }}</strong>
+                </span>
+            @endif
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
         <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
-            <label class="col-md-12 control-label" for="image">Image<span class="text-red">*</span></label>
+            <label class="col-md-12 control-label" for="image">Image:<span class="text-red">*</span></label>
             <div class="col-md-12">
                 <div class="fileError">
                     {!! Form::file('image', ['class' => '', 'id'=> 'image','accept'=>'image/*', 'onChange'=>'AjaxUploadImage(this)']) !!}
@@ -27,8 +40,6 @@
             </div>
         </div>
     </div>
-</div>
-<div class="row">
     <div class="col-md-6">
         <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
             <label class="col-md-12 control-label" for="status">Status :<span class="text-red">*</span></label>

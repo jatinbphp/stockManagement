@@ -64,7 +64,8 @@ $(function () {
         lengthMenu: [ 100, 200, 300, 400, 500 ],
         ajax: $("#route_name").val(),
         columns: [
-            {data: 'name', "width": "55%", name: 'name'},
+            {data: 'name', "width": "15%", name: 'name'},
+            {data: 'supplier.name', "width": "15%", name: 'supplier.name'},
             {data: 'image', "width": "15%", name: 'image', orderable: false, searchable: false, render: function (data,type,row){
                     return '<img src="'+data+'" height="50" alt="Image"/>';
                 }

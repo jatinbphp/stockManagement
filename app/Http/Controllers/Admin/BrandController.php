@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
@@ -13,9 +14,10 @@ class BrandController extends Controller
 {
     public function index(Request $request)
     {
+        //return Brand::with('supplier')->get();
         $data['menu'] = 'Brand';
         if ($request->ajax()) {
-            return Datatables::of(Brand::all())
+            return Datatables::of(Brand::with('supplier')->get())
                 ->addIndexColumn()
                 ->addColumn('image', function($row){
                     if (!empty($row['image']) && file_exists($row['image'])) {
@@ -40,7 +42,8 @@ class BrandController extends Controller
     }
 
     public function create(){
-        $data['menu'] = 'Brand';
+        $data['menu']      = 'Brand';
+        $data['supplier']  = Supplier::where('status', 'active')->pluck('name', 'id');
         return view("admin.brand.create",$data);
     }
 
@@ -56,6 +59,7 @@ class BrandController extends Controller
 
     public function edit(string $id){        
         $data['menu']       = 'Brand';
+        $data['supplier']   = Supplier::where('status', 'active')->pluck('name', 'id');
         $data['brand']      = Brand::where('id',$id)->first();
         return view('admin.brand.edit',$data);
     }

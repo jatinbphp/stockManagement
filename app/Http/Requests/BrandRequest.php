@@ -16,9 +16,10 @@ class BrandRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'name'      => 'required',
-            'image'     => 'required|mimes:jpeg,jpg,png,bmp',
-            'status'    => 'required',
+            'name'          => 'required',
+            'image'         => 'required|mimes:jpeg,jpg,png,bmp',
+            'status'        => 'required',
+            'supplier_id'   => 'required',
         ];
 
         // Check if it's an edit scenario

@@ -36,6 +36,7 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
+                                        <th>Supplier Name</th>
                                         <th>Image</th>
                                         <th>Status</th>
                                         <th>Action</th>
