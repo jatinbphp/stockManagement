@@ -25,4 +25,8 @@ class Practice extends Model
         self::STATUS_ACTIVE => 'Active',
         self::STATUS_INACTIVE => 'In Active',
     ];
+
+    public function stockOrder(){
+        return $this->hasMany(StockOrder::class);
+    }
 }

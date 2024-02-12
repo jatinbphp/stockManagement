@@ -92,7 +92,7 @@ $(function () {
         ]
     });
 
-     //practice Table
+    //practice Table
     var practice_table = $('#practiceTable').DataTable({
         processing: true,
         serverSide: true,
@@ -101,9 +101,24 @@ $(function () {
         ajax: $("#route_name").val(),
         columns: [
             {data: 'name', name: 'name'},
-            {data: 'email', name: 'email'},
-            {data: 'telephone', name: 'telephone'},
-            {data: 'manager_name', name: 'manager_name'},
+            {data: 'created_at', name: 'created_at'},
+            {data: 'status', "width": "12%", name: 'status', orderable: false},
+            {data: 'action', "width": "10%", name: 'action', orderable: false},
+        ]
+    });
+
+    //Stock Order Table
+    var stock_order_table = $('#stockOrderTable').DataTable({
+        processing: true,
+        serverSide: true,
+        pageLength: 100,
+        lengthMenu: [ 100, 200, 300, 400, 500, ],
+        ajax: $("#route_name").val(),
+        columns: [
+            {data: 'supplier.name', name: 'supplier'},
+            {data: 'brand.name', name: 'brand'},
+            {data: 'practice.name', name: 'practice'},
+            {data: 'instructions', name: 'instructions'},
             {data: 'status', "width": "12%", name: 'status', orderable: false},
             {data: 'action', "width": "10%", name: 'action', orderable: false},
         ]
@@ -144,6 +159,8 @@ $(function () {
                             supplier_table.row('.selected').remove().draw(false);
                         } else if (section == 'practice_table'){
                             practice_table.row('.selected').remove().draw(false);
+                        } else if (section == 'stock-order_table'){
+                            stock_order_table.row('.selected').remove().draw(false);
                         }
                  
                         swal("Deleted", "Your data successfully deleted!", "success");

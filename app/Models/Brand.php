@@ -23,4 +23,8 @@ class Brand extends Model
     public function supplier(){
         return $this->belongsTo(Supplier::class, 'supplier_id');
     }
+
+    public function stockOrder(){
+        return $this->hasMany(StockOrder::class);
+    }
 }
