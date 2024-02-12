@@ -99,7 +99,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('brand.index') }}" class="nav-link @if(isset($menu) && $menu=='Brand') active @endif">
-                            <i class="nav-icon fa fa-sitemap"></i>
+                            <i class="nav-icon fa fa-boxes"></i>
                             <p>Brands</p>
                         </a>
                     </li>
@@ -115,10 +115,16 @@
                             <p>Orders</p>
                         </a>
                     </li>
-                     <li class="nav-item">
+                    <li class="nav-item">
                         <a href="{{ route('supplier.index') }}" class="nav-link @if(isset($menu) && $menu=='Supplier') active @endif">
                             <i class="nav-icon fa fa-truck"></i>
                             <p>Suppliers</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('practice.index') }}" class="nav-link @if(isset($menu) && $menu=='Practice') active @endif">
+                            <i class="nav-icon fa fa-folder"></i>
+                            <p>Practice</p>
                         </a>
                     </li>
                     <!-- <li class="nav-item">

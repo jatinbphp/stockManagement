@@ -16,6 +16,8 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthorizationController;
 use App\Http\Controllers\Admin\ProfileUpdateController;
 use App\Http\Controllers\Admin\ContentManagementController;
+use App\Http\Controllers\Admin\PracticeController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -87,4 +89,6 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     /* suppliers */
     Route::resource('supplier', SupplierController::class);
 
+    /* practice */
+    Route::resource('practice', PracticeController::class);
 });
