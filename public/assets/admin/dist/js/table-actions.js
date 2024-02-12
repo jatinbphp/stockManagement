@@ -20,42 +20,6 @@ $(function () {
         ]
     });
 
-    //Order Table 
-    var orders_table = $('#ordersTable').DataTable({
-        processing: true,
-        serverSide: true,
-        pageLength: 100,
-        lengthMenu: [100, 200, 300, 400, 500],
-        ajax: $("#route_name").val(),
-        columns: [
-            { data: 'order_id', name: 'order_id'},
-            { data: 'user_name', name: 'user_name'},
-            { data: 'user_email', name: 'user_email'},
-            { data: 'total_amount', name: 'total_amount'},
-            { data: 'status', name: 'status', orderable: false},
-            { data: 'action', name: 'action', orderable: false},
-
-        ]
-    });
-
-    //Order Product Table 
-    var orders_products_table = $('#orderProductTable').DataTable({
-        processing: true,
-        serverSide: true,
-        pageLength: 100,
-        lengthMenu: [100, 200, 300, 400, 500],
-        ajax: $("#route_name").val(),
-        columns: [
-            { data: 'product_name', name: 'product_name' },
-            { data: 'sku', name: 'sku' },
-            { data: 'quantity', name: 'quantity' },
-            { data: 'unit_price', name: 'unit_price' },
-            { data: 'total', name: 'total' },
-            //{ data: 'action', name: 'action' },
-
-        ]
-    });
-
     //Brand Table
     var brand_table = $('#brandTable').DataTable({
         processing: true,
@@ -151,8 +115,6 @@ $(function () {
                     success: function(data){
                         if(section=='users_table'){
                             users_table.row('.selected').remove().draw(false);    
-                        } else if (section == 'orders_table') {
-                            orders_table.row('.selected').remove().draw(false);
                         } else if (section == 'brand_table'){
                             brand_table.row('.selected').remove().draw(false);
                         } else if (section == 'supplier_table'){
