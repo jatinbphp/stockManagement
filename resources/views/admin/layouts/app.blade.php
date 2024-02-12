@@ -109,7 +109,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('stock-order.index') }}" class="nav-link @if(isset($menu) && $menu=='Stock-Orders') active @endif">
+                        <a href="{{ route('stock-order.index') }}" class="nav-link @if(isset($menu) && $menu=='Stock Order') active @endif">
                             <i class="nav-icon fa fa-warehouse"></i>
                             <p>Stock Order</p>
                         </a>
