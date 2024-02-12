@@ -58,26 +58,6 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     /*Users*/
     Route::resource('users', UserController::class);
 
-    /*Categories*/
-    Route::resource('category', CategoryController::class);
-
-    /*Products*/
-    Route::get('products/import-product', [ProductController::class,'importProduct'])->name('products.import.product');
-    Route::post('products/import-product-store', [ProductController::class,'importProductStore'])->name('products.import.product.store');
-    Route::post('products/removeimage', [ProductController::class,'removeImage'])->name('products.removeimage');
-    Route::post('products/getoptions', [ProductController::class,'getOptions'])->name('products.getoptions');
-    Route::resource('products', ProductController::class);
-
-    /*Options*/
-    Route::post('options/removeoptionvalues', [OptionController::class,'removeOptionValues'])->name('options.removeoptionvalues');
-    Route::resource('options', OptionController::class);
-
-    /*Content Management*/
-    Route::resource('content', ContentManagementController::class);
-
-    /*Contact Us*/
-    Route::resource('contactus', ContactUsController::class);
-
     /*Orders*/
     Route::post('orders/addproduct', [OrderController::class,'addProductToCart'])->name('orders.addproduct');
     Route::get('/index_product', [OrderController::class, 'index_product'])->name('orders.index_product');

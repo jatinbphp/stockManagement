@@ -24,8 +24,8 @@ class SupplierRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'telephone' => 'required|numeric|digits_between:10,20',
-            'account_number' => 'required|numeric|digits_between:10,20',
+            'telephone' => 'required|numeric',
+            'account_number' => 'required|numeric',
             'status' => 'required',
         ];
     }

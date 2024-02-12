@@ -90,31 +90,6 @@
                             <p>Users</p>
                         </a>
                     </li>
-
-                    <li class="nav-item">
-                        <a href="{{ route('category.index') }}" class="nav-link @if(isset($menu) && $menu=='Category') active @endif">
-                            <i class="nav-icon fa fa-sitemap"></i>
-                            <p>Categories</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('brand.index') }}" class="nav-link @if(isset($menu) && $menu=='Brand') active @endif">
-                            <i class="nav-icon fa fa-boxes"></i>
-                            <p>Brands</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('products.index') }}" class="nav-link @if(isset($menu) && $menu=='Products') active @endif">
-                            <i class="nav-icon fa fa-list"></i>
-                            <p>Products</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('orders.index') }}" class="nav-link @if(isset($menu) && $menu=='Orders') active @endif">
-                            <i class="nav-icon fa fa-cart-plus"></i>
-                            <p>Orders</p>
-                        </a>
-                    </li>
                     <li class="nav-item">
                         <a href="{{ route('supplier.index') }}" class="nav-link @if(isset($menu) && $menu=='Supplier') active @endif">
                             <i class="nav-icon fa fa-truck"></i>
@@ -127,22 +102,16 @@
                             <p>Practice</p>
                         </a>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a href="{{ route('options.index') }}" class="nav-link @if(isset($menu) && $menu=='Product Options') active @endif">
-                            <i class="nav-icon fa fa-list"></i>
-                            <p>Product Options</p>
-                        </a>
-                    </li> -->
                     <li class="nav-item">
-                        <a href="{{ route('content.index') }}" class="nav-link @if(isset($menu) && $menu=='Content Management') active @endif">
-                            <i class="nav-icon fa fa-list"></i>
-                            <p>Content Management</p>
+                        <a href="{{ route('brand.index') }}" class="nav-link @if(isset($menu) && $menu=='Brand') active @endif">
+                            <i class="nav-icon fa fa-boxes"></i>
+                            <p>Brands</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('contactus.index') }}" class="nav-link @if(isset($menu) && $menu=='Contact Us') active @endif">
-                            <i class="nav-icon fa fa-envelope"></i>
-                            <p>Contact Us</p>
+                        <a href="{{ route('orders.index') }}" class="nav-link @if(isset($menu) && $menu=='Orders') active @endif">
+                            <i class="nav-icon fa fa-cart-plus"></i>
+                            <p>Orders</p>
                         </a>
                     </li>
                 </ul>

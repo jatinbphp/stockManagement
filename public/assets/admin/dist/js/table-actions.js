@@ -7,7 +7,7 @@ $(function () {
         lengthMenu: [ 100, 200, 300, 400, 500 ],
         ajax: $("#route_name").val(),
         columns: [
-            {data: 'name', "width": "15%", name: 'name'},
+            {data: 'name', name: 'name'},
             {data: 'role',  name: 'role'},
             {data: 'email',  name: 'email'},
             {data: 'phone',  name: 'phone'},
@@ -15,83 +15,8 @@ $(function () {
                     return '<img src="'+data+'" height="50" alt="Image"/>';
                 }
             },
-            {data: 'status',  name: 'status', orderable: false},    
-            {data: 'action',  name: 'action', orderable: false},                
-        ]
-    });
-
-    //Category Table
-    var category_table = $('#categoryTable').DataTable({
-        processing: true,
-        serverSide: true,
-        pageLength: 100,
-        lengthMenu: [ 100, 200, 300, 400, 500 ],
-        ajax: $("#route_name").val(),
-        columns: [
-            {data: 'categoryName', "width": "55%", categoryName: 'categoryName'},
-            {data: 'image', "width": "15%", name: 'image', orderable: false, searchable: false, render: function (data,type,row){
-                    return '<img src="'+data+'" height="50" alt="Image"/>';
-                }
-            },
-            {data: 'status',  name: 'status', orderable: false},
-            {data: 'action',  name: 'action', orderable: false},
-        ]
-    });
-
-    //Product Table
-    var products_table = $('#productsTable').DataTable({
-        processing: true,
-        serverSide: true,
-        pageLength: 100,
-        lengthMenu: [ 100, 200, 300, 400, 500 ],
-        ajax: $("#route_name").val(),
-        columns: [
-            {data: 'product_name', product_name: 'product_name'},
-            {data: 'sku',  name: 'sku'},
-            {data: 'status',  name: 'status', orderable: false},
-            {data: 'action',  name: 'action', orderable: false},
-        ]
-    });
-
-    //Option Table
-    var options_table = $('#optionsTable').DataTable({
-        processing: true,
-        serverSide: true,
-        pageLength: 100,
-        lengthMenu: [ 100, 200, 300, 400, 500 ],
-        ajax: $("#route_name").val(),
-        columns: [
-            {data: 'name', "width": "55%", name: 'name'},
-            {data: 'status',  name: 'status'},
-            {data: 'action',  name: 'action'},
-        ]
-    });
-
-    //CMS Table
-    var content_table = $('#contentTable').DataTable({
-        processing: true,
-        serverSide: true,
-        pageLength: 100,
-        lengthMenu: [ 100, 200, 300, 400, 500 ],
-        ajax: $("#route_name").val(),
-        columns: [
-            {data: 'title', name: 'title'},
-            {data: 'action',  name: 'action', orderable: false},                
-        ]
-    });
-
-    //Contact Us Table
-    var contactus_table = $('#contactusTable').DataTable({
-        processing: true,
-        serverSide: true,
-        pageLength: 100,
-        lengthMenu: [ 100, 200, 300, 400, 500 ],
-        ajax: $("#route_name").val(),
-        columns: [
-            {data: 'name', name: 'name'},
-            {data: 'email', name: 'email'},
-            {data: 'message', name: 'message'},
-            {data: 'action',  name: 'action', orderable: false},                
+            {data: 'status', "width": "12%",  name: 'status', orderable: false},    
+            {data: 'action', "width": "10%",  name: 'action', orderable: false},                
         ]
     });
 
@@ -144,8 +69,8 @@ $(function () {
                     return '<img src="'+data+'" height="50" alt="Image"/>';
                 }
             },
-            {data: 'status',  name: 'status', orderable: false},
-            {data: 'action',  name: 'action', orderable: false},
+            {data: 'status', "width": "12%",  name: 'status', orderable: false},
+            {data: 'action', "width": "10%",  name: 'action', orderable: false},
         ]
     });
 
@@ -157,12 +82,12 @@ $(function () {
         lengthMenu: [ 100, 200, 300, 400, 500, ],
         ajax: $("#route_name").val(),
         columns: [
-            {data: 'name', "width": "20%", name: 'name'},
-            {data: 'email', "width": "20%", name: 'email'},
-            {data: 'telephone', "width": "20%", name: 'telephone'},
-            {data: 'account_number', "width": "20%", name: 'account_number'},
-            {data: 'status',  name: 'status', orderable: false},
-            {data: 'action',  name: 'action', orderable: false},
+            {data: 'name', name: 'name'},
+            {data: 'email', name: 'email'},
+            {data: 'telephone', name: 'telephone'},
+            {data: 'account_number', name: 'account_number'},
+            {data: 'status', "width": "12%",  name: 'status', orderable: false},
+            {data: 'action', "width": "10%",  name: 'action', orderable: false},
         ]
     });
 
@@ -174,12 +99,12 @@ $(function () {
         lengthMenu: [ 100, 200, 300, 400, 500, ],
         ajax: $("#route_name").val(),
         columns: [
-            {data: 'name', "width": "20%", name: 'name'},
-            {data: 'email', "width": "20%", name: 'email'},
-            {data: 'telephone', "width": "20%", name: 'telephone'},
-            {data: 'manager_name', "width": "20%", name: 'manager_name'},
-            {data: 'status',  name: 'status', orderable: false},
-            {data: 'action',  name: 'action', orderable: false},
+            {data: 'name', name: 'name'},
+            {data: 'email', name: 'email'},
+            {data: 'telephone', name: 'telephone'},
+            {data: 'manager_name', name: 'manager_name'},
+            {data: 'status', "width": "12%", name: 'status', orderable: false},
+            {data: 'action', "width": "10%", name: 'action', orderable: false},
         ]
     });
 
@@ -210,14 +135,6 @@ $(function () {
                     success: function(data){
                         if(section=='users_table'){
                             users_table.row('.selected').remove().draw(false);    
-                        } else if(section=='category_table'){
-                            category_table.row('.selected').remove().draw(false);   
-                        } else if(section=='products_table'){
-                            products_table.row('.selected').remove().draw(false);   
-                        } else if(section=='options_table'){
-                            options_table.row('.selected').remove().draw(false);   
-                        } else if(section=='contactus_table'){
-                            contactus_table.row('.selected').remove().draw(false);   
                         } else if (section == 'orders_table') {
                             orders_table.row('.selected').remove().draw(false);
                         } else if (section == 'brand_table'){
@@ -270,13 +187,13 @@ $(function () {
 
                 if(section=='users_table'){
                     users_table.draw(false);
-                } else if(section=='products_table'){
-                    products_table.draw(false);   
-                } else if(section=='products_table'){
-                    products_table.draw(false);   
-                } else if(section=='options_table'){
-                    options_table.draw(false);   
-                } 
+                } else if (section == 'brand_table'){
+                    brand_table.draw(false);
+                } else if (section == 'supplier_table'){
+                    supplier_table.draw(false);
+                } else if (section == 'practice_table'){
+                    practice_table.draw(false);
+                }
             }
         });
     });

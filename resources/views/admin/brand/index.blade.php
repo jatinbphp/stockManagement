@@ -37,8 +37,8 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Image</th>
-                                        <th style="width: 10%;">Status</th>
-                                        <th style="width: 10%;">Action</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
