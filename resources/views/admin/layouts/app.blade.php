@@ -115,6 +115,12 @@
                             <p>Orders</p>
                         </a>
                     </li>
+                     <li class="nav-item">
+                        <a href="{{ route('supplier.index') }}" class="nav-link @if(isset($menu) && $menu=='Supplier') active @endif">
+                            <i class="nav-icon fa fa-truck"></i>
+                            <p>Suppliers</p>
+                        </a>
+                    </li>
                     <!-- <li class="nav-item">
                         <a href="{{ route('options.index') }}" class="nav-link @if(isset($menu) && $menu=='Product Options') active @endif">
                             <i class="nav-icon fa fa-list"></i>

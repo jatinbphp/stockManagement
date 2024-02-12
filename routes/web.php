@@ -1,20 +1,21 @@
 <?php
 
-use App\Http\Controllers\Admin\ImageController;
-use App\Http\Controllers\Admin\ProfileUpdateController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Admin\AuthorizationController;
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\OptionController;
-use App\Http\Controllers\Admin\CommonController;
-use App\Http\Controllers\Admin\ContentManagementController;
-use App\Http\Controllers\Admin\ContactUsController;
-use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\ImageController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\CommonController;
+use App\Http\Controllers\Admin\OptionController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\SupplierController;
+use App\Http\Controllers\Admin\ContactUsController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\AuthorizationController;
+use App\Http\Controllers\Admin\ProfileUpdateController;
+use App\Http\Controllers\Admin\ContentManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,4 +83,8 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
 
     /* Brands */
     Route::resource('brand', BrandController::class);
+
+    /* suppliers */
+    Route::resource('supplier', SupplierController::class);
+
 });
