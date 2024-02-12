@@ -65,7 +65,9 @@ $(function () {
         ajax: $("#route_name").val(),
         columns: [
             {data: 'name', name: 'name'},
-            {data: 'created_at', name: 'created_at'},
+            {data: 'email', name: 'email'},
+            {data: 'telephone', name: 'telephone'},
+            {data: 'manager_name', name: 'manager_name'},
             {data: 'status', "width": "12%", name: 'status', orderable: false},
             {data: 'action', "width": "10%", name: 'action', orderable: false},
         ]
