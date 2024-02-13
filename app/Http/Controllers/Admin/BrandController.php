@@ -62,9 +62,9 @@ class BrandController extends Controller
 
     public function show($id)
     {
-        $data['section_info'] = Brand::find($id)->toArray();
+        $data['section_info'] = Brand::with('supplier')->find($id)->toArray();
         $data['type'] = "Brand";
-        $data['required_columns'] = ['id', 'name', 'image', 'status', 'created_at'];
+        $data['required_columns'] = ['id', 'image', 'name', 'supplier', 'status', 'created_at'];
         return view('admin.show_modal', $data);
     }
 

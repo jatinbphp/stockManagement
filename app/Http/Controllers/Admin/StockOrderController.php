@@ -58,10 +58,8 @@ class StockOrderController extends Controller{
 
     public function show($id)
     {
-        $data['section_info'] = StockOrder::find($id)->toArray();
-        $data['type'] = "Stock Order";
-        $data['required_columns'] = ['id', 'brand_id', 'supplier_id', 'practice_id', 'instructions', 'order_copy', 'status', 'created_at'];
-        return view('admin.show_modal', $data);
+        $data['stock_order'] = StockOrder::with(['supplier', 'brand', 'practice'])->find($id);
+        return view('admin.stock-order.show_modal', $data);
     }
 
     public function edit(string $id){        
