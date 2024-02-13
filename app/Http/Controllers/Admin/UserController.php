@@ -64,10 +64,13 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $data['section_info'] = User::find($id)->toArray();
-        $data['type'] = "User";
-        $data['required_columns'] = ['id', 'image', 'name', 'email', 'role', 'email', 'phone', 'status', 'created_at'];
-        return view('admin.show_modal', $data);
+        $user = User::findOrFail($id);
+        
+        return view('admin.show_modal', [
+            'section_info' => $user->toArray(),
+            'type' => 'User',
+            'required_columns' => ['id', 'image', 'name', 'email', 'role', 'email', 'phone', 'status', 'created_at']
+        ]);
     }
 
     public function edit($id)

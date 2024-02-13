@@ -1,7 +1,7 @@
 <div style=" display: flex;">
     <select class="form-control stockOrderStatus" id="status{{$id}}"  data-id="{{$id}}" >';
         @foreach($stock_order_status as $statusName)
-            @php $selected = ($statusName == $status) ? ' selected="selected"' : ''; @endphp
+            @php $selected = (strtolower($statusName) == $status) ? ' selected="selected"' : ''; @endphp
             <option {{$selected}} value="{{strtolower($statusName)}}">{{ucfirst($statusName)}}</option>
         @endforeach
     </select>

@@ -54,7 +54,15 @@
                                     </tr>
                                     <tr>
                                         <th>Status:</th>
-                                        <td>{{ ucfirst($stock_order->status) }}</td>
+                                        <td>
+                                            @if($stock_order->status == 'incomplete')
+                                                <button class="btn-sm btn btn-warning">{{ ucfirst($stock_order->status) }}</button>
+                                            @elseif($stock_order->status == 'completed')
+                                                <button class="btn-sm btn btn-success">{{ ucfirst($stock_order->status) }}</button>
+                                            @elseif($stock_order->status == 'open')
+                                                <button class="btn-sm btn btn-primary">{{ ucfirst($stock_order->status) }}</button>
+                                            @endif
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th>Created Date:</th>

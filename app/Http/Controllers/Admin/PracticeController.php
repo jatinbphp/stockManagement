@@ -50,10 +50,13 @@ class PracticeController extends Controller
 
     public function show($id)
     {
-        $data['section_info'] = Practice::find($id)->toArray();
-        $data['type'] = "Practice";
-        $data['required_columns'] = ['id', 'name', 'manager_name', 'address', 'email', 'telephone', 'status', 'created_at'];
-        return view('admin.show_modal', $data);
+        $practice = Practice::findOrFail($id);
+        
+        return view('admin.show_modal', [
+            'section_info' => $practice->toArray(),
+            'type' => 'Practice',
+            'required_columns' => ['id', 'name', 'manager_name', 'address', 'email', 'telephone', 'status', 'created_at']
+        ]);
     }
 
     public function edit(string $id)

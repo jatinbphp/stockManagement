@@ -53,12 +53,15 @@ class RoleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        $data['section_info'] = Role::find($id)->toArray();
-        $data['type'] = "Role";
-        $data['required_columns'] = ['id', 'name', 'status', 'created_at'];
-        return view('admin.show_modal', $data);
+        $role = Role::findOrFail($id);
+        
+        return view('admin.show_modal', [
+            'section_info' => $role->toArray(),
+            'type' => 'Role',
+            'required_columns' => ['id', 'name', 'status', 'created_at']
+        ]);
     }
 
     /**

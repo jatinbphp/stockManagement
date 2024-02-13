@@ -23,11 +23,7 @@ class BrandController extends Controller
                     return date("Y-m-d H:i:s", strtotime($row->created_at)); 
                 })             
                 ->addColumn('image', function($row){
-                    if (!empty($row['image']) && file_exists($row['image'])) {
-                        return url($row['image']);
-                    } else {
-                        return url('uploads/brands/default-brand-image.jpeg');
-                    }
+                    return $this->getImageUrl($row['image']);
                 })
                 ->editColumn('status', function($row){
                     $row['table_name'] = 'brands';
@@ -52,20 +48,27 @@ class BrandController extends Controller
 
     public function store(BrandRequest $request){
         $input   = $request->all();
+
         if($file = $request->file('image')){
             $input['image'] = $this->fileMove($file,'brands');
         }
+
         Brand::create($input);
+
         \Session::flash('success', 'Brand has been inserted successfully!');
+        
         return redirect()->route('brands.index');
     }
 
     public function show($id)
     {
-        $data['section_info'] = Brand::with('supplier')->find($id)->toArray();
-        $data['type'] = "Brand";
-        $data['required_columns'] = ['id', 'image', 'name', 'supplier', 'status', 'created_at'];
-        return view('admin.show_modal', $data);
+        $brand = Brand::with('supplier')->findOrFail($id);
+        
+        return view('admin.show_modal', [
+            'section_info' => $brand->toArray(),
+            'type' => 'Brand',
+            'required_columns' => ['id', 'image', 'name', 'supplier', 'status', 'created_at']
+        ]);
     }
 
     public function edit(string $id){        
@@ -99,6 +102,15 @@ class BrandController extends Controller
             return 1;
         }else{  
             return 0;
+        }
+    }
+
+    public function getImageUrl($image)
+    {
+        if (!empty($image) && file_exists($image)) {
+            return url($image);
+        } else {
+            return url('uploads/default-image.jpeg');
         }
     }
 }
