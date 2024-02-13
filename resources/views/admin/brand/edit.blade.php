@@ -9,7 +9,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('brand.index')}}">{{$menu}}</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('brands.index')}}">{{$menu}}</a></li>
                             <li class="breadcrumb-item active">Edit</li>
                         </ol>
                     </div>
@@ -24,12 +24,12 @@
                         <div class="card-header">
                             <h3 class="card-title">Edit {{$menu}}</h3>
                         </div>
-                        {!! Form::model($brand,['url' => route('brand.update',['brand'=>$brand->id]),'method'=>'patch','id' => 'categorysForm','class' => 'form-horizontal','files'=>true]) !!}
+                        {!! Form::model($brand,['url' => route('brands.update',['brand'=>$brand->id]),'method'=>'patch','id' => 'brandsForm','class' => 'form-horizontal','files'=>true]) !!}
                         <div class="card-body">
                             @include ('admin.brand.form')
                         </div>
                         <div class="card-footer">
-                            <a href="{{ route('brand.index') }}" class="btn btn-default">Back</a>
+                            <a href="{{ route('brands.index') }}" class="btn btn-default">Back</a>
                             <button class="btn btn-info float-right" type="submit">Update</button>
                         </div>
                         {!! Form::close() !!}

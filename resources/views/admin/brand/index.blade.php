@@ -26,19 +26,21 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <a href="{{ route('brand.create') }}" class="btn btn-info float-right">Add New</a>
+                                    <a href="{{ route('brands.create') }}" class="btn btn-info float-right">Add New</a>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body table-responsive">
-                            <input type="hidden" id="route_name" value="{{ route('brand.index') }}">
+                            <input type="hidden" id="route_name" value="{{ route('brands.index') }}">
                             <table id="brandTable" class="table table-bordered table-striped datatable-dynamic">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Supplier Name</th>
-                                        <th>Image</th>
+                                        <th>#</th>
+                                        <th>Brand Name</th>
+                                        <th>Supplier Information</th>
+                                        <!-- <th>Image</th> -->
                                         <th>Status</th>
+                                        <th>Created Date</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>

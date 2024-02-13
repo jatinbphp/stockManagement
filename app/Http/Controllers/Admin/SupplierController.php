@@ -14,16 +14,19 @@ class SupplierController extends Controller
 {
     public function index(Request $request)
     {
-        $data['menu'] = 'Supplier';
+        $data['menu'] = 'Suppliers';
         if ($request->ajax()) {
             return Datatables::of(Supplier::all())
                 ->addIndexColumn()
-                ->addColumn('status', function ($row) {
+                ->addColumn('created_at', function($row) {
+                    return date("Y-m-d H:i:s", strtotime($row->created_at)); 
+                })
+                ->editColumn('status', function ($row) {
                     $row['table_name'] = 'suppliers';
                     return view('admin.status-buttons', $row);
                 })
                 ->addColumn('action', function ($row) {
-                    $row['section_name'] = 'supplier';
+                    $row['section_name'] = 'suppliers';
                     $row['section_title'] = 'Supplier';
                     return view('admin.action-buttons', $row);
                 })
@@ -35,7 +38,7 @@ class SupplierController extends Controller
 
     public function create()
     {
-        $data['menu'] = 'Supplier';
+        $data['menu'] = 'Suppliers';
         return view("admin.supplier.create", $data);
     }
 
@@ -44,12 +47,12 @@ class SupplierController extends Controller
         $input = $request->all();
         Supplier::create($input);
         \Session::flash('success', 'Supplier has been inserted successfully!');
-        return redirect()->route('supplier.index');
+        return redirect()->route('suppliers.index');
     }
 
     public function edit(string $id)
     {
-        $data['menu'] = 'Supplier';
+        $data['menu'] = 'Suppliers';
         $data['supplier'] = Supplier::where('id', $id)->first();
         return view('admin.supplier.edit', $data);
     }
@@ -60,7 +63,7 @@ class SupplierController extends Controller
         $supplier = Supplier::findOrFail($id);
         $supplier->update($input);
         \Session::flash('success', 'Supplier has been updated successfully!');
-        return redirect()->route('supplier.index');
+        return redirect()->route('suppliers.index');
     }
 
     public function destroy(string $id)

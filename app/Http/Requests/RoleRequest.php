@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class PracticeRequest extends FormRequest
+class RoleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,22 +21,16 @@ class PracticeRequest extends FormRequest
      */
     public function rules(): array
     {
-
-        $practiceId = $this->route('practice');
+        $roleId = $this->route('role');
 
         $rules = [
-            'name'          => 'required',
-            'address'       => 'required',       
-            'telephone'     => 'required|numeric',
-            'manager_name'  => 'required',
-            'status'        => 'required',
-            'email' => [
-                'required', // Make the email field optional
-                'email',  // Allow null values
-                Rule::unique('practices', 'email')->ignore($practiceId),
+            'status' => 'required',
+            'name' => [
+                'required',
+                Rule::unique('roles', 'name')->ignore($roleId),
             ],
         ];
-
+        
         return $rules;
     }
 }

@@ -13,8 +13,8 @@
     </div>
     <div class="col-md-6">
         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-            <label class="control-label" for="email">Role :<span class="text-red">*</span></label>
-            {!! Form::select('role', \App\Models\User::$roles, null, ['class' => 'form-control', 'placeholder' => 'Select Role', 'id' => 'role']) !!}
+            <label class="control-label" for="email">Select Role :<span class="text-red">*</span></label>
+            {!! Form::select('role', \App\Models\User::$roles, null, ['class' => 'form-control', 'placeholder' => 'Please Select', 'id' => 'role']) !!}
             @if ($errors->has('role'))
                 <span class="text-danger">
                     <strong>{{ $errors->first('role') }}</strong>
@@ -46,7 +46,7 @@
     </div>
     <div class="col-md-6">
         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-            <label class="control-label" for="password">Password :@if (empty($customers))<span class="text-red">*</span>@endif</label>
+            <label class="control-label" for="password">Password :@if (empty($user))<span class="text-red">*</span>@endif</label>
             {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Enter Password', 'id' => 'password']) !!}
             @if ($errors->has('password'))
                 <span class="text-danger">
@@ -57,7 +57,7 @@
     </div>
     <div class="col-md-6">
         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-            <label class="control-label" for="password">Confirm Password :@if (empty($customers))<span class="text-red">*</span>@endif</label>
+            <label class="control-label" for="password">Confirm Password :@if (empty($user))<span class="text-red">*</span>@endif</label>
             {!! Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => 'Confirm password', 'id' => 'password-confirm']) !!}
             @if ($errors->has('password_confirmation'))
                 <span class="text-danger">
@@ -68,12 +68,12 @@
     </div>
     <div class="col-md-6">
         <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
-            <label class="col-md-12 control-label" for="image">Image<span class="text-red">*</span></label>
-            <div class="col-md-12">
+            <label class="control-label" for="image">Image<span class="text-red">*</span></label>
+            <div class="">
                 <div class="fileError">
                     {!! Form::file('image', ['class' => '', 'id'=> 'image','accept'=>'image/*', 'onChange'=>'AjaxUploadImage(this)']) !!}
                 </div>
-                <img id="DisplayImage" @if(!empty($users['image'])) src="{{ url($users['image'])}}" style="margin-top: 1%; padding-bottom:5px; display: block;" @else src="" style="padding-bottom:5px; display: none;" @endif width="150">
+                <img id="DisplayImage" @if(!empty($user['image'])) src="{{ url($user['image'])}}" style="margin-top: 1%; padding-bottom:5px; display: block;" @else src="" style="padding-bottom:5px; display: none;" @endif width="150">
                 @if ($errors->has('image'))
                     <span class="text-danger">
                     <strong>{{ $errors->first('image') }}</strong>
@@ -87,7 +87,7 @@
             <label class="col-md-12 control-label" for="status">Status :<span class="text-red">*</span></label>
             <div class="col-md-12">
                 @foreach (\App\Models\User::$status as $key => $value)
-                        @php $checked = !isset($users) && $key == 'active'?'checked':''; @endphp
+                        @php $checked = !isset($user) && $key == 'active'?'checked':''; @endphp
                     <label>
                         {!! Form::radio('status', $key, null, ['class' => 'flat-red',$checked]) !!} <span style="margin-right: 10px">{{ $value }}</span>
                     </label>

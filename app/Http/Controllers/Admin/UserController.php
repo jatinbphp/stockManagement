@@ -16,13 +16,13 @@ class UserController extends Controller
 
         if ($request->ajax()) {
 
-            $user = User::selectRaw('*, LCASE(REPLACE(role, "_", " ")) as role')
-                ->where('role', '!=', 'admin')
-                ->where('deleted_at', null)
-                ->get();
+            $user = User::select()->where('role', '!=', 'admin');
         
             return Datatables::of($user)
                 ->addIndexColumn()
+                ->addColumn('created_at', function($row) {
+                    return date("Y-m-d H:i:s", strtotime($row->created_at)); 
+                })
                 ->addColumn('image', function($row){
                     if (!empty($row['image']) && file_exists($row['image'])) {
                         return url($row['image']);
@@ -30,7 +30,7 @@ class UserController extends Controller
                         return url('uploads/users/user-default-image.png');
                     }
                 })
-                ->addColumn('status', function($row){
+                ->editColumn('status', function($row){
                     $row['table_name'] = 'users';
                     return view('admin.status-buttons', $row);
                 })
@@ -70,7 +70,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $data['menu']  = 'Users';
-        $data['users'] = User::where('id',$id)->first();
+        $data['user'] = User::where('id',$id)->first();
         return view('admin.user.edit',$data);
     }
 
@@ -79,9 +79,7 @@ class UserController extends Controller
         if(empty($request['password'])){
             unset($request['password']);
         }
-
         $input = $request->all();
-
         $user = User::findorFail($id);
 
         if($file = $request->file('image')){
@@ -90,7 +88,6 @@ class UserController extends Controller
             }
             $input['image'] = $this->fileMove($file,'users');
         }
-
         $user->update($input);
 
         \Session::flash('success','User has been updated successfully!');

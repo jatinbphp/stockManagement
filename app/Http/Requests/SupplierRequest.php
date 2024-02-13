@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
-
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SupplierRequest extends FormRequest
@@ -21,12 +21,20 @@ class SupplierRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'telephone' => 'required|numeric',
-            'account_number' => 'required|numeric',
-            'status' => 'required',
+        $supplierId = $this->route('supplier');
+
+        $rules = [
+            'name'          => 'required',
+            'telephone'     => 'required|numeric',
+            'account_number'  => 'required',
+            'status'        => 'required',
+            'email' => [
+                'required', // Make the email field optional
+                'email',  // Allow null values
+                Rule::unique('suppliers', 'email')->ignore($supplierId),
+            ],
         ];
+
+        return $rules;
     }
 }

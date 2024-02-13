@@ -15,10 +15,13 @@ class BrandController extends Controller
     public function index(Request $request)
     {
         //return Brand::with('supplier')->get();
-        $data['menu'] = 'Brand';
+        $data['menu'] = 'Brands';
         if ($request->ajax()) {
             return Datatables::of(Brand::with('supplier')->get())
-                ->addIndexColumn()
+                ->addIndexColumn()   
+                ->addColumn('created_at', function($row) {
+                    return date("Y-m-d H:i:s", strtotime($row->created_at)); 
+                })             
                 ->addColumn('image', function($row){
                     if (!empty($row['image']) && file_exists($row['image'])) {
                         return url($row['image']);
@@ -26,12 +29,12 @@ class BrandController extends Controller
                         return url('uploads/brands/default-brand-image.jpeg');
                     }
                 })
-                ->addColumn('status', function($row){
+                ->editColumn('status', function($row){
                     $row['table_name'] = 'brands';
                     return view('admin.status-buttons', $row);
                 })
                 ->addColumn('action', function($row){
-                    $row['section_name'] = 'brand';
+                    $row['section_name'] = 'brands';
                     $row['section_title'] = 'Brand';
                     return view('admin.action-buttons', $row);
                 })
@@ -42,8 +45,8 @@ class BrandController extends Controller
     }
 
     public function create(){
-        $data['menu']      = 'Brand';
-        $data['supplier']  = Supplier::where('status', 'active')->pluck('name', 'id');
+        $data['menu'] = 'Brands';
+        $data['supplier']  = Supplier::where('status', 'active')->get()->pluck('full_name', 'id');
         return view("admin.brand.create",$data);
     }
 
@@ -54,13 +57,13 @@ class BrandController extends Controller
         }
         Brand::create($input);
         \Session::flash('success', 'Brand has been inserted successfully!');
-        return redirect()->route('brand.index');
+        return redirect()->route('brands.index');
     }
 
     public function edit(string $id){        
-        $data['menu']       = 'Brand';
-        $data['supplier']   = Supplier::where('status', 'active')->pluck('name', 'id');
-        $data['brand']      = Brand::where('id',$id)->first();
+        $data['menu'] = 'Brands';
+        $data['supplier'] = Supplier::where('status', 'active')->get()->pluck('full_name', 'id');
+        $data['brand'] = Brand::where('id',$id)->first();
         return view('admin.brand.edit',$data);
     }
 
@@ -75,7 +78,7 @@ class BrandController extends Controller
         }
         $brand->update($input);
         \Session::flash('success','Brand has been updated successfully!');
-        return redirect()->route('brand.index');
+        return redirect()->route('brands.index');
     }
 
     public function destroy(string $id){

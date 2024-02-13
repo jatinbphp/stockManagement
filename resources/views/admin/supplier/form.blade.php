@@ -40,7 +40,7 @@
     <div class="col-md-6">
         <div class="form-group{{ $errors->has('account_number') ? ' has-error' : '' }}">
             <label class="control-label" for="account_number">Account Number :<span class="text-red">*</span></label>
-            {!! Form::number('account_number', null, ['class' => 'form-control', 'placeholder' => 'Enter Account Number', 'id' => 'account_number']) !!}
+            {!! Form::text('account_number', null, ['class' => 'form-control', 'placeholder' => 'Enter Account Number', 'id' => 'account_number']) !!}
             @if ($errors->has('account_number'))
                 <span class="text-danger">
                     <strong>{{ $errors->first('account_number') }}</strong>

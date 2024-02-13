@@ -10,10 +10,9 @@ class Supplier extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    protected $appends = ['full_name'];
 
-    protected $fillable = [
-        'name', 'email', 'telephone', 'account_number', 'status',
-    ];
+    protected $fillable = ['name', 'email', 'telephone', 'account_number', 'status'];
 
     protected $dates = ['deleted_at'];
 
@@ -31,5 +30,10 @@ class Supplier extends Model
 
     public function stockOrder(){
         return $this->hasMany(StockOrder::class);
+    }
+
+    public function getFullNameAttribute()
+    {
+        return $this->name . ' (' . $this->email . ')';
     }
 }

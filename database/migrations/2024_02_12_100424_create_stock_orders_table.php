@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigInteger('practice_id')->nullable();
             $table->text('instructions')->nullable();
             $table->string('order_copy')->nullable();
-            $table->string('status')->default('active');
+            $table->string('status')->default('open');
             $table->softDeletes();
             $table->timestamps();
         });

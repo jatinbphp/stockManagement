@@ -23,25 +23,14 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card card-info card-outline">
-                        <div class="card-header">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <a href="{{ route('users.create') }}" class="btn btn-info float-right">Add New</a>
-                                </div>
-                            </div>
-                        </div>
                         <div class="card-body table-responsive">
-                            <input type="hidden" id="route_name" value="{{ route('users.index') }}">
-                            <table id="usersTable" class="table table-bordered table-striped datatable-dynamic">
+                            <input type="hidden" id="route_name" value="{{ route('roles.index') }}">
+                            <table id="roleTable" class="table table-bordered table-striped datatable-dynamic">
                                 <thead>
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Role</th>
-                                        <!-- <th>Image</th> -->
                                         <th>Status</th>
-                                        <th>Created Date</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>

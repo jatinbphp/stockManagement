@@ -11,21 +11,16 @@ class StockOrder extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = [
-        'brand_id', 
-        'supplier_id', 
-        'practice_id', 
-        'instructions', 
-        'order_copy',
-        'status',
-    ];
+    protected $fillable = ['brand_id', 'supplier_id', 'practice_id', 'instructions', 'order_copy', 'status'];
 
-    const STATUS_ACTIVE     = 'active';
-    const STATUS_INACTIVE   = 'inactive';
+    const STATUS_OPEN     = 'open';
+    const STATUS_IN_COMPLETE   = 'incomplete';
+    const STATUS_COMPLETED   = 'completed';
 
     public static $status = [
-        self::STATUS_ACTIVE => 'Active',
-        self::STATUS_INACTIVE => 'In Active',
+        self::STATUS_OPEN => 'Open',
+        self::STATUS_IN_COMPLETE => 'Incomplete',
+        self::STATUS_COMPLETED => 'Completed',
     ];
 
     public function brand(){

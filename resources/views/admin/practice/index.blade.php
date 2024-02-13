@@ -26,20 +26,22 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <a href="{{ route('practice.create') }}" class="btn btn-info float-right">Add New</a>
+                                    <a href="{{ route('practices.create') }}" class="btn btn-info float-right">Add New</a>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body table-responsive">
-                            <input type="hidden" id="route_name" value="{{ route('practice.index') }}">
+                            <input type="hidden" id="route_name" value="{{ route('practices.index') }}">
                             <table id="practiceTable" class="table table-bordered table-striped datatable-dynamic">
                                 <thead>
                                     <tr>
+                                        <th>#</th>
                                         <th>Name</th>
                                         <th>Email</th>
-                                        <th>Telphone</th>
-                                        <th>Manager Name</th>
+                                        <!-- <th>Telphone</th>
+                                        <th>Manager Name</th> -->
                                         <th>Status</th>
+                                        <th>Created Date</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>

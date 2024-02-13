@@ -18,7 +18,7 @@ use App\Http\Controllers\Admin\ProfileUpdateController;
 use App\Http\Controllers\Admin\ContentManagementController;
 use App\Http\Controllers\Admin\PracticeController;
 use App\Http\Controllers\Admin\StockOrderController;
-
+use App\Http\Controllers\Admin\RoleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,24 +45,34 @@ Route::post('/adminLogin', [AuthorizationController::class, 'adminLogin'])->name
 
 Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
     Route::get('logout', [AuthorizationController::class, 'adminLogout'])->name('admin.logout');
+
     /*IMAGE UPLOAD IN SUMMER NOTE*/
     Route::post('image/upload', [ImageController::class,'upload_image']);
     Route::resource('profile_update', ProfileUpdateController::class);
+
     /*Common*/
     Route::post('common/changestatus', [CommonController::class,'changeStatus'])->name('common.changestatus');
+
+    /*Roles*/
+    Route::resource('roles', RoleController::class);
+
     /*Users*/
     Route::resource('users', UserController::class);
-    /*Orders*/
-    Route::post('orders/addproduct', [OrderController::class,'addProductToCart'])->name('orders.addproduct');
-    Route::get('/index_product', [OrderController::class, 'index_product'])->name('orders.index_product');
-    Route::resource('orders',OrderController::class);
+
     /* Brands */
-    Route::resource('brand', BrandController::class);
-    /* suppliers */
-    Route::resource('supplier', SupplierController::class);
-    /* practice */
-    Route::resource('practice', PracticeController::class);
-    /* stock order */
-    Route::resource('stock-order', StockOrderController::class);
+    Route::resource('brands', BrandController::class);
+
+    /* Suppliers */
+    Route::resource('suppliers', SupplierController::class);
+
+    /* Practices */
+    Route::resource('practices', PracticeController::class);
+
+    /* Stock order */
+    Route::post('stock-orders/add_history', [StockOrderController::class,'addStockOrderStatusHistory'])->name('stock-orders.add_history');
+    Route::get('stock-orders/get_history/{id}', [StockOrderController::class,'getStockOrderStatusHistory'])->name('stock-orders.get_history');
+    Route::post('stock-orders/update_status', [StockOrderController::class,'updateStockOrderStatus'])->name('stock-orders.update_status');
+    Route::resource('stock-orders', StockOrderController::class);
 });

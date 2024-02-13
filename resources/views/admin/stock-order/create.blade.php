@@ -9,7 +9,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('stock-order.index')}}">{{$menu}}</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('stock-orders.index')}}">{{$menu}}</a></li>
                             <li class="breadcrumb-item active">Add</li>
                         </ol>
                     </div>
@@ -25,12 +25,12 @@
                         <div class="card-header">
                             <h3 class="card-title">Add {{$menu}}</h3>
                         </div>
-                        {!! Form::open(['url' => route('stock-order.store'), 'id' => 'categorysForm', 'class' => 'form-horizontal','files'=>true]) !!}
+                        {!! Form::open(['url' => route('stock-orders.store'), 'id' => 'stockOrdersForm', 'class' => 'form-horizontal','files'=>true]) !!}
                         <div class="card-body">
                             @include ('admin.stock-order.form')
                         </div>
                         <div class="card-footer">
-                            <a href="{{ route('stock-order.index') }}" class="btn btn-default">Back</a>
+                            <a href="{{ route('stock-orders.index') }}" class="btn btn-default">Back</a>
                             <button class="btn btn-info float-right" type="submit">Add</button>
                         </div>
                         {!! Form::close() !!}

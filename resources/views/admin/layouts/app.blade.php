@@ -83,7 +83,12 @@
                             <p>Dashboard</p>
                         </a>
                     </li>
-
+                    <li class="nav-item">
+                        <a href="{{ route('roles.index') }}" class="nav-link @if(isset($menu) && $menu=='Roles') active @endif">
+                            <i class="nav-icon fa fa-list"></i>
+                            <p>Roles</p>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a href="{{ route('users.index') }}" class="nav-link @if(isset($menu) && $menu=='Users') active @endif">
                             <i class="nav-icon fa fa-users"></i>
@@ -91,27 +96,27 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('supplier.index') }}" class="nav-link @if(isset($menu) && $menu=='Supplier') active @endif">
+                        <a href="{{ route('suppliers.index') }}" class="nav-link @if(isset($menu) && $menu=='Suppliers') active @endif">
                             <i class="nav-icon fa fa-truck"></i>
                             <p>Suppliers</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('practice.index') }}" class="nav-link @if(isset($menu) && $menu=='Practice') active @endif">
-                            <i class="nav-icon fa fa-folder"></i>
-                            <p>Practice</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('brand.index') }}" class="nav-link @if(isset($menu) && $menu=='Brand') active @endif">
+                        <a href="{{ route('brands.index') }}" class="nav-link @if(isset($menu) && $menu=='Brands') active @endif">
                             <i class="nav-icon fa fa-boxes"></i>
                             <p>Brands</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('stock-order.index') }}" class="nav-link @if(isset($menu) && $menu=='Stock Order') active @endif">
+                        <a href="{{ route('practices.index') }}" class="nav-link @if(isset($menu) && $menu=='Practices') active @endif">
+                            <i class="nav-icon fa fa-folder"></i>
+                            <p>Practices</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('stock-orders.index') }}" class="nav-link @if(isset($menu) && $menu=='Stock Orders') active @endif">
                             <i class="nav-icon fa fa-warehouse"></i>
-                            <p>Stock Order</p>
+                            <p>Stock Orders</p>
                         </a>
                     </li>
                 </ul>

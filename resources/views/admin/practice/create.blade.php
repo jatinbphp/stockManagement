@@ -9,7 +9,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{route('practice.index')}}">{{$menu}}</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('practices.index')}}">{{$menu}}</a></li>
                             <li class="breadcrumb-item active">Add</li>
                         </ol>
                     </div>
@@ -25,12 +25,12 @@
                         <div class="card-header">
                             <h3 class="card-title">Add {{$menu}}</h3>
                         </div>
-                        {!! Form::open(['url' => route('practice.store'), 'id' => 'practiceForm', 'class' => 'form-horizontal','files'=>true]) !!}
+                        {!! Form::open(['url' => route('practices.store'), 'id' => 'practicesForm', 'class' => 'form-horizontal','files'=>true]) !!}
                         <div class="card-body">
                             @include ('admin.practice.form')
                         </div>
                         <div class="card-footer">
-                            <a href="{{ route('practice.index') }}" class="btn btn-default">Back</a>
+                            <a href="{{ route('practices.index') }}" class="btn btn-default">Back</a>
                             <button class="btn btn-info float-right" type="submit">Add</button>
                         </div>
                         {!! Form::close() !!}

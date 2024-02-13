@@ -25,7 +25,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Edit {{$menu}}</h3>
                         </div>
-                        {!! Form::model($users,['url' => route('users.update',['user'=>$users->id]),'method'=>'patch','id' => 'usersForm','class' => 'form-horizontal','files'=>true]) !!}
+                        {!! Form::model($user,['url' => route('users.update',['user'=>$user->id]),'method'=>'patch','id' => 'usersForm','class' => 'form-horizontal','files'=>true]) !!}
                         <div class="card-body">
                             <div class="callout callout-danger">
                                 <h4><i class="fa fa-info"></i> Note:</h4>

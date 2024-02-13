@@ -14,7 +14,7 @@
     </div>
     <div class="col-md-6">
         <div class="form-group{{ $errors->has('manager_name') ? ' has-error' : '' }}">
-            <label class="control-label" for="manager_name">Manager Name :</label>
+            <label class="control-label" for="manager_name">Manager Name :<span class="text-red">*</span></label>
             {!! Form::text('manager_name', null, ['class' => 'form-control', 'placeholder' => 'Enter Manager Name', 'id' => 'manager_name']) !!}
             @if ($errors->has('manager_name'))
                 <span class="text-danger">
@@ -28,7 +28,7 @@
 <div class="row">
     <div class="col-md-6">
         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-            <label class="control-label" for="email">Email :</label>
+            <label class="control-label" for="email">Email :<span class="text-red">*</span></label>
             {!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'Enter Email', 'id' => 'email']) !!}
             @if ($errors->has('email'))
                 <span class="text-danger">
@@ -39,7 +39,7 @@
     </div>
     <div class="col-md-6">
         <div class="form-group{{ $errors->has('telephone') ? ' has-error' : '' }}">
-            <label class="control-label" for="telephone">Telephone :</label>
+            <label class="control-label" for="telephone">Telephone :<span class="text-red">*</span></label>
             {!! Form::number('telephone', null, ['class' => 'form-control', 'placeholder' => 'Enter Telephone', 'id' => 'telephone']) !!}
             @if ($errors->has('telephone'))
                 <span class="text-danger">
@@ -66,8 +66,8 @@
         <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
             <label class="col-md-12 control-label" for="status">Status :<span class="text-red">*</span></label>
             <div class="col-md-12">
-                @foreach (\App\Models\Supplier::$status as $key => $value)
-                    @php $checked = !isset($supplier) && $key == 'active'?'checked':''; @endphp
+                @foreach (\App\Models\Practice::$status as $key => $value)
+                    @php $checked = !isset($practice) && $key == 'active'?'checked':''; @endphp
                     <label>
                         {!! Form::radio('status', $key, null, ['class' => 'flat-red',$checked]) !!} <span style="margin-right: 10px">{{ $value }}</span>
                     </label>

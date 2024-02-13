@@ -12,16 +12,19 @@ class PracticeController extends Controller
 {
     public function index(Request $request)
     {
-        $data['menu'] = 'Practice';
+        $data['menu'] = 'Practices';
         if ($request->ajax()) {
             return DataTables::of(Practice::all())
                 ->addIndexColumn()
-                ->addColumn('status', function ($row) {
+                ->addColumn('created_at', function($row) {
+                    return date("Y-m-d H:i:s", strtotime($row->created_at)); 
+                })
+                ->editColumn('status', function ($row) {
                     $row['table_name'] = 'practices';
                     return view('admin.status-buttons', $row);
                 })
                 ->addColumn('action', function ($row) {
-                    $row['section_name'] = 'practice';
+                    $row['section_name'] = 'practices';
                     $row['section_title'] = 'Practice';
                     return view('admin.action-buttons', $row);
                 })
@@ -33,7 +36,7 @@ class PracticeController extends Controller
 
     public function create()
     {
-        $data['menu'] = 'Practice';
+        $data['menu'] = 'Practices';
         return view('admin.practice.create', $data);
     }
 
@@ -42,12 +45,12 @@ class PracticeController extends Controller
         $input = $request->all();
         Practice::create($input);
         \Session::flash('success', 'Practice has been inserted successfully!');
-        return redirect()->route('practice.index');
+        return redirect()->route('practices.index');
     }
 
     public function edit(string $id)
     {
-        $data['menu'] = 'Practice';
+        $data['menu'] = 'Practices';
         $data['practice'] = Practice::findOrFail($id);
         return view('admin.practice.edit', $data);
     }
@@ -58,17 +61,17 @@ class PracticeController extends Controller
         $practice = Practice::findOrFail($id);
         $practice->update($input);
         \Session::flash('success', 'Practice has been updated successfully!');
-        return redirect()->route('practice.index');
+        return redirect()->route('practices.index');
     }
 
     public function destroy(string $id)
     {
         $practice = Practice::findOrFail($id);
-        if(!$practice){
-            return response()->json(false);
+        if (!empty($practice)) {
+            $practice->delete();
+            return 1;
+        } else {
+            return 0;
         }
-
-        $practice->delete();
-        return response()->json(true);
     }
 }

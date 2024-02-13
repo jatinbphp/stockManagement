@@ -12,9 +12,9 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-            <label class="control-label" for="email">Supplier :<span class="text-red">*</span></label>
-            {!! Form::select('supplier_id', empty($supplier) ? [] : $supplier, null, ['class' => 'form-control', 'placeholder' => 'Select Supplier', 'id' => 'supplier_id']) !!}
+        <div class="form-group{{ $errors->has('supplier_id') ? ' has-error' : '' }}">
+            <label class="control-label" for="supplier_id">Select Supplier :<span class="text-red">*</span></label>
+            {!! Form::select('supplier_id', empty($supplier) ? [] : $supplier, null, ['class' => 'form-control', 'placeholder' => 'Please Select', 'id' => 'supplier_id']) !!}
             @if ($errors->has('supplier_id'))
                 <span class="text-danger">
                     <strong>{{ $errors->first('supplier_id') }}</strong>
@@ -26,8 +26,8 @@
 <div class="row">
     <div class="col-md-6">
         <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
-            <label class="col-md-12 control-label" for="image">Image:<span class="text-red">*</span></label>
-            <div class="col-md-12">
+            <label class="control-label" for="image">Image:<span class="text-red">*</span></label>
+            <div class="">
                 <div class="fileError">
                     {!! Form::file('image', ['class' => '', 'id'=> 'image','accept'=>'image/*', 'onChange'=>'AjaxUploadImage(this)']) !!}
                 </div>
@@ -45,7 +45,7 @@
             <label class="col-md-12 control-label" for="status">Status :<span class="text-red">*</span></label>
             <div class="col-md-12">
                 @foreach (\App\Models\Brand::$status as $key => $value)
-                        @php $checked = !isset($users) && $key == 'active'?'checked':''; @endphp
+                    @php $checked = !isset($brand) && $key == 'active'?'checked':''; @endphp
                     <label>
                         {!! Form::radio('status', $key, null, ['class' => 'flat-red',$checked]) !!} <span style="margin-right: 10px">{{ $value }}</span>
                     </label>
