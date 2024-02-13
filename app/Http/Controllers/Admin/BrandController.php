@@ -60,6 +60,14 @@ class BrandController extends Controller
         return redirect()->route('brands.index');
     }
 
+    public function show($id)
+    {
+        $data['section_info'] = Brand::find($id)->toArray();
+        $data['type'] = "Brand";
+        $data['required_columns'] = ['id', 'name', 'image', 'status', 'created_at'];
+        return view('admin.show_modal', $data);
+    }
+
     public function edit(string $id){        
         $data['menu'] = 'Brands';
         $data['supplier'] = Supplier::where('status', 'active')->get()->pluck('full_name', 'id');

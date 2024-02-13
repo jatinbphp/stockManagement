@@ -50,6 +50,14 @@ class SupplierController extends Controller
         return redirect()->route('suppliers.index');
     }
 
+    public function show($id)
+    {
+        $data['section_info'] = Supplier::find($id)->toArray();
+        $data['type'] = "Supplier";
+        $data['required_columns'] = ['id', 'name', 'email', 'telephone', 'account_number', 'status', 'created_at'];
+        return view('admin.show_modal', $data);
+    }
+
     public function edit(string $id)
     {
         $data['menu'] = 'Suppliers';

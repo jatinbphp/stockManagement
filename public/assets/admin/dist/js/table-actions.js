@@ -16,7 +16,7 @@ $(function () {
             },
             {data: 'name', name: 'name'},
             {data: 'status', "width": "12%", name: 'status', orderable: false},
-            {data: 'action', "width": "5%", orderable: false},
+            {data: 'action', "width": "12%", orderable: false},
         ],
         "order": []
     });
@@ -44,7 +44,7 @@ $(function () {
             },*/
             {data: 'status', "width": "12%",  name: 'status', orderable: false},  
             {data: 'created_at', "width": "18%", name: 'created_at'},  
-            {data: 'action', "width": "10%", orderable: false},                
+            {data: 'action', "width": "15%", orderable: false},                
         ],
         "order": [[0, "DESC"]]
     });
@@ -67,7 +67,7 @@ $(function () {
             {data: 'email', name: 'email'},
             {data: 'status', "width": "12%",  name: 'status', orderable: false},
             {data: 'created_at', "width": "18%", name: 'created_at'},
-            {data: 'action', "width": "10%", orderable: false},
+            {data: 'action', "width": "15%", orderable: false},
         ],
         "order": [[0, "DESC"]]
     });
@@ -99,7 +99,7 @@ $(function () {
             },*/
             {data: 'status', "width": "12%",  name: 'status', orderable: false},
             {data: 'created_at', "width": "18%", name: 'created_at'},
-            {data: 'action', "width": "10%", orderable: false},
+            {data: 'action', "width": "15%", orderable: false},
         ],
         "order": [[0, "DESC"]]
     });
@@ -124,7 +124,7 @@ $(function () {
             {data: 'manager_name', name: 'manager_name'},*/
             {data: 'status', "width": "12%", name: 'status', orderable: false},
             {data: 'created_at', "width": "18%", name: 'created_at'},
-            {data: 'action', "width": "10%", orderable: false},
+            {data: 'action', "width": "15%", orderable: false},
         ],
         "order": [[0, "DESC"]]
     });
@@ -158,7 +158,7 @@ $(function () {
             },
             {data: 'status', "width": "20%", name: 'status', orderable: false},
             {data: 'created_at', "width": "20%", name: 'created_at'},
-            {data: 'action', "width": "12%", orderable: false},
+            {data: 'action', "width": "20%", orderable: false},
         ],
         "order": [[0, "DESC"]]
     });
@@ -340,6 +340,26 @@ $(function () {
                     $("#status-histories-list").find(".status-histories-list-view").html(html);
                     $("#status-histories-list").modal("show");
                 }
+            }
+        });
+    });
+
+    //get Order Indo
+    $('.datatable-dynamic tbody').on('click', '.view-info', function (event) {
+        event.preventDefault();
+        var url = $(this).attr('data-url');
+        var id = $(this).attr("data-id");
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            data: {
+                'id': id,
+            },
+            headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+            success: function(data){
+                $('#commonModal .modal-content').html(data);
+                $('#commonModal').modal('show');
             }
         });
     });

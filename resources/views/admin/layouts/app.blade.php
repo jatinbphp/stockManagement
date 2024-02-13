@@ -126,6 +126,15 @@
 
     @yield('content')
 
+    <!-- Modal -->
+    <div class="modal fade" id="commonModal" tabindex="-1" role="dialog" aria-labelledby="commonModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <!-- Modal content -->
+            </div>
+        </div>
+    </div>
+
     <footer class="main-footer">
         <strong>{{ config('app.name', 'Shopping Cart') }} Admin</strong>
     </footer>
