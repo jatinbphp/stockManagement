@@ -71,6 +71,13 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::resource('practices', PracticeController::class);
 
     /* Stock order */
+    Route::get('stock-orders/brand/{supplierId}', [StockOrderController::class,'getBrandsBySupplier'])->name('brands.by_supplier');
+    Route::get('stock-orders/delete_document/{id}/{type}', [StockOrderController::class,'deleteReceiveStockOrderDocuments'])->name('stock-orders.receive_stock_order_and_documents');
+    Route::get('stock-orders/get_documents/{id}', [StockOrderController::class,'getReceiveStockOrderDocuments'])->name('stock-orders.get_documents');
+    Route::get('/index_receive_stock_order', [StockOrderController::class, 'index_receive_stock_order'])->name('stock-orders.index_receive_stock_order');
+    Route::post('stock-orders/store_receive', [StockOrderController::class,'storeReceiveDocuments'])->name('stock-orders.receive-documents');
+
+    Route::get('stock-orders/{id}/receive', [StockOrderController::class,'receiveStockOrder'])->name('stock-orders.receive');
     Route::post('stock-orders/add_history', [StockOrderController::class,'addStockOrderStatusHistory'])->name('stock-orders.add_history');
     Route::get('stock-orders/get_history/{id}', [StockOrderController::class,'getStockOrderStatusHistory'])->name('stock-orders.get_history');
     Route::post('stock-orders/update_status', [StockOrderController::class,'updateStockOrderStatus'])->name('stock-orders.update_status');

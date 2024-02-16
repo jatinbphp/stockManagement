@@ -158,10 +158,12 @@ $(function () {
             },
             {data: 'status', "width": "20%", name: 'status', orderable: false},
             {data: 'created_at', "width": "20%", name: 'created_at'},
-            {data: 'action', "width": "20%", orderable: false},
+            {data: 'action', "width": "25%", orderable: false},
         ],
         "order": [[0, "DESC"]]
     });
+
+    
 
     //Delete Record
     $('.datatable-dynamic tbody').on('click', '.deleteRecord', function (event) {
@@ -200,7 +202,9 @@ $(function () {
                             stock_orders_table.row('.selected').remove().draw(false);
                         } else if (section == 'roles_table'){
                             roles_table.row('.selected').remove().draw(false);
-                        }
+                        } else if (section == 'receive-stock-orders'){
+                            receive_stock_orders_table.row('.selected').remove().draw(false);
+                        } 
                  
                         swal("Deleted", "Your data successfully deleted!", "success");
                     }
@@ -280,7 +284,11 @@ $(function () {
                     data: {'id': orderId, 'status': status, '_token': $('meta[name=_token]').attr('content') },
                     success: function(data){
                         
-                        swal({
+                        stock_orders_table.ajax.reload(null, false);
+                        
+                        swal("Success", "Order status is updated", "success");
+
+                        /*swal({
                             title: "Enter your notes!",
                             text: "<textarea class='form-control' id='notes_text'></textarea>",
                             html: true,
@@ -302,7 +310,7 @@ $(function () {
                                     swal("Success", "Order status is updated", "success");
                                 }
                             });
-                        });
+                        });*/
                     }
                 });
             } else {

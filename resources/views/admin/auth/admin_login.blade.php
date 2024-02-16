@@ -15,7 +15,9 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="{{ URL::to('/admin') }}"><b>{{ config('app.name', 'Laravel') }}</b> <br>Admin</a>
+        <a href="{{ URL::to('/admin') }}">
+            <img src="{{url('uploads/logo.png')}}" style="width: 100%;" />
+        </a>
     </div>
     <!-- /.login-logo -->
     <div class="card">

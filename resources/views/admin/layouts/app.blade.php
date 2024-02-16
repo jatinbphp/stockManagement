@@ -43,7 +43,10 @@
     </nav>
     <aside class="main-sidebar sidebar-dark-primary elevation-4" id="left-menubar" style="height: 100%; min-height:0!important; overflow-x: hidden;">
         <a href="{{ url('admin/dashboard') }}" class="brand-link" style="text-align: center">
-            <span class="brand-text font-weight-light"><b>{{ config('app.name', 'Shopping Cart') }} Admin</b></span>
+            <span class="brand-text font-weight-light">
+                <!-- <b>{{ config('app.name', 'Shopping Cart') }} Admin</b> -->
+                <img src="{{url('uploads/small_logo.png')}}" style="width: 40%;" />
+            </span>
         </a>
 
         <div class="sidebar">

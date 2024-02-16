@@ -7,16 +7,19 @@ use App\Models\Practice;
 use App\Models\Supplier;
 use App\Models\StockOrder;
 use App\Models\StockOrderStatusHistory;
+use App\Models\StockOrderReceive;
+use App\Models\StockOrderReceiveDocument;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StockOrderRequest;
+use App\Http\Requests\StockOrderReceiveRequest;
 use Illuminate\Support\Facades\Auth;
 
 class StockOrderController extends Controller{
     public function index(Request $request){
         $data['menu'] = 'Stock Orders';    
         if ($request->ajax()) {
-            return datatables()->of(StockOrder::with(['supplier', 'brand', 'practice'])->get())
+            return datatables()->of(StockOrder::with(['supplier', 'brand', 'practice']))
                 ->addIndexColumn()
                 ->addColumn('created_at', function($row) {
                     return date("Y-m-d H:i:s", strtotime($row->created_at)); 
@@ -28,6 +31,7 @@ class StockOrderController extends Controller{
                 ->addColumn('action', function($row){
                     $row['section_name'] = 'stock-orders';
                     $row['section_title'] = 'Stock Order';
+                    $row['order_status'] = $row->status;
                     return view('admin.action-buttons', $row);
                 })
                 ->rawColumns(['status'])
@@ -38,15 +42,15 @@ class StockOrderController extends Controller{
     }
 
     public function create(){
-        $data['menu']       = 'Stock Orders';
-        $data['brand']      = Brand::where('status', 'active')->pluck('name', 'id');
-        $data['supplier']  = Supplier::where('status', 'active')->get()->pluck('full_name', 'id');
+        $data['menu'] = 'Stock Orders';
+        $data['brand'] = Brand::where('status', 'active')->pluck('name', 'id');
+        $data['supplier'] = Supplier::where('status', 'active')->get()->pluck('full_name', 'id');
         $data['practice'] = Practice::where('status', 'active')->get()->pluck('full_name', 'id');
         return view("admin.stock-order.create",$data);
     }
 
     public function store(StockOrderRequest $request){
-        $input   = $request->all();
+        $input = $request->all();
         if($file = $request->file('order_copy')){
             $input['order_copy'] = $this->fileMove($file,'stock-orders');
         }
@@ -79,7 +83,7 @@ class StockOrderController extends Controller{
             if (!empty($stockOrder->order_copy) && file_exists($stockOrder->order_copy)) {
                 unlink($stockOrder->order_copy);
             }
-            $input['order_copy'] = $this->fileMove($file,'stock-orders');
+            $input['order_copy'] = $this->fileMove($file,'receive-stock-order');
         }
 
         $stockOrder->update($input);
@@ -134,5 +138,89 @@ class StockOrderController extends Controller{
         ], 200);
     }
 
+    public function receiveStockOrder(string $id){        
+        $data['menu'] = 'Stock Orders';
+        $data['stockOrder'] = StockOrder::findOrFail($id);
+        return view('admin.stock-order.receive', $data);
+    }
 
+    public function storeReceiveDocuments(StockOrderReceiveRequest $request){        
+        $input   = $request->all();
+       
+        $input = $request->all();
+        $input['added_by'] = Auth::user()->id;
+        $StockOrderReceive = StockOrderReceive::create($input);
+
+        if ($request->hasFile('documents')) {
+            foreach ($request->file('documents') as $document) {
+                $documentName = $this->fileMove($document,'receive-stock-orders-documents');
+                StockOrderReceiveDocument::create([
+                    'document_name' => $documentName,
+                    'stock_order_receive_id' =>  $StockOrderReceive->id,
+                    'added_by' => Auth::user()->id,
+                ]);
+            }
+        }
+
+        \Session::flash('success', 'Stock Order Docuement has been inserted successfully!');
+        return redirect()->route('stock-orders.receive', [$input['stock_order_id']]);
+    }
+
+    public function index_receive_stock_order(Request $request){
+        $data['menu'] = 'Stock Orders';    
+        if ($request->ajax()) {
+            return datatables()->of(StockOrderReceive::where('stock_order_id', $request->stock_order_id))
+                ->addIndexColumn()
+                ->addColumn('created_at', function($row) {
+                    return date("Y-m-d H:i:s", strtotime($row->created_at)); 
+                })
+                ->addColumn('action', function($row){
+                    $row['section_name'] = 'receive-stock-orders';
+                    $row['section_title'] = 'Receive Stock Order';
+                    return view('admin.action-buttons', $row);
+                })
+                ->make(true);
+        }
+
+        return view('admin.stock-order.index', $data);
+    }
+
+    public function getReceiveStockOrderDocuments($stock_order_receive_id)
+    {   
+        $datas = StockOrderReceiveDocument::with('user')->where('stock_order_receive_id', $stock_order_receive_id)->latest()->get();
+
+        foreach ($datas as $data) {
+            $data->document_path = asset($data->document_name);
+        }
+
+        return response()->json([
+            'status' => true,
+            'data' => $datas,
+            'message' => 'History get successfully',
+            'status_name' => 'success',
+        ], 200);
+    }
+
+    public function deleteReceiveStockOrderDocuments(Request $request, $id, $type)
+    {   
+        if($type=='receive_stock_order'){
+            $deleteData = StockOrderReceive::find($id);    
+        } else {
+            $deleteData = StockOrderReceiveDocument::find($id);    
+        }
+
+        if ($deleteData) {
+            $deleteData->delete();
+            return response()->json(['status' => 'success']);
+        } else {
+            return response()->json(['status' => 'error']);
+        }
+    }
+
+    public function getBrandsBySupplier($supplierId)
+    {   
+        $supplier = Supplier::with('brand')->where('id', $supplierId)->first();
+        $brands = $supplier->brand;
+        return response()->json($brands);
+    }
 }
