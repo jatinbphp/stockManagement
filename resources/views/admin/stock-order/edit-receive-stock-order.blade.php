@@ -34,6 +34,7 @@ $documentCounter = 1;
                                 {!! Form::hidden('redirects_to', URL::previous()) !!}
                                 {!! Form::hidden('stock_order_id', $receiveStockOrder->stock_order->id, []) !!}
                                 {!! Form::hidden('stock_order_receive_id', $receiveStockOrder->id, []) !!}
+                                {!! Form::hidden('stock_order_status', $receiveStockOrder->stock_order->status, []) !!}
                                 <div class="row">
 
                                     <div class="col-md-6">
@@ -187,8 +188,8 @@ $(document).ready(function(){
             {data: 'inv_number', name: 'inv_number'},
             {data: 'grv_number', name: 'grv_number'},
             {data: 'notes', name: 'notes'},
-            {data: 'created_at', "width": "20%", name: 'created_at'},
-            {data: 'action', "width": "20%", orderable: false},
+            {data: 'created_at', "width": "18%", name: 'created_at'},
+            {data: 'action', "width": "15%", orderable: false},
         ],
         "order": [[0, "DESC"]]
     });

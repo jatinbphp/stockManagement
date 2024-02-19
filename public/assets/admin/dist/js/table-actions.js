@@ -390,14 +390,23 @@ $(function () {
                         var formattedCreatedAt = moment(v.created_at).format('YYYY-MM-DD HH:mm:ss');
 
                         html += `<tr>
-                                    <td>#${k+1} </td>
-                                    <td> ${v.user.name} </td>
-                                    <td> ${formattedCreatedAt} </td>
-                                    <td>
-                                        <a class="btn btn-sm btn-warning" href="${v.document_path}" download><i class="fa fa-download" aria-hidden="true"></i></a>
-                                        <button class="btn btn-sm btn-danger deleteStockOrderDocumentRecord" data-id="${v.id}" type="button" data-type="receive_stock_order_document"><i class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>`;
+                                    <td>#${k+1}</td>
+                                    <td>${v.user.name}</td>
+                                    <td>${formattedCreatedAt}</td>
+                                    <td>`;
+
+                        // Conditionally include the download button
+                        if (v.document_path) {
+                            html += `<a class="btn btn-sm btn-warning mr-1" href="${v.document_path}" download><i class="fa fa-download" aria-hidden="true"></i></a>`;
+                        }
+
+                        // Conditionally include the delete button based on stock order status
+                        if ($('[name="stock_order_status"]').val() != 'completed') {
+                            html += `<button class="btn btn-sm btn-danger deleteStockOrderDocumentRecord" data-id="${v.id}" type="button" data-type="receive_stock_order_document"><i class="fa fa-trash"></i></button>`;
+                        }
+
+                        html += `</td></tr>`;
+
                     });
                     $("#view-documents-list").find(".view-documents-list-view").html(html);
                     $("#view-documents-list").modal("show");
