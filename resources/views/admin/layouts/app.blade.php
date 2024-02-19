@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{ config('app.name', 'Shopping Cart') }}</title>
+    <title>{{ config('app.name', 'Shopping Cart') }} @if(isset($menu)) - {{$menu}} @endif</title>
     <meta name="_token" content="{!! csrf_token() !!}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="refresh" content = "28800; url={{ route('login') }}">
@@ -43,10 +43,7 @@
     </nav>
     <aside class="main-sidebar sidebar-dark-primary elevation-4" id="left-menubar" style="height: 100%; min-height:0!important; overflow-x: hidden;">
         <a href="{{ url('admin/dashboard') }}" class="brand-link" style="text-align: center">
-            <span class="brand-text font-weight-light">
-                <!-- <b>{{ config('app.name', 'Shopping Cart') }} Admin</b> -->
-                <img src="{{url('uploads/small_logo.png')}}" style="width: 40%;" />
-            </span>
+            <img src="{{url('uploads/small_logo.png')}}" style="width: 40%;" />
         </a>
 
         <div class="sidebar">
