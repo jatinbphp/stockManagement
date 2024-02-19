@@ -371,5 +371,91 @@ $(function () {
             }
         });
     });
+
+    $('.datatable-dynamic tbody').on('click', '.view-documents', function (event) {
+        event.preventDefault();
+        var url = $(this).attr('data-url');
+        var id = $(this).attr("data-id");
+
+        $.ajax({
+            method: "GET",
+            url: url,
+            dataType: "json",
+            headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+            success: function(response) {
+                if (response.status) {
+                    var html = "";
+                    $.each(response.data, function(k, v) {
+
+                        var formattedCreatedAt = moment(v.created_at).format('YYYY-MM-DD HH:mm:ss');
+
+                        html += `<tr>
+                                    <td>#${k+1} </td>
+                                    <td> ${v.user.name} </td>
+                                    <td> ${formattedCreatedAt} </td>
+                                    <td>
+                                        <a class="btn btn-sm btn-warning" href="${v.document_path}" download><i class="fa fa-download" aria-hidden="true"></i></a>
+                                        <button class="btn btn-sm btn-danger deleteStockOrderDocumentRecord" data-id="${v.id}" type="button" data-type="receive_stock_order_document"><i class="fa fa-trash"></i></button>
+                                    </td>
+                                </tr>`;
+                    });
+                    $("#view-documents-list").find(".view-documents-list-view").html(html);
+                    $("#view-documents-list").modal("show");
+                }
+            }
+        });
+    });
+
+    var addCounter = parseInt($("#documentCounter").val());
+
+    $('#documentBtn').on('click', function(){
+        addCounter = addCounter + 1;
+
+        var addNewdocument = '<div class="col-md-3 documents-upload mb-1" id="documents_'+addCounter+'">'+
+                                '<div class="file-upload-box">'+
+                                    '<h2>Upload File</h2>'+
+                                    '<input class="file-input" id="fileInput_'+addCounter+'" name="documents[new]['+addCounter+']" type="file">'+
+                                    '<label for="fileInput_'+addCounter+'" class="upload-label mb-0"><span class="btn btn-sm btn-info" style="margin-right: 3px;"><i class="fa fa-upload"></i> Choose File</span></label>'+
+                                    '<button type="button" class="btn btn-sm btn-danger deleteExp" onClick="removeDocument('+addCounter+', 0)"><i class="fa fa-trash"></i> Delete</button>'+
+                                '</div>'+
+                            '</div>';
+
+        $('#documentBtn').before(addNewdocument);
+    });
 });
 
+function removeDocument(divId, type){
+    const removeRowAlert = createDocumentAlert("Are you sure?", "Do want to delete this row", "warning");
+    swal(removeRowAlert, function(isConfirm) {
+        if (isConfirm) {
+            var flag =  deleteRow(divId, type);
+            if(flag){
+                swal.close();
+            }
+        } else{
+             swal("Cancelled", "Your data safe!", "error");
+        }
+    });
+}
+
+function deleteRow(divId, type){
+    $('#documents_'+divId).remove();
+    if ($(".documents-upload").length == 0) {
+        $('#documentBtn').click();
+    }
+    return 1;  
+}
+
+function createDocumentAlert(title, text, type) {
+    return {
+        title: title,
+        text: text,
+        type: type,
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'Yes, Delete',
+        cancelButtonText: "No, cancel",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    };
+}

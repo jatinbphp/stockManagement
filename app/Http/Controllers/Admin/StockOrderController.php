@@ -157,7 +157,13 @@ class StockOrderController extends Controller{
         $input['added_by'] = Auth::user()->id;
         $StockOrderReceive = StockOrderReceive::create($input);
 
-        if ($request->hasFile('documents')) {
+        // options & options values
+        if (!empty($input['documents'])) {
+            $input['stock_order_receive_id'] = $StockOrderReceive->id;
+            $this->addDocumentAddUpdate($input);
+        } 
+
+        /*if ($request->hasFile('documents')) {
             foreach ($request->file('documents') as $document) {
                 $documentName = $this->fileMove($document,'receive-stock-orders-documents');
                 StockOrderReceiveDocument::create([
@@ -166,7 +172,7 @@ class StockOrderController extends Controller{
                     'added_by' => Auth::user()->id,
                 ]);
             }
-        }
+        }*/
 
         \Session::flash('success', 'Stock Order Docuement has been inserted successfully!');
         return redirect()->route('stock-orders.receive', [$input['stock_order_id']]);
@@ -244,7 +250,7 @@ class StockOrderController extends Controller{
             StockOrderReceiveDocument::where('stock_order_receive_id', $input['stock_order_receive_id'])->delete();
         }
 
-        \Session::flash('success', 'Stock Order Docuement has been inserted successfully!!');
+        \Session::flash('success', 'Stock Order Docuement has been updated successfully!!');
         return redirect()->route('stock-orders.receive', [$input['stock_order_id']]);
     }
 
@@ -270,7 +276,7 @@ class StockOrderController extends Controller{
                 $documentName = $this->fileMove($value,'receive-stock-orders-documents');
                 StockOrderReceiveDocument::create([
                     'document_name' => $documentName,
-                    'stock_order_receive_id' =>  $input['stock_order_id'],
+                    'stock_order_receive_id' =>  $input['stock_order_receive_id'],
                     'added_by' => Auth::user()->id,
                 ]);
             }
