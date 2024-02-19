@@ -144,6 +144,12 @@ class StockOrderController extends Controller{
         return view('admin.stock-order.receive', $data);
     }
 
+    public function receiveStockOrderEdit(string $id){        
+        $data['menu'] = 'Stock Orders';
+        $data['receiveStockOrder'] = StockOrderReceive::with(['stock_order','stock_order_receive_documents'])->find($id);        
+        return view('admin.stock-order.edit-receive-stock-order', $data);
+    }
+
     public function storeReceiveDocuments(StockOrderReceiveRequest $request){        
         $input   = $request->all();
        
@@ -222,5 +228,52 @@ class StockOrderController extends Controller{
         $supplier = Supplier::with('brand')->where('id', $supplierId)->first();
         $brands = $supplier->brand;
         return response()->json($brands);
+    }
+
+    public function updateReceiveDocuments(StockOrderReceiveRequest $request){        
+        $input   = $request->all();
+        
+        $input = $request->all();
+        $StockOrderReceive = StockOrderReceive::findorFail($input['stock_order_receive_id']);
+        $StockOrderReceive->update($input);
+
+        // options & options values
+        if (!empty($input['documents'])) {
+            $this->addDocumentAddUpdate($input);
+        } else {
+            StockOrderReceiveDocument::where('stock_order_receive_id', $input['stock_order_receive_id'])->delete();
+        }
+
+        \Session::flash('success', 'Stock Order Docuement has been inserted successfully!!');
+        return redirect()->route('stock-orders.receive', [$input['stock_order_id']]);
+    }
+
+    public function addDocumentAddUpdate($input)
+    {
+        $document_ids = [];
+        if(!empty($input['documents']['old'])){
+            foreach ($input['documents']['old'] as $key => $value) {
+
+                $documentOld = StockOrderReceiveDocument::where('id',$key)->first();
+                $document_ids[] = $documentOld->id;
+            }
+
+            if(count($document_ids)>0){
+                StockOrderReceiveDocument::whereNotIn('id', $document_ids)->where('stock_order_receive_id',$input['stock_order_receive_id'])->delete();
+            }
+        }
+
+        if(!empty($input['documents']['new'])){
+
+            foreach ($input['documents']['new'] as $key => $value) {
+
+                $documentName = $this->fileMove($value,'receive-stock-orders-documents');
+                StockOrderReceiveDocument::create([
+                    'document_name' => $documentName,
+                    'stock_order_receive_id' =>  $input['stock_order_id'],
+                    'added_by' => Auth::user()->id,
+                ]);
+            }
+        }
     }
 }

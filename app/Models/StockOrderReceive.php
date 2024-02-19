@@ -16,4 +16,8 @@ class StockOrderReceive extends Model
     {
         return $this->hasMany(StockOrderReceiveDocument::class, 'stock_order_receive_id')->orderBy('id', 'ASC');
     }
+
+    public function stock_order(){
+        return $this->belongsTo(StockOrder::class, 'stock_order_id');
+    }
 }

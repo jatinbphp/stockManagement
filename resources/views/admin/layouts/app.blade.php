@@ -55,10 +55,10 @@
                     <li class="nav-item has-treeview @if(isset($menu) && $menu=='Admin Profile') menu-open  @endif" style="border-bottom: 1px solid #4f5962; margin-bottom: 4.5%;">
 
                         <a href="#" class="nav-link @if(isset($menu) && $menu=='Admin Profile') active  @endif">
-                            @if(Auth::user()->image)
+                            @if(!empty(Auth::user()->image) && file_exists(Auth::user()->image))
                                 <img src=" {{asset(Auth::user()->image)}}" class="img-circle elevation-2" alt="User Image" style="width: 2.1rem; margin-right: 1.5%;">
                             @else
-                                <img src=" {{url('assets/admin/dist/img/AdminLTELogo.png')}}" class="img-circle elevation-2" alt="User Image" style="width: 2.1rem; margin-right: 1.5%;">
+                                <img src=" {{url('uploads/user-logo.png')}}" class="img-circle elevation-2" alt="User Image" style="width: 2.1rem; margin-right: 1.5%;">
                             @endif
                             <p style="padding-right: 6.5%;">
                                 {{ ucfirst(Auth::user()->name) }}

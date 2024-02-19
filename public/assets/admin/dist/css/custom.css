@@ -9,3 +9,12 @@
 .ladda-button{height:28px; padding:0 12px}
 #content3 .col-md-8 {border-left: 1px solid #ccc;}
 .sweet-alert h2{font-size: 22px;}
+.file-group {padding: 3px 0px 0px 5px;}
+
+.file-icon{font-size:48px;margin-bottom:10px}
+.file-name{font-size:16px;margin-bottom:10px}
+
+.file-upload-box{border:2px dashed #ccc;padding:5px;text-align:center;cursor:pointer;}
+.file-upload-box h2{font-size:20px;margin-bottom:10px}
+.file-input{display:none}
+.upload-label{cursor:pointer}

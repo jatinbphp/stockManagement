@@ -73,7 +73,13 @@
                 <div class="fileError">
                     {!! Form::file('image', ['class' => '', 'id'=> 'image','accept'=>'image/*', 'onChange'=>'AjaxUploadImage(this)']) !!}
                 </div>
-                <img id="DisplayImage" @if(!empty($user['image'])) src="{{ url($user['image'])}}" style="margin-top: 1%; padding-bottom:5px; display: block;" @else src="" style="padding-bottom:5px; display: none;" @endif width="150">
+
+                @if(!empty($user['image']) && file_exists($user['image']))
+                    <img src="{{asset($user['image'])}}" alt="User Image" style="border: 1px solid #ccc;margin-top: 5px;" width="150" id="DisplayImage">
+                @else
+                    <img src=" {{url('uploads/user-logo.png')}}" alt="User Image" style="border: 1px solid #ccc;margin-top: 5px;" width="150" id="DisplayImage">
+                @endif
+                
                 @if ($errors->has('image'))
                     <span class="text-danger">
                     <strong>{{ $errors->first('image') }}</strong>

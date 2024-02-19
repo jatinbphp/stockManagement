@@ -89,7 +89,7 @@ class UserController extends Controller
         $user = User::findorFail($id);
 
         if($file = $request->file('image')){
-            if (!empty($user['image'])) {
+            if (!empty($user['image']) && file_exists($user['image'])) {
                 @unlink($user['image']);
             }
             $input['image'] = $this->fileMove($file,'users');

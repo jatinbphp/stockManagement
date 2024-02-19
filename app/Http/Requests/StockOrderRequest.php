@@ -21,7 +21,7 @@ class StockOrderRequest extends FormRequest
             'supplier_id'   => 'required|exists:suppliers,id',
             'practice_id'   => 'required|exists:practices,id',
             'instructions'  => 'required',
-            'order_copy'    => 'required|file|mimes:pdf,doc,docx|max:10240', 
+            'order_copy'    => 'required|file|mimes:jpg,pdf,doc,docx|max:10240', 
         ];
 
         if ($this->isMethod('patch')) {

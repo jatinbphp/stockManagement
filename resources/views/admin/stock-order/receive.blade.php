@@ -10,7 +10,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('stock-orders.index')}}">{{$menu}}</a></li>
-                        <li class="breadcrumb-item active">Edit</li>
+                        <li class="breadcrumb-item active">Add</li>
                     </ol>
                 </div>
             </div>
@@ -81,27 +81,30 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row product-attribute" id="documents_1">
-                                                <div class="col-md-12">
-                                                    <div class="row">
-                                                        <div class="col-md-11">
-                                                            <div class="form-control form-group{{ $errors->has('documents') ? ' has-error' : '' }}">
-                                                                {!! Form::file("documents[1]", null) !!}
+                                            <div class="row">
 
-                                                                @if ($errors->has('documents'))
-                                                                    <span class="text-danger">
-                                                                        <strong>{{ $errors->first('documents') }}</strong>
-                                                                    </span>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-1">
-                                                            <button type="button" class="btn btn-info" id="optionBtn"><i class="fa fa-plus"></i></button>
-                                                        </div>
+                                                <div class="col-md-3 documents-upload mb-1" id="documents_1">
+
+                                                    <div class="file-upload-box">
+                                                        <h2>Upload File</h2>
+
+                                                        {!! Form::file("documents[1]", ['class' => 'file-input', 'id' => 'fileInput']) !!}
+
+                                                        <label for="fileInput" class="upload-label mb-0"><span class="btn btn-sm btn-info"><i class="fa fa-upload"></i> Choose File</span></label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-3" id="documentBtn">
+                                                    <div class="file-upload-box">
+                                                        <h2>Add File</h2>
+                                                        <label class="upload-label mb-0">
+                                                            <span class="btn btn-sm btn-info">
+                                                                <i class="fa fa-plus"></i> Add New
+                                                            </span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="extraOption"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -122,20 +125,7 @@
                     <div class="card-body table-responsive">
                         <input type="hidden" id="route_name" value="{{ route('stock-orders.index_receive_stock_order') }}">
                         <input type="hidden" id="stock_order_id" value="{{$stockOrder->id}}">
-                        <table id="receiveStockOrderTable" class="table table-bordered table-striped datatable-dynamic">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Invoice Number</th>
-                                    <th>GRV Number</th>
-                                    <th>Notes</th>
-                                    <th>Created Date</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                        @include ('admin.stock-order.receive-stock-order-table')
                     </div>
                 </div>
             </div>
@@ -143,62 +133,31 @@
     </section>
 </div>
 
-<div id="view-documents-list" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Documents</h4>
-                <button type="button" class="close" data-dismiss="modal">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="col-md-12">
-                    <table class="table table-bordered datatable-dynamic">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Updated By</th>
-                                <th>Updated Date</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody class="view-documents-list-view">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+@include ('admin.stock-order.view-documents-list')
+
 @endsection
 @section('jquery')
 <script type="text/javascript">
-var optionName = 1;
+var addCounter = 1;
 
-$('#optionBtn').on('click', function(){
-    optionName = optionName + 1;
+$('#documentBtn').on('click', function(){
+    addCounter = addCounter + 1;
 
-    var exOptionContent = '<div class="row product-attribute" id="documents_'+optionName+'">'+
-                '<div class="col-md-12">'+
-                    '<div class="row">'+
-                        '<div class="col-md-11">'+
-                            '<div class="form-control form-group">'+
-                                '<input type="file" name="documents['+optionName+']">'+
+    var addNewdocument = '<div class="col-md-3 documents-upload mb-1" id="documents_'+addCounter+'">'+
+                            '<div class="file-upload-box">'+
+                                '<h2>Upload File</h2>'+
+                                '<input type="file" name="documents[new]['+addCounter+']" class="file-input" id="fileInput">'+
+                                '<label for="fileInput" class="upload-label mb-0"><span class="btn btn-sm btn-info" style="margin-right: 3px;"><i class="fa fa-upload"></i> Choose File</span></label>'+
+                                /*'<p class="file-name"></p>'+*/
+                                '<button type="button" class="btn btn-sm btn-danger deleteExp" onClick="removeDocument('+addCounter+', 0)"><i class="fa fa-trash"></i> Delete</button>'+
                             '</div>'+
-                        '</div>'+
-                        '<div class="col-md-1">'+
-                            '<button type="button" class="btn btn-danger deleteExp" onClick="removeOptionRow('+optionName+', 0)"><i class="fa fa-trash"></i></button>'+
-                        '</div>'+
-                    '</div>'+
-                '</div>'+
-        '</div>';
-    $('#extraOption').append(exOptionContent);
+                        '</div>';
+
+    $('#documentBtn').before(addNewdocument);
 });
 
-function removeOptionRow(divId, type){
-    const removeRowAlert = createOptionAlert("Are you sure?", "Do want to delete this row", "warning");
+function removeDocument(divId, type){
+    const removeRowAlert = createDocumentAlert("Are you sure?", "Do want to delete this row", "warning");
     swal(removeRowAlert, function(isConfirm) {
         if (isConfirm) {
             var flag =  deleteRow(divId, type);
@@ -214,13 +173,13 @@ function removeOptionRow(divId, type){
 //remove the row
 function deleteRow(divId, type){
     $('#documents_'+divId).remove();
-    if ($(".product-attribute").length == 0) {
-        $('#optionBtn').click();
+    if ($(".documents-upload").length == 0) {
+        $('#documentBtn').click();
     }
     return 1;  
 }
 
-function createOptionAlert(title, text, type) {
+function createDocumentAlert(title, text, type) {
     return {
         title: title,
         text: text,
@@ -337,7 +296,7 @@ $(document).ready(function(){
                                     <td> ${v.user.name} </td>
                                     <td> ${formattedCreatedAt} </td>
                                     <td>
-                                        <a class="btn btn-sm btn-info" href="${v.document_path}" download><i class="fa fa-download" aria-hidden="true"></i></a>
+                                        <a class="btn btn-sm btn-warning" href="${v.document_path}" download><i class="fa fa-download" aria-hidden="true"></i></a>
                                         <button class="btn btn-sm btn-danger deleteStockOrderDocumentRecord" data-id="${v.id}" type="button" data-type="receive_stock_order_document"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>`;

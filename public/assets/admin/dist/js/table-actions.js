@@ -158,7 +158,7 @@ $(function () {
             },
             {data: 'status', "width": "20%", name: 'status', orderable: false},
             {data: 'created_at', "width": "20%", name: 'created_at'},
-            {data: 'action', "width": "25%", orderable: false},
+            {data: 'action', "width": "30%", orderable: false},
         ],
         "order": [[0, "DESC"]]
     });
