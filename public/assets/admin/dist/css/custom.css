@@ -18,3 +18,13 @@
 .file-upload-box h2{font-size:20px;margin-bottom:10px}
 .file-input{display:none}
 .upload-label{cursor:pointer}
+.checkbox-list{display:flex;flex-wrap:wrap}
+.checkbox-label{margin-right:20px;display:flex;align-items:center;position:relative}
+.checkbox-label input{display:none}
+.checkmark{display:inline-block;width:20px;height:20px;border:2px solid #555;border-radius:4px;margin-right:5px;position:relative;cursor:pointer}
+.checkmark:after{content:"";position:absolute;display:none}
+.checkbox-label input:checked ~ .checkmark:after{display:block}
+.checkbox-label input:checked ~ .checkmark{background-color:#2196F3;border-color:#2196F3}
+.checkmark:after{content:"";position:absolute;left:6px;top:2px;width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.checkbox-label span{font-weight:400}
+.checkmark:hover{background-color:#ccc}

@@ -15,8 +15,8 @@ $(function () {
                 }
             },
             {data: 'name', name: 'name'},
-            {data: 'status', "width": "12%", name: 'status', orderable: false},
-            {data: 'action', "width": "12%", orderable: false},
+            {data: 'status', "width": "10%", name: 'status', orderable: false},
+            {data: 'action', "width": "10%", orderable: false},
         ],
         "order": []
     });
@@ -42,9 +42,9 @@ $(function () {
                     return '<img src="'+data+'" height="50" alt="Image"/>';
                 }
             },*/
-            {data: 'status', "width": "12%",  name: 'status', orderable: false},  
-            {data: 'created_at', "width": "18%", name: 'created_at'},  
-            {data: 'action', "width": "15%", orderable: false},                
+            {data: 'status', "width": "10%",  name: 'status', orderable: false},  
+            {data: 'created_at', "width": "14%", name: 'created_at'},  
+            {data: 'action', "width": "12%", orderable: false},                
         ],
         "order": [[0, "DESC"]]
     });
@@ -65,9 +65,9 @@ $(function () {
             },
             {data: 'name', name: 'name'},
             {data: 'email', name: 'email'},
-            {data: 'status', "width": "12%",  name: 'status', orderable: false},
-            {data: 'created_at', "width": "18%", name: 'created_at'},
-            {data: 'action', "width": "15%", orderable: false},
+            {data: 'status', "width": "10%",  name: 'status', orderable: false},
+            {data: 'created_at', "width": "14%", name: 'created_at'},
+            {data: 'action', "width": "12%", orderable: false},
         ],
         "order": [[0, "DESC"]]
     });
@@ -97,9 +97,9 @@ $(function () {
                     return '<img src="'+data+'" height="50" alt="Image"/>';
                 }
             },*/
-            {data: 'status', "width": "12%",  name: 'status', orderable: false},
-            {data: 'created_at', "width": "18%", name: 'created_at'},
-            {data: 'action', "width": "15%", orderable: false},
+            {data: 'status', "width": "10%",  name: 'status', orderable: false},
+            {data: 'created_at', "width": "14%", name: 'created_at'},
+            {data: 'action', "width": "12%", orderable: false},
         ],
         "order": [[0, "DESC"]]
     });
@@ -122,9 +122,9 @@ $(function () {
             {data: 'email', name: 'email'},
             /*{data: 'telephone', name: 'telephone'},
             {data: 'manager_name', name: 'manager_name'},*/
-            {data: 'status', "width": "12%", name: 'status', orderable: false},
-            {data: 'created_at', "width": "18%", name: 'created_at'},
-            {data: 'action', "width": "15%", orderable: false},
+            {data: 'status', "width": "10%", name: 'status', orderable: false},
+            {data: 'created_at', "width": "14%", name: 'created_at'},
+            {data: 'action', "width": "12%", orderable: false},
         ],
         "order": [[0, "DESC"]]
     });

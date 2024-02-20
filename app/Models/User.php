@@ -14,6 +14,10 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
    
     protected $fillable = ['name', 'email', 'password', 'role', 'image', 'phone', 'status'];
+
+    public function role(){
+        return $this->belongsTo(Role::class);
+    }
    
     /**
      * The attributes that should be hidden for serialization.

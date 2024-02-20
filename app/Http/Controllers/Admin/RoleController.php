@@ -80,6 +80,7 @@ class RoleController extends Controller
     public function update(RoleRequest $request, string $id)
     {
         $input = $request->all();
+        $input['access_rights'] = json_encode($request->access_rights);
         $role = Role::findorFail($id);
         $role->update($input);
         \Session::flash('success','Role has been updated successfully!');
