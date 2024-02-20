@@ -15,23 +15,17 @@ class AuthorizationController extends Controller
 
     public function adminLogin(Request $request)
     {
-
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
-
-            if ($user->role === 'admin') {
-                return redirect()->route('admin.dashboard');
-            } else {
-                return redirect('/admin')->with('error', 'Only Admin Can Login Here');
-            }
+            return redirect()->route('admin.dashboard');
         } else {
-            return redirect('/admin')->with('errormessage', 'Invalid Credentials');
+            \Session::flash('danger', 'Invalid Credentials!');
+            return redirect()->route('admin.login');
         }
     }
 

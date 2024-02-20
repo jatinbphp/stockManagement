@@ -22,17 +22,27 @@
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
+            @include ('admin.common.error')
             <p class="login-box-msg">Sign in to start your session</p>
             <form method="POST" action="{{ route('admin.signin') }}">
                 {{ csrf_field() }}
                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} has-feedback">
                     <input type="text" id="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
-
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    @if ($errors->has('email'))
+                        <span class="text-danger">
+                            <strong>{{ $errors->first('email') }}</strong>
+                        </span>
+                    @endif
                 </div>
                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} has-feedback">
                     <input type="password" id="password" name="password" class="form-control" placeholder="Password">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    @if ($errors->has('password'))
+                        <span class="text-danger">
+                            <strong>{{ $errors->first('password') }}</strong>
+                        </span>
+                    @endif
                 </div>
                 <div class="row">
                     <div class="col-sm-8">
