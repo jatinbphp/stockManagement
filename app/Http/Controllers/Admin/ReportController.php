@@ -41,9 +41,9 @@ class ReportController extends Controller{
                 })
                 ->editColumn('status', function($row){
                    $status = [
-                        'open'          => '<span class="badge badge-primary">open</span>',
-                        'completed'     => '<span class="badge badge-success">completed</span>',
-                        'incomplete'    => '<span class="badge badge-danger">incomplete</span>',
+                        'open'          => '<span class="badge badge-primary">Open</span>',
+                        'completed'     => '<span class="badge badge-success">Completed</span>',
+                        'incomplete'    => '<span class="badge badge-danger">Incomplete</span>',
                    ]; 
                    return $status[$row->status] ?? null;
                 })

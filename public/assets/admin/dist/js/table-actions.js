@@ -228,8 +228,8 @@ $(function () {
                     return `${name}<br>${email.slice(0, -1)}`;
                 }
             },
-            {data: 'status', "width": "23%", name: 'status', orderable: false},
-            {data: 'created_at', "width": "20%", name: 'created_at'},
+            {data: 'status', "width": "10%", name: 'status', orderable: false},
+            {data: 'created_at', "width": "15%", name: 'created_at'},
         ],
         "order": [[0, "DESC"]]
     });

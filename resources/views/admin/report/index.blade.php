@@ -36,15 +36,8 @@
                 <div class="col-12">
                     <div class="card card-info card-outline">
                         <div class="card-header">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <a href="{{ route('stock-orders.create') }}" class="btn btn-info float-right d-none">Add New</a>
-                                </div>
-                            </div>
                         </div>
                         <div class="card-body table-responsive">
-                            <input type="hidden" id="order_update" value="{{ route('stock-orders.update_status')}}">
-                            <input type="hidden" id="add_history" value="{{ route('stock-orders.add_history')}}">
                             <input type="hidden" id="route_name" value="{{ route('reports.index') }}">
                             <table id="reportsTable" class="table table-bordered table-striped datatable-dynamic">
                                 <thead>

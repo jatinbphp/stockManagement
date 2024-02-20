@@ -121,7 +121,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('reports.index') }}" class="nav-link @if(isset($menu) && $menu=='Reports') active @endif">
-                            <i class="nav-icon fa fa-file"></i>
+                            <i class="nav-icon fa fa-flag"></i>
                             <p>Reports</p>
                         </a>
                     </li>
