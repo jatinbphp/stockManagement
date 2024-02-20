@@ -55,7 +55,7 @@ class StockOrderController extends Controller{
                     $row['section_name'] = 'stock-orders';
                     $row['section_title'] = 'Stock Order';
                     $row['order_status'] = $row->status;
-                    return view('admin.action-buttons', $row);
+                    return view('admin.common.action-buttons', $row);
                 })
                 ->rawColumns(['status'])
                 ->make(true);
@@ -213,7 +213,7 @@ class StockOrderController extends Controller{
                     $row['section_name'] = 'receive-stock-orders';
                     $row['section_title'] = 'Receive Stock Order';
                     $row['store_order_status'] = $row->stock_order->status;
-                    return view('admin.action-buttons', $row);
+                    return view('admin.common.action-buttons', $row);
                 })
                 ->make(true);
         }

@@ -21,12 +21,12 @@ class RoleController extends Controller
                 ->addIndexColumn()
                 ->editColumn('status', function ($row) {
                     $row['table_name'] = 'roles';
-                    return view('admin.status-buttons', $row);
+                    return view('admin.common.status-buttons', $row);
                 })
                 ->addColumn('action', function ($row) {
                     $row['section_name'] = 'roles';
                     $row['section_title'] = 'Role';
-                    return view('admin.action-buttons', $row);
+                    return view('admin.common.action-buttons', $row);
                 })
                 ->make(true);
         }
@@ -57,7 +57,7 @@ class RoleController extends Controller
     {
         $role = Role::findOrFail($id);
         
-        return view('admin.show_modal', [
+        return view('admin.common.show_modal', [
             'section_info' => $role->toArray(),
             'type' => 'Role',
             'required_columns' => ['id', 'name', 'status', 'created_at']

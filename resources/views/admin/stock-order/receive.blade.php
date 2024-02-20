@@ -22,7 +22,7 @@ $documentCounter = 1;
 
     {!! Form::hidden('stock_order_status', $stockOrder->status, []) !!}
     <section class="content">
-        @include ('admin.error')
+        @include ('admin.common.error')
         <div class="row">
             <div class="col-md-12">
                 @if($stockOrder->status!='completed')

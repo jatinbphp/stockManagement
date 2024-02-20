@@ -55,7 +55,7 @@
                             @if(!empty(Auth::user()->image) && file_exists(Auth::user()->image))
                                 <img src=" {{asset(Auth::user()->image)}}" class="img-circle elevation-2" alt="User Image" style="width: 2.1rem; margin-right: 1.5%;">
                             @else
-                                <img src=" {{url('uploads/user-logo.png')}}" class="img-circle elevation-2" alt="User Image" style="width: 2.1rem; margin-right: 1.5%;">
+                                <img src=" {{url('uploads/no-image.png')}}" class="img-circle elevation-2" alt="User Image" style="width: 2.1rem; margin-right: 1.5%;">
                             @endif
                             <p style="padding-right: 6.5%;">
                                 {{ ucfirst(Auth::user()->name) }}

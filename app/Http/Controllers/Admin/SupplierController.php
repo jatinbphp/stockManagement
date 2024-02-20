@@ -23,12 +23,12 @@ class SupplierController extends Controller
                 })
                 ->editColumn('status', function ($row) {
                     $row['table_name'] = 'suppliers';
-                    return view('admin.status-buttons', $row);
+                    return view('admin.common.status-buttons', $row);
                 })
                 ->addColumn('action', function ($row) {
                     $row['section_name'] = 'suppliers';
                     $row['section_title'] = 'Supplier';
-                    return view('admin.action-buttons', $row);
+                    return view('admin.common.action-buttons', $row);
                 })
                 ->make(true);
         }
@@ -54,7 +54,7 @@ class SupplierController extends Controller
     {
         $supplier = Supplier::findOrFail($id);
         
-        return view('admin.show_modal', [
+        return view('admin.common.show_modal', [
             'section_info' => $supplier->toArray(),
             'type' => 'Supplier',
             'required_columns' => ['id', 'name', 'email', 'telephone', 'account_number', 'status', 'created_at']

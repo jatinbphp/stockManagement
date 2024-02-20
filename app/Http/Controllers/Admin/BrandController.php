@@ -27,12 +27,12 @@ class BrandController extends Controller
                 })
                 ->editColumn('status', function($row){
                     $row['table_name'] = 'brands';
-                    return view('admin.status-buttons', $row);
+                    return view('admin.common.status-buttons', $row);
                 })
                 ->addColumn('action', function($row){
                     $row['section_name'] = 'brands';
                     $row['section_title'] = 'Brand';
-                    return view('admin.action-buttons', $row);
+                    return view('admin.common.action-buttons', $row);
                 })
                 ->make(true);
         }
@@ -64,7 +64,7 @@ class BrandController extends Controller
     {
         $brand = Brand::with('supplier')->findOrFail($id);
         
-        return view('admin.show_modal', [
+        return view('admin.common.show_modal', [
             'section_info' => $brand->toArray(),
             'type' => 'Brand',
             'required_columns' => ['id', 'image', 'name', 'supplier', 'status', 'created_at']

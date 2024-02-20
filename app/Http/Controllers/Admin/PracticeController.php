@@ -21,12 +21,12 @@ class PracticeController extends Controller
                 })
                 ->editColumn('status', function ($row) {
                     $row['table_name'] = 'practices';
-                    return view('admin.status-buttons', $row);
+                    return view('admin.common.status-buttons', $row);
                 })
                 ->addColumn('action', function ($row) {
                     $row['section_name'] = 'practices';
                     $row['section_title'] = 'Practice';
-                    return view('admin.action-buttons', $row);
+                    return view('admin.common.action-buttons', $row);
                 })
                 ->make(true);
         }
@@ -52,7 +52,7 @@ class PracticeController extends Controller
     {
         $practice = Practice::findOrFail($id);
         
-        return view('admin.show_modal', [
+        return view('admin.common.show_modal', [
             'section_info' => $practice->toArray(),
             'type' => 'Practice',
             'required_columns' => ['id', 'name', 'manager_name', 'address', 'email', 'telephone', 'status', 'created_at']

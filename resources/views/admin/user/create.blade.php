@@ -18,7 +18,7 @@
         </section>
 
         <section class="content">
-            @include ('admin.error')
+            @include ('admin.common.error')
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-info">
