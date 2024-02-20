@@ -17,7 +17,12 @@ use Illuminate\Support\Facades\Auth;
 
 class StockOrderController extends Controller{
     public function index(Request $request){
-        $data['menu'] = 'Stock Orders';    
+        $data['menu'] = 'Stock Orders'; 
+        $data['menu']       = 'Stock Orders';
+        $data['practice']   = Practice::where('status', 'active')->pluck('name', 'id');
+        $data['brand']      = Brand::where('status', 'active')->pluck('name', 'id');
+        $data['supplier']   = Supplier::where('status', 'active')->pluck('name', 'id');
+        $data['status']     = StockOrder::$status;   
         if ($request->ajax()) {
             return datatables()->of(StockOrder::with(['supplier', 'brand', 'practice']))
                 ->addIndexColumn()
@@ -275,6 +280,51 @@ class StockOrderController extends Controller{
                     'added_by' => Auth::user()->id,
                 ]);
             }
+        }
+    }
+
+    public function filterStockOrder(Request $request){
+        try {
+            $response = StockOrder::with(['supplier', 'brand', 'practice'])
+                ->when($request->input('status'), function ($query, $status) {
+                    return $query->where('status', $status);
+                })
+                ->when($request->input('brand_id'), function ($query, $brand_id) {
+                    return $query->where('brand_id', $brand_id);
+                })
+                ->when($request->input('supplier_id'), function ($query, $supplier_id) {
+                    return $query->where('supplier_id', $supplier_id);
+                })
+                ->when($request->input('practice_id'), function ($query, $practice_id) {
+                    return $query->where('practice_id', $practice_id);
+                })
+                ->when($request->input('daterange'), function ($query, $daterange) {
+                    $start_date = explode("-", $daterange)[0];
+                    $end_date = explode("-", $daterange)[1];
+                    return $query->whereDate('created_at', '>=', $start_date)
+                        ->whereDate('created_at', '<=', $end_date);
+                })
+                ->get();
+
+            return datatables()->of($response)
+                ->addIndexColumn()
+                ->addColumn('created_at', function ($row) {
+                    return date("Y-m-d H:i:s", strtotime($row->created_at));
+                })
+                ->editColumn('status', function ($row) {
+                    $row['stock_order_status'] = StockOrder::$status;
+                    return view('admin.stock-order.status-dropdown', $row);
+                })
+                ->addColumn('action', function ($row) {
+                    $row['section_name'] = 'stock-orders';
+                    $row['section_title'] = 'Stock Order';
+                    $row['order_status'] = $row->status;
+                    return view('admin.action-buttons', $row);
+                })
+                ->rawColumns(['status'])
+                ->make(true);
+        } catch (\Exception $e) {
+            return response()->json(['Error' => $e]);
         }
     }
 }

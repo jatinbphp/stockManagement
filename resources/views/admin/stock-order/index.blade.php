@@ -22,6 +22,18 @@
             @include ('admin.error')
             <div class="row">
                 <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            {!! Form::open(['url' => null, 'id' => 'stock-orders-filter-Form', 'class' => 'form-horizontal','files'=>true]) !!}
+                                @include ('admin.stock-order.filter')
+                            {!! Form::close() !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
                     <div class="card card-info card-outline">
                         <div class="card-header">
                             <div class="row">

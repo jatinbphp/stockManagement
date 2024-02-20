@@ -254,6 +254,18 @@ $(function () {
         checkboxClass: 'icheckbox_flat-green',
         radioClass   : 'iradio_flat-green'
     });
+
+    /* date range picker */
+    $(function() {
+        $('input[name="daterange"]').daterangepicker({
+            opens: 'left',
+            locale: {
+                format: 'YYYY/MM/DD'
+            },
+        }, function(start, end, label) {
+            console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
+        });
+    });
 </script>
 @yield('jquery')
 </body>
