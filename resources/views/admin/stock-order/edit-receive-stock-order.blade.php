@@ -138,113 +138,18 @@ $documentCounter = 1;
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <a href="{{ route('stock-orders.index') }}" class="btn btn-default">Back</a>
+                                <a href="{{ url('admin/stock-orders/'.$receiveStockOrder->stock_order->id.'/receive') }}" class="btn btn-default">Back</a>
                                 <button class="btn btn-info float-right" type="submit">Update</button>
                             </div>
                         {!! Form::close() !!}
                     </div>
                 @endif
 
-                <div class="card card-info">
-                    <div class="card-header">
-                        <h3 class="card-title">Uploaded Documents</h3>
-                    </div>
-                    <div class="card-body table-responsive">
-                        <input type="hidden" id="route_name" value="{{ route('stock-orders.index_receive_stock_order') }}">
-                        <input type="hidden" id="stock_order_id" value="{{$receiveStockOrder->stock_order->id}}">
-                        @include ('admin.stock-order.receive-stock-order-table')
-                    </div>
-                </div>
+                <input type="hidden" id="route_name" value="{{ route('stock-orders.index_receive_stock_order') }}">
+                <input type="hidden" id="stock_order_id" value="{{$receiveStockOrder->stock_order->id}}">
             </div>
         </div>
     </section>
 </div>
 <input type="hidden" id="documentCounter" value="{{$documentCounter}}">
-@include ('admin.stock-order.view-documents-list')
-@endsection
-
-@section('jquery')
-<script type="text/javascript">
-$(document).ready(function(){
-    //Receive Stock Order Table
-    var receive_stock_orders_table = $('#receiveStockOrderTable').DataTable({
-        processing: true,
-        serverSide: true,
-        pageLength: 100,
-        lengthMenu: [ 100, 200, 300, 400, 500, ],
-        ajax: {
-            url: $("#route_name").val(),
-            data: function (d) {
-                d.stock_order_id = $("#stock_order_id").val();
-            }
-        },
-        columns: [
-            {
-                data: 'id', width: '10%', name: 'id',
-                render: function(data, type, row) {
-                    return '#' + data; // Prepend '#' to the 'id' data
-                }
-            },
-            {data: 'inv_number', name: 'inv_number'},
-            {data: 'grv_number', name: 'grv_number'},
-            {data: 'notes', name: 'notes'},
-            {data: 'created_at', "width": "18%", name: 'created_at'},
-            {data: 'action', "width": "15%", orderable: false},
-        ],
-        "order": [[0, "DESC"]]
-    });
-
-    function reloadStockOrdersTable() {
-        receive_stock_orders_table.ajax.reload(null, false);
-    }
-
-    //Delete Record
-    $('.datatable-dynamic tbody').on('click', '.deleteStockOrderDocumentRecord', function (event) {
-        event.preventDefault();
-        var id = $(this).attr("data-id");
-        var type = $(this).attr("data-type");
-
-        if(type=='receive_stock_order'){
-            var msg = "You want to delete this record & documents?"
-        } else {
-            var msg = "You want to delete this document?"
-        }
-
-        swal({
-            title: "Are you sure?",
-            text: msg,
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: '#DD6B55',
-            confirmButtonText: 'Yes, Delete',
-            cancelButtonText: "No, cancel",
-            closeOnConfirm: false,
-            closeOnCancel: false
-        },
-        function(isConfirm) {
-            if (isConfirm) {
-
-                var url = "{{ route('stock-orders.receive_stock_order_and_documents', [':stock_order_id', ':type']) }}";
-                url = url.replace(':stock_order_id', id).replace(':type', type);
-
-                $.ajax({
-                    url: url,
-                    type: "GET",
-                    headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
-                    success: function(data){
-                        if(type=='receive_stock_order'){
-                            reloadStockOrdersTable();
-                        } else {
-                            $("#view-documents-list").modal("hide");
-                        }
-                        swal("Deleted", "Your data successfully deleted!", "success");
-                    }
-                });
-            } else {
-                swal("Cancelled", "Your data safe!", "error");
-            }
-        });
-    });
-});
-</script>
 @endsection

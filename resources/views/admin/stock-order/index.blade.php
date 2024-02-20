@@ -101,7 +101,6 @@
 @endsection
 @section('jquery')
 <script type="text/javascript">
-
     $('#supplier_id').change(function(){
         // Call your function here
         var supplier_id = $(this).val();
