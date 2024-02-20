@@ -31,6 +31,6 @@
     </div>
     <div class="col-md-1" style="margin-top: 30px;">
         <button type="button" id="clear-filter" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i></button>
-        <button type="button" id="apply-filter" class="btn btn-success"><i class="fa fa-filter" aria-hidden="true"></i></button>
+        <button type="button" id="apply-filter" class="btn btn-primary"><i class="fa fa-filter" aria-hidden="true"></i></button>
     </div>
 </div>

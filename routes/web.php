@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\BrandController;
@@ -8,17 +9,17 @@ use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\CommonController;
 use App\Http\Controllers\Admin\OptionController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\PracticeController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\StockOrderController;
 use App\Http\Controllers\Admin\AuthorizationController;
 use App\Http\Controllers\Admin\ProfileUpdateController;
 use App\Http\Controllers\Admin\ContentManagementController;
-use App\Http\Controllers\Admin\PracticeController;
-use App\Http\Controllers\Admin\StockOrderController;
-use App\Http\Controllers\Admin\RoleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -84,4 +85,7 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::get('stock-orders/get_history/{id}', [StockOrderController::class,'getStockOrderStatusHistory'])->name('stock-orders.get_history');
     Route::post('stock-orders/update_status', [StockOrderController::class,'updateStockOrderStatus'])->name('stock-orders.update_status');
     Route::resource('stock-orders', StockOrderController::class);
+
+    /* report */
+    Route::resource('reports', ReportController::class);
 });

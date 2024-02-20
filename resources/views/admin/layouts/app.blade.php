@@ -119,6 +119,12 @@
                             <p>Stock Orders</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('reports.index') }}" class="nav-link @if(isset($menu) && $menu=='Reports') active @endif">
+                            <i class="nav-icon fa fa-file"></i>
+                            <p>Reports</p>
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>

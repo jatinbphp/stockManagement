@@ -182,6 +182,58 @@ $(function () {
         "order": [[0, "DESC"]]
     });
 
+    //report table
+    var reports_table = $('#reportsTable').DataTable({
+        processing: true,
+        serverSide: true,
+        pageLength: 100,
+        lengthMenu: [ 100, 200, 300, 400, 500, ],
+        ajax: {
+            url: $("#route_name").val(),
+            data: function (d) {
+                var formDataArray = $('#reports-filter-Form').find(':input:not(select[multiple])').serializeArray();
+
+                // Filter out non-multiple-select elements and create a single array
+                var multipleSelectValues = $('#reports-filter-Form select[multiple]').map(function () {
+                    return { name: $(this).attr('name'), value: $(this).val() };
+                }).get();
+
+                formDataArray = formDataArray.concat(multipleSelectValues);
+                var formData = {};
+                $.each(formDataArray, function(i, field){
+                    formData[field.name] = field.value;
+                });
+                d = $.extend(d, formData);
+                
+                return d;
+            },
+        },
+        columns: [
+            {
+                data: 'id', width: '10%', name: 'id',
+                render: function(data, type, row) {
+                    return '#' + data; // Prepend '#' to the 'id' data
+                }
+            },            
+            {data: 'supplier.full_name', name: 'supplier.full_name',
+                render: data => {
+                    const [name, email] = data.split(' (');
+                    return `${name}<br>${email.slice(0, -1)}`;
+                }
+            },
+            {data: 'brand.name', name: 'brand'},
+            {data: 'practice.full_name', name: 'practice.full_name',
+                render: data => {
+                    const [name, email] = data.split(' (');
+                    return `${name}<br>${email.slice(0, -1)}`;
+                }
+            },
+            {data: 'status', "width": "23%", name: 'status', orderable: false},
+            {data: 'created_at', "width": "20%", name: 'created_at'},
+        ],
+        "order": [[0, "DESC"]]
+    });
+
     //Delete Record
     $('.datatable-dynamic tbody').on('click', '.deleteRecord', function (event) {
         event.preventDefault();
@@ -455,6 +507,7 @@ $(function () {
     // stock order filter
     $('#apply-filter').click(function() {
         stock_orders_table.ajax.reload(null, false);
+        reports_table.ajax.reload(null, false);
     });
 
     // clear filter
@@ -462,6 +515,7 @@ $(function () {
          $('#stock-orders-filter-Form')[0].reset();
         $(".select2").val([]).trigger('change');
         stock_orders_table.ajax.reload(null, false);
+        reports_table.ajax.reload(null, false);
     });
 });
 
