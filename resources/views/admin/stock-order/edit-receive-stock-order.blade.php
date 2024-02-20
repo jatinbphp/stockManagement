@@ -20,6 +20,7 @@ $documentCounter = 1;
         </div>
     </section>
 
+    {!! Form::hidden('stock_order_status', $receiveStockOrder->stock_order->status, []) !!}
     <section class="content">
         @include ('admin.error')
         <div class="row">
@@ -34,7 +35,6 @@ $documentCounter = 1;
                                 {!! Form::hidden('redirects_to', URL::previous()) !!}
                                 {!! Form::hidden('stock_order_id', $receiveStockOrder->stock_order->id, []) !!}
                                 {!! Form::hidden('stock_order_receive_id', $receiveStockOrder->id, []) !!}
-                                {!! Form::hidden('stock_order_status', $receiveStockOrder->stock_order->status, []) !!}
                                 <div class="row">
 
                                     <div class="col-md-6">

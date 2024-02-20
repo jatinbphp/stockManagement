@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 </head>
-<body class="hold-transition sidebar-mini" id="bodyid">
+<body class="hold-transition sidebar-mini sidebar-collapse" id="bodyid">
 <div class="wrapper">
     <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
         <ul class="navbar-nav">
@@ -265,6 +265,8 @@ $(function () {
         }, function(start, end, label) {
             console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
         });
+
+        $('input[name="daterange"]').val('');
     });
 </script>
 @yield('jquery')

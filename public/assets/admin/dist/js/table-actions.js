@@ -135,7 +135,26 @@ $(function () {
         serverSide: true,
         pageLength: 100,
         lengthMenu: [ 100, 200, 300, 400, 500, ],
-        ajax: $("#route_name").val(),
+        ajax: {
+            url: $("#route_name").val(),
+            data: function (d) {
+                var formDataArray = $('#stock-orders-filter-Form').find(':input:not(select[multiple])').serializeArray();
+
+                // Filter out non-multiple-select elements and create a single array
+                var multipleSelectValues = $('#filterForm select[multiple]').map(function () {
+                    return { name: $(this).attr('name'), value: $(this).val() };
+                }).get();
+
+                formDataArray = formDataArray.concat(multipleSelectValues);
+                var formData = {};
+                $.each(formDataArray, function(i, field){
+                    formData[field.name] = field.value;
+                });
+                d = $.extend(d, formData);
+                
+                return d;
+            },
+        },
         columns: [
             {
                 data: 'id', width: '10%', name: 'id',
@@ -156,14 +175,12 @@ $(function () {
                     return `${name}<br>${email.slice(0, -1)}`;
                 }
             },
-            {data: 'status', "width": "20%", name: 'status', orderable: false},
+            {data: 'status', "width": "23%", name: 'status', orderable: false},
             {data: 'created_at', "width": "20%", name: 'created_at'},
-            {data: 'action', "width": "30%", orderable: false},
+            {data: 'action', "width": "26%", orderable: false},
         ],
         "order": [[0, "DESC"]]
     });
-
-    
 
     //Delete Record
     $('.datatable-dynamic tbody').on('click', '.deleteRecord', function (event) {
@@ -319,6 +336,7 @@ $(function () {
         });
     });
 
+    //stock order status history
     $('.datatable-dynamic tbody').on('click', '.get-status-history', function (event) {
         event.preventDefault();
         var url = $(this).attr('data-url');
@@ -340,10 +358,11 @@ $(function () {
                         html += `<tr>
                                     <td>#${v.id} </td>
                                     <td> ${status} </td>
-                                    <td> ${(v.notes_text != null) ? v.notes_text : ' - ' } </td>
                                     <td> ${v.user.name} </td>
                                     <td> ${formattedCreatedAt} </td>
                                 </tr>`;
+
+                        /*<td> ${(v.notes_text != null) ? v.notes_text : ' - ' } </td>*/
                     });
                     $("#status-histories-list").find(".status-histories-list-view").html(html);
                     $("#status-histories-list").modal("show");
@@ -372,6 +391,7 @@ $(function () {
         });
     });
 
+    // receive view document
     $('.datatable-dynamic tbody').on('click', '.view-documents', function (event) {
         event.preventDefault();
         var url = $(this).attr('data-url');
@@ -430,6 +450,18 @@ $(function () {
                             '</div>';
 
         $('#documentBtn').before(addNewdocument);
+    });
+
+    // stock order filter
+    $('#apply-filter').click(function() {
+        stock_orders_table.ajax.reload(null, false);
+    });
+
+    // clear filter
+    $('#clear-filter').click(function() {
+         $('#stock-orders-filter-Form')[0].reset();
+        $(".select2").val([]).trigger('change');
+        stock_orders_table.ajax.reload(null, false);
     });
 });
 

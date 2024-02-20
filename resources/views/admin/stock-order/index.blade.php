@@ -69,7 +69,7 @@
     </div>
 
     <div id="status-histories-list" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Status Histories</h4>
@@ -82,7 +82,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Status</th>
-                                    <th>Notes</th>
+                                    <!-- <th>Notes</th> -->
                                     <th>Updated By</th>
                                     <th>Updated Date</th>
                                 </tr>
@@ -98,4 +98,33 @@
             </div>
         </div>
     </div>
+@endsection
+@section('jquery')
+<script type="text/javascript">
+
+    $('#supplier_id').change(function(){
+        // Call your function here
+        var supplier_id = $(this).val();
+        if (supplier_id) {
+            $.ajax({
+                url: "{{ route('brands.by_supplier', ':supplierId') }}".replace(':supplierId', supplier_id),
+                type: "GET",
+                data: {
+                    _token: '{{csrf_token()}}',
+                    'supplier_id': supplier_id,
+                 },
+                success: function(data){                        
+                    $('#brand_id').empty().append('<option value="">Please Select</option>');
+                    $('#brand_id').select2('destroy').select2();
+                    data.forEach(function(brand) {
+                        $('#brand_id').append('<option value="' + brand.id + '">' + brand.name + '</option>');
+                    });
+                }
+            });
+        } else {
+            $('#brand_id').empty().append('<option value="">Please Select</option>');
+            $('#brand_id').select2('destroy').select2();
+        }
+    });
+</script>
 @endsection
