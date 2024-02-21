@@ -37,7 +37,7 @@
                 <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{ url('admin/dashboard') }}" class="nav-link">Home</a>
+                <a href="{{ url('admin/dashboard') }}" class="nav-link"></a>
             </li>
         </ul>
     </nav>
@@ -77,54 +77,83 @@
                         </ul>
                     </li>
 
+                    <?php
+                    $login_user_role = \Illuminate\Support\Facades\Auth::user()->role;
+                    $role_rights = \App\Models\Role::where('alias', $login_user_role)->first();
+                    $access_rights=array();
+                    if (!empty($role_rights)) {
+                        $access_rights = json_decode($role_rights->access_rights);
+                    } ?>
+
                     <li class="nav-item">
                         <a href="{{ route('admin.dashboard') }}" class="nav-link @if(isset($menu) && $menu=='Dashboard') active @endif">
                             <i class="nav-icon fa fa-tachometer-alt"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="{{ route('roles.index') }}" class="nav-link @if(isset($menu) && $menu=='Roles') active @endif">
-                            <i class="nav-icon fa fa-list"></i>
-                            <p>Roles</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('users.index') }}" class="nav-link @if(isset($menu) && $menu=='Users') active @endif">
-                            <i class="nav-icon fa fa-users"></i>
-                            <p>Users</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('suppliers.index') }}" class="nav-link @if(isset($menu) && $menu=='Suppliers') active @endif">
-                            <i class="nav-icon fa fa-truck"></i>
-                            <p>Suppliers</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('brands.index') }}" class="nav-link @if(isset($menu) && $menu=='Brands') active @endif">
-                            <i class="nav-icon fa fa-boxes"></i>
-                            <p>Brands</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('practices.index') }}" class="nav-link @if(isset($menu) && $menu=='Practices') active @endif">
-                            <i class="nav-icon fa fa-folder"></i>
-                            <p>Practices</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('stock-orders.index') }}" class="nav-link @if(isset($menu) && $menu=='Stock Orders') active @endif">
-                            <i class="nav-icon fa fa-warehouse"></i>
-                            <p>Stock Orders</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('reports.index') }}" class="nav-link @if(isset($menu) && $menu=='Reports') active @endif">
-                            <i class="nav-icon fa fa-flag"></i>
-                            <p>Reports</p>
-                        </a>
-                    </li>
+
+                    @if(in_array('roles', $access_rights))
+                        <li class="nav-item">
+                            <a href="{{ route('roles.index') }}" class="nav-link @if(isset($menu) && $menu=='Roles') active @endif">
+                                <i class="nav-icon fa fa-list"></i>
+                                <p>Roles</p>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if(in_array('users', $access_rights))
+                        <li class="nav-item">
+                            <a href="{{ route('users.index') }}" class="nav-link @if(isset($menu) && $menu=='Users') active @endif">
+                                <i class="nav-icon fa fa-users"></i>
+                                <p>Users</p>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if(in_array('suppliers', $access_rights))
+                        <li class="nav-item">
+                            <a href="{{ route('suppliers.index') }}" class="nav-link @if(isset($menu) && $menu=='Suppliers') active @endif">
+                                <i class="nav-icon fa fa-truck"></i>
+                                <p>Suppliers</p>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if(in_array('brands', $access_rights))
+                        <li class="nav-item">
+                            <a href="{{ route('brands.index') }}" class="nav-link @if(isset($menu) && $menu=='Brands') active @endif">
+                                <i class="nav-icon fa fa-boxes"></i>
+                                <p>Brands</p>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if(in_array('practices', $access_rights))
+                        <li class="nav-item">
+                            <a href="{{ route('practices.index') }}" class="nav-link @if(isset($menu) && $menu=='Practices') active @endif">
+                                <i class="nav-icon fa fa-folder"></i>
+                                <p>Practices</p>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if(in_array('stock-orders', $access_rights))
+                        <li class="nav-item">
+                            <a href="{{ route('stock-orders.index') }}" class="nav-link @if(isset($menu) && $menu=='Stock Orders') active @endif">
+                                <i class="nav-icon fa fa-warehouse"></i>
+                                <p>Stock Orders</p>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if(in_array('reports', $access_rights))
+                        <li class="nav-item">
+                            <a href="{{ route('reports.index') }}" class="nav-link @if(isset($menu) && $menu=='Reports') active @endif">
+                                <i class="nav-icon fa fa-flag"></i>
+                                <p>Reports</p>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </nav>
         </div>
@@ -176,7 +205,7 @@
 <script src="{{ URL::asset('assets/admin/plugins/ladda/spin.min.js')}}"></script>
 <script src="{{ URL::asset('assets/admin/plugins/ladda/ladda.min.js')}}"></script>
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-<script src="{{ URL('assets/admin/dist/js/table-actions.js')}}"></script>
+<script src="{{ URL('assets/admin/dist/js/table-actions.js')}}?{{ time() }}"></script>
 <script>Ladda.bind( 'input[type=submit]' );</script>
 <script>
 $(function () {

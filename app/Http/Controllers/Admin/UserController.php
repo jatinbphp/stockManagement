@@ -10,15 +10,15 @@ use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
-    public function index(Request $request)
-    {
-        $data['menu']  = 'Users';
+    public function __construct(Request $request){
+        $this->middleware('auth');
+        $this->middleware('accessright:users');
+    }
 
+    public function index(Request $request){
+        $data['menu'] = 'Users';
         if ($request->ajax()) {
-
-            $user = User::select()->where('role', '!=', 'admin');
-        
-            return Datatables::of($user)
+            return Datatables::of(User::select()->where('role', '!=', 'admin'))
                 ->addIndexColumn()
                 ->addColumn('created_at', function($row) {
                     return date("Y-m-d H:i:s", strtotime($row->created_at)); 
@@ -37,6 +37,7 @@ class UserController extends Controller
                 ->addColumn('action', function($row){
                     $row['section_name'] = 'users';
                     $row['section_title'] = 'User';
+
                     return view('admin.common.action-buttons', $row);
                 })
                 ->make(true);
@@ -45,8 +46,7 @@ class UserController extends Controller
         return view('admin.user.index', $data);
     }
 
-    public function create()
-    {
+    public function create(){
         $data['menu'] = 'Users';
         return view("admin.user.create",$data);
     }
@@ -62,8 +62,7 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
-    public function show($id)
-    {
+    public function show($id){
         $user = User::findOrFail($id);
         
         return view('admin.common.show_modal', [
@@ -73,15 +72,13 @@ class UserController extends Controller
         ]);
     }
 
-    public function edit($id)
-    {
-        $data['menu']  = 'Users';
+    public function edit($id){
+        $data['menu'] = 'Users';
         $data['user'] = User::where('id',$id)->first();
         return view('admin.user.edit',$data);
     }
 
-    public function update(UserRequest $request, $id)
-    {
+    public function update(UserRequest $request, $id){
         if(empty($request['password'])){
             unset($request['password']);
         }
@@ -100,8 +97,7 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
-    public function destroy($id)
-    {
+    public function destroy($id){
         $users = User::findOrFail($id);
         if(!empty($users)){
             if (!empty($users['image']) && file_exists($users['image'])) {

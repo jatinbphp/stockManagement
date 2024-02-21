@@ -23,6 +23,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card card-info card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">Manage {{$menu}}</h3>
+                        </div>
                         <div class="card-body table-responsive">
                             <input type="hidden" id="route_name" value="{{ route('roles.index') }}">
                             <table id="roleTable" class="table table-bordered table-striped datatable-dynamic">
@@ -30,6 +33,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
+                                        <th>Access Rights</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>

@@ -9,10 +9,15 @@ use App\Models\StockOrder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ReportController extends Controller{
+class ReportController extends Controller
+{
+    public function __construct(Request $request){
+        $this->middleware('auth');
+        $this->middleware('accessright:reports');
+    }
+    
     public function index(Request $request){
         $data['menu'] = 'Reports';
-
         if ($request->ajax()) {
             $collection = StockOrder::with(['supplier', 'brand', 'practice'])
                 ->when($request->input('status'), function ($query, $status) {

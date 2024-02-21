@@ -10,9 +10,13 @@ use App\Http\Requests\PracticeRequest;
 
 class PracticeController extends Controller
 {
-    public function index(Request $request)
-    {
-        $data['menu'] = 'Practices';
+    public function __construct(Request $request){
+        $this->middleware('auth');
+        $this->middleware('accessright:users');
+    }
+    
+    public function index(Request $request){
+        $data['menu'] = 'Practices';        
         if ($request->ajax()) {
             return DataTables::of(Practice::all())
                 ->addIndexColumn()
@@ -23,35 +27,34 @@ class PracticeController extends Controller
                     $row['table_name'] = 'practices';
                     return view('admin.common.status-buttons', $row);
                 })
-                ->addColumn('action', function ($row) {
+                ->addColumn('action', function($row){
                     $row['section_name'] = 'practices';
                     $row['section_title'] = 'Practice';
+
                     return view('admin.common.action-buttons', $row);
                 })
+                ->rawColumns(['action'])
                 ->make(true);
         }
 
         return view('admin.practice.index', $data);
     }
 
-    public function create()
-    {
+    public function create(){
         $data['menu'] = 'Practices';
         return view('admin.practice.create', $data);
     }
 
-    public function store(PracticeRequest $request)
-    {
+    public function store(PracticeRequest $request){
         $input = $request->all();
         Practice::create($input);
+
         \Session::flash('success', 'Practice has been inserted successfully!');
         return redirect()->route('practices.index');
     }
 
-    public function show($id)
-    {
+    public function show($id){
         $practice = Practice::findOrFail($id);
-        
         return view('admin.common.show_modal', [
             'section_info' => $practice->toArray(),
             'type' => 'Practice',
@@ -59,24 +62,22 @@ class PracticeController extends Controller
         ]);
     }
 
-    public function edit(string $id)
-    {
+    public function edit(string $id){
         $data['menu'] = 'Practices';
         $data['practice'] = Practice::findOrFail($id);
         return view('admin.practice.edit', $data);
     }
 
-    public function update(PracticeRequest $request, string $id)
-    {
+    public function update(PracticeRequest $request, string $id){
         $input = $request->all();
         $practice = Practice::findOrFail($id);
         $practice->update($input);
+        
         \Session::flash('success', 'Practice has been updated successfully!');
         return redirect()->route('practices.index');
     }
 
-    public function destroy(string $id)
-    {
+    public function destroy(string $id){
         $practice = Practice::findOrFail($id);
         if (!empty($practice)) {
             $practice->delete();

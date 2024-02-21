@@ -15,13 +15,16 @@ use App\Http\Requests\StockOrderRequest;
 use App\Http\Requests\StockOrderReceiveRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StockOrderController extends Controller{
+class StockOrderController extends Controller
+{   
+    public function __construct(Request $request){
+        $this->middleware('auth');
+        $this->middleware('accessright:stock-orders');
+    }
+    
     public function index(Request $request){
-
         $data['menu'] = 'Stock Orders';
-
         if ($request->ajax()) {
-
             $collection = StockOrder::with(['supplier', 'brand', 'practice'])
                 ->when($request->input('status'), function ($query, $status) {
                     return $query->where('status', $status);
@@ -55,6 +58,7 @@ class StockOrderController extends Controller{
                     $row['section_name'] = 'stock-orders';
                     $row['section_title'] = 'Stock Order';
                     $row['order_status'] = $row->status;
+
                     return view('admin.common.action-buttons', $row);
                 })
                 ->rawColumns(['status'])
@@ -82,14 +86,13 @@ class StockOrderController extends Controller{
         if($file = $request->file('order_copy')){
             $input['order_copy'] = $this->fileMove($file,'stock-orders');
         }
-
         StockOrder::create($input);
+
         \Session::flash('success', 'Stock Order has been inserted successfully!');
         return redirect()->route('stock-orders.index');
     }
 
-    public function show($id)
-    {
+    public function show($id){
         $data['stock_order'] = StockOrder::with(['supplier', 'brand', 'practice'])->find($id);
         return view('admin.stock-order.show_modal', $data);
     }
@@ -113,8 +116,8 @@ class StockOrderController extends Controller{
             }
             $input['order_copy'] = $this->fileMove($file,'receive-stock-order');
         }
-
         $stockOrder->update($input);
+
         \Session::flash('success','Stock Order has been updated successfully!');
         return redirect()->route('stock-orders.index');
     }
@@ -133,8 +136,7 @@ class StockOrderController extends Controller{
         }
     }
 
-    public function updateStockOrderStatus(Request $request)
-    { 
+    public function updateStockOrderStatus(Request $request){ 
         $data['status'] = 0;
         $order = StockOrder::findOrFail($request->id);
         $input = $request->all();
@@ -153,17 +155,14 @@ class StockOrderController extends Controller{
         return $data;
     }
 
-    public function addStockOrderStatusHistory(Request $request)
-    {
-        $input   = $request->all();
+    public function addStockOrderStatusHistory(Request $request){
+        $input = $request->all();
         $input['updated_by'] = Auth::user()->id;
         return StockOrderStatusHistory::create($input);
     }
 
-    public function getStockOrderStatusHistory($stock_order_id)
-    {   
+    public function getStockOrderStatusHistory($stock_order_id){   
         $datas = StockOrderStatusHistory::with('user')->where('stock_order_id', $stock_order_id)->latest()->get();
-
         return response()->json([
             'status' => true,
             'data' => $datas,
@@ -180,13 +179,11 @@ class StockOrderController extends Controller{
 
     public function receiveStockOrderEdit(string $id){        
         $data['menu'] = 'Stock Orders';
-        $data['receiveStockOrder'] = StockOrderReceive::with(['stock_order','stock_order_receive_documents'])->find($id);        
+        $data['receiveStockOrder'] = StockOrderReceive::with(['stock_order','stock_order_receive_documents'])->find($id); 
         return view('admin.stock-order.edit-receive-stock-order', $data);
     }
 
-    public function storeReceiveDocuments(StockOrderReceiveRequest $request){        
-        $input   = $request->all();
-       
+    public function storeReceiveDocuments(StockOrderReceiveRequest $request){               
         $input = $request->all();
         $input['added_by'] = Auth::user()->id;
         $StockOrderReceive = StockOrderReceive::create($input);
@@ -209,12 +206,14 @@ class StockOrderController extends Controller{
                 ->addColumn('created_at', function($row) {
                     return date("Y-m-d H:i:s", strtotime($row->created_at)); 
                 })
-                ->addColumn('action', function($row){
+                ->addColumn('action', function ($row) {
                     $row['section_name'] = 'receive-stock-orders';
                     $row['section_title'] = 'Receive Stock Order';
                     $row['store_order_status'] = $row->stock_order->status;
-                    return view('admin.common.action-buttons', $row);
+
+                    return view('admin.common.receive-stock-orders-button', $row)->render();
                 })
+                ->rawColumns(['action'])
                 ->make(true);
         }
 
@@ -222,10 +221,8 @@ class StockOrderController extends Controller{
     }
 
     // receive document view popup
-    public function getReceiveStockOrderDocuments($stock_order_receive_id)
-    {   
+    public function getReceiveStockOrderDocuments($stock_order_receive_id){   
         $datas = StockOrderReceiveDocument::with('user')->where('stock_order_receive_id', $stock_order_receive_id)->latest()->get();
-
         foreach ($datas as $data) {
             $data->document_path = asset($data->document_name);
         }
@@ -239,8 +236,7 @@ class StockOrderController extends Controller{
     }
 
     // delete receive documents
-    public function deleteReceiveStockOrderDocuments(Request $request, $id, $type)
-    {   
+    public function deleteReceiveStockOrderDocuments(Request $request, $id, $type){   
         if($type=='receive_stock_order'){
             $deleteData = StockOrderReceive::find($id);    
         } else {
@@ -256,8 +252,7 @@ class StockOrderController extends Controller{
     }
 
     // get brand using supplier
-    public function getBrandsBySupplier($supplierId)
-    {   
+    public function getBrandsBySupplier($supplierId){   
         $supplier = Supplier::with('brand')->where('id', $supplierId)->first();
         $brands = $supplier->brand;
         return response()->json($brands);
@@ -265,14 +260,12 @@ class StockOrderController extends Controller{
 
     // update receive documents
     public function updateReceiveDocuments(StockOrderReceiveRequest $request){        
-        $input   = $request->all();
-        
         $input = $request->all();
         $StockOrderReceive = StockOrderReceive::findorFail($input['stock_order_receive_id']);
         $StockOrderReceive->update($input);
 
         // options & options values
-        if (!empty($input['documents'])) {
+        if (!empty($input['documents'])){
             $this->addDocumentAddUpdate($input);
         } else {
             StockOrderReceiveDocument::where('stock_order_receive_id', $input['stock_order_receive_id'])->delete();
@@ -283,12 +276,10 @@ class StockOrderController extends Controller{
     }
 
     //for upload receive documents
-    public function addDocumentAddUpdate($input)
-    {
+    public function addDocumentAddUpdate($input){
         $document_ids = [];
         if(!empty($input['documents']['old'])){
             foreach ($input['documents']['old'] as $key => $value) {
-
                 $documentOld = StockOrderReceiveDocument::where('id',$key)->first();
                 $document_ids[] = $documentOld->id;
             }
@@ -299,9 +290,7 @@ class StockOrderController extends Controller{
         }
 
         if(!empty($input['documents']['new'])){
-
             foreach ($input['documents']['new'] as $key => $value) {
-
                 $documentName = $this->fileMove($value,'receive-stock-orders-documents');
                 StockOrderReceiveDocument::create([
                     'document_name' => $documentName,

@@ -26,7 +26,7 @@ $documentCounter = 1;
         <div class="row">
             <div class="col-md-12">
                 @if($receiveStockOrder->stock_order->status!='completed')
-                    <div class="card card-info">
+                    <div class="card card-info card-outline">
                         <div class="card-header">
                             <h3 class="card-title">Edit Receive {{$menu}}</h3>
                         </div>

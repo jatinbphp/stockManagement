@@ -15,6 +15,7 @@ $(function () {
                 }
             },
             {data: 'name', name: 'name'},
+            {data: 'access_rights', name: 'access_rights', orderable: false},
             {data: 'status', "width": "10%", name: 'status', orderable: false},
             {data: 'action', "width": "10%", orderable: false},
         ],

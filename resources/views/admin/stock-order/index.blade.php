@@ -36,9 +36,10 @@
                 <div class="col-12">
                     <div class="card card-info card-outline">
                         <div class="card-header">
+                            <h3 class="card-title">Manage {{$menu}}</h3>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <a href="{{ route('stock-orders.create') }}" class="btn btn-info float-right">Add New</a>
+                                    <a href="{{ route('stock-orders.create') }}" class="btn btn-sm btn-info float-right">Add New</a>
                                 </div>
                             </div>
                         </div>

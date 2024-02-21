@@ -9,12 +9,17 @@ use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 use App\Http\Requests\SupplierRequest;
 
-
 class SupplierController extends Controller
 {
-    public function index(Request $request)
-    {
+
+    public function __construct(Request $request){
+        $this->middleware('auth');
+        $this->middleware('accessright:suppliers');
+    }
+
+    public function index(Request $request){
         $data['menu'] = 'Suppliers';
+
         if ($request->ajax()) {
             return Datatables::of(Supplier::all())
                 ->addIndexColumn()
@@ -25,9 +30,10 @@ class SupplierController extends Controller
                     $row['table_name'] = 'suppliers';
                     return view('admin.common.status-buttons', $row);
                 })
-                ->addColumn('action', function ($row) {
+                ->addColumn('action', function($row){
                     $row['section_name'] = 'suppliers';
                     $row['section_title'] = 'Supplier';
+
                     return view('admin.common.action-buttons', $row);
                 })
                 ->make(true);
@@ -36,24 +42,21 @@ class SupplierController extends Controller
         return view('admin.supplier.index', $data);
     }
 
-    public function create()
-    {
+    public function create(){
         $data['menu'] = 'Suppliers';
         return view("admin.supplier.create", $data);
     }
 
-    public function store(SupplierRequest $request)
-    {
+    public function store(SupplierRequest $request){
         $input = $request->all();
         Supplier::create($input);
+
         \Session::flash('success', 'Supplier has been inserted successfully!');
         return redirect()->route('suppliers.index');
     }
 
-    public function show($id)
-    {
+    public function show($id){
         $supplier = Supplier::findOrFail($id);
-        
         return view('admin.common.show_modal', [
             'section_info' => $supplier->toArray(),
             'type' => 'Supplier',
@@ -61,24 +64,22 @@ class SupplierController extends Controller
         ]);
     }
 
-    public function edit(string $id)
-    {
+    public function edit(string $id){
         $data['menu'] = 'Suppliers';
         $data['supplier'] = Supplier::where('id', $id)->first();
         return view('admin.supplier.edit', $data);
     }
 
-    public function update(SupplierRequest $request, string $id)
-    {
+    public function update(SupplierRequest $request, string $id){
         $input = $request->all();
         $supplier = Supplier::findOrFail($id);
         $supplier->update($input);
+        
         \Session::flash('success', 'Supplier has been updated successfully!');
         return redirect()->route('suppliers.index');
     }
 
-    public function destroy(string $id)
-    {
+    public function destroy(string $id){
         $supplier = Supplier::findOrFail($id);
         if (!empty($supplier)) {
             $supplier->delete();

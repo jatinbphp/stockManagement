@@ -15,10 +15,11 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->role === 'admin') {
+        if (auth()->check() && in_array(auth()->user()->role, ['admin', 'stock_clerk', 'accountant'])) {
             return $next($request);
         }
 
-        return redirect('admin');
+        \Session::flash('danger', 'You cannot log in!');
+        return redirect('admin.login');
     }
 }

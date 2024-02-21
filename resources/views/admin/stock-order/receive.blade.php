@@ -26,7 +26,7 @@ $documentCounter = 1;
         <div class="row">
             <div class="col-md-12">
                 @if($stockOrder->status!='completed')
-                    <div class="card card-info">
+                    <div class="card card-info card-outline">
                         <div class="card-header">
                             <h3 class="card-title">Receive {{$menu}}</h3>
                         </div>
@@ -122,7 +122,7 @@ $documentCounter = 1;
                     </div>
                 @endif
 
-                <div class="card card-info">
+                <div class="card card-info card-outline">
                     <div class="card-header">
                         <h3 class="card-title">Uploaded Documents</h3>
                     </div>

@@ -3,62 +3,68 @@
     <div class="content-wrapper">
         <section class="content">
             <div class="container-fluid">
+                @include ('admin.common.error')
+
                 <div class="row">
-                    <div class="col-lg-3 col-6 mt-3">
-                        <div class="small-box bg-info">
-                            <div class="inner">
-                                <h3>{{$users}}</h3>
-                                <p>Total Users</p>
+                    @if(in_array('users', $access_rights))
+                        <div class="col-12 col-sm-6 col-md-3 mt-2">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-info elevation-1">
+                                    <i class="fas fa-users">
+                                    </i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Total Stock Clerk</span>
+                                    <span class="info-box-number">{{$total_stock_clerk}}</span>
+                                </div>
                             </div>
-                            <div class="icon">
-                                <i class="fa fa-users"></i>
-                            </div>
-                            <a href="{{route('users.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-6 mt-3">
-                        <div class="small-box bg-success">
-                            <div class="inner">
-                                <h3>{{$suppliers}}</h3>
-                                <p>Total Suppliers</p>
+
+                        <div class="col-12 col-sm-6 col-md-3 mt-2">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-danger elevation-1">
+                                    <i class="fas fa-boxes">
+                                    </i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Total Accountant</span>
+                                    <span class="info-box-number">{{$total_accountant}}</span>
+                                </div>
                             </div>
-                            <div class="icon">
-                                <i class="fa fa-truck"></i>
-                            </div>
-                            <a href="{{route('suppliers.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-6 mt-3">
-                        <div class="small-box bg-warning">
-                            <div class="inner">
-                                <h3>{{$brands}}</h3>
-                                <p>Total Brands</p>
+                    @endif
+
+                    @if(in_array('suppliers', $access_rights))
+                        <div class="col-12 col-sm-6 col-md-3 mt-2">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-success elevation-1">
+                                    <i class="fas fa-truck">
+                                    </i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Total Suppliers</span>
+                                    <span class="info-box-number">{{$total_suppliers}}</span>
+                                </div>
                             </div>
-                            <div class="icon">
-                                <i class="fa fa-boxes"></i>
-                            </div>
-                            <a href="{{route('brands.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-6 mt-3">
-                        <div class="small-box bg-danger">
-                            <div class="inner">
-                                <h3>{{$practices}}</h3>
-                                <p>Total Practices</p>
+                    @endif
+
+                    @if(in_array('stock-orders', $access_rights))
+                        <div class="col-12 col-sm-6 col-md-3 mt-2">
+                            <div class="info-box mb-3">
+                                <span class="info-box-icon bg-warning elevation-1">
+                                    <i class="fas fa-folder">
+                                    </i>
+                                </span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Total Stock Orders</span>
+                                    <span class="info-box-number">{{$total_stock_orders}}</span>
+                                </div>
                             </div>
-                            <div class="icon">
-                                <i class="fa fa-folder"></i>
-                            </div>
-                            <a href="{{route('practices.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
         </section>
     </div>
-@endsection
-@section('jquery')
-<script>
-
-</script>
 @endsection

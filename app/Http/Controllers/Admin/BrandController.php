@@ -12,9 +12,12 @@ use App\Http\Requests\BrandRequest;
 
 class BrandController extends Controller
 {
-    public function index(Request $request)
-    {
-        //return Brand::with('supplier')->get();
+    public function __construct(Request $request){
+        $this->middleware('auth');
+        $this->middleware('accessright:brands');
+    }
+
+    public function index(Request $request){        
         $data['menu'] = 'Brands';
         if ($request->ajax()) {
             return Datatables::of(Brand::with('supplier')->get())
@@ -32,6 +35,7 @@ class BrandController extends Controller
                 ->addColumn('action', function($row){
                     $row['section_name'] = 'brands';
                     $row['section_title'] = 'Brand';
+
                     return view('admin.common.action-buttons', $row);
                 })
                 ->make(true);
@@ -42,28 +46,24 @@ class BrandController extends Controller
 
     public function create(){
         $data['menu'] = 'Brands';
-        $data['supplier']  = Supplier::where('status', 'active')->get()->pluck('full_name', 'id');
+        $data['supplier'] = Supplier::where('status', 'active')->get()->pluck('full_name', 'id');
         return view("admin.brand.create",$data);
     }
 
     public function store(BrandRequest $request){
         $input   = $request->all();
-
         if($file = $request->file('image')){
             $input['image'] = $this->fileMove($file,'brands');
         }
-
         Brand::create($input);
 
         \Session::flash('success', 'Brand has been inserted successfully!');
-        
         return redirect()->route('brands.index');
     }
 
     public function show($id)
     {
         $brand = Brand::with('supplier')->findOrFail($id);
-        
         return view('admin.common.show_modal', [
             'section_info' => $brand->toArray(),
             'type' => 'Brand',
@@ -88,6 +88,7 @@ class BrandController extends Controller
             $input['image'] = $this->fileMove($file,'brands');
         }
         $brand->update($input);
+
         \Session::flash('success','Brand has been updated successfully!');
         return redirect()->route('brands.index');
     }
@@ -105,8 +106,7 @@ class BrandController extends Controller
         }
     }
 
-    public function getImageUrl($image)
-    {
+    public function getImageUrl($image){
         if (!empty($image) && file_exists($image)) {
             return url($image);
         } else {
