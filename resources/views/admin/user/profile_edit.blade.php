@@ -21,9 +21,9 @@
             @include ('admin.common.error')
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card card-info">
+                    <div class="card card-info card-outline">
                         <div class="card-header">
-                            <h3 class="card-title">Edit Admin Profile</h3>
+                            <h3 class="card-title">Edit Profile</h3>
                         </div>
 
                         {!! Form::model($user,['url' => url('admin/profile_update/'.$user->id),'method'=>'patch','id'=>'profileForm','class' => 'form-horizontal','files'=>true]) !!}

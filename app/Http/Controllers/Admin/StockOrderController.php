@@ -300,4 +300,24 @@ class StockOrderController extends Controller
             }
         }
     }
+
+    public function index_stock_order_dashborad(Request $request){
+        if ($request->ajax()) {
+            return datatables()->of(StockOrder::with(['supplier', 'brand', 'practice'])->orderBy('id', 'DESC')->take(5))
+                ->addIndexColumn()
+                ->addColumn('created_at', function($row) {
+                    return date("Y-m-d H:i:s", strtotime($row->created_at)); 
+                })
+                ->editColumn('status', function($row){
+                    $status = [
+                        'open' => '<span class="badge badge-info">Open</span>',
+                        'incomplete'  => '<span class="badge badge-secondary">Incomplete</span>',
+                        'completed'=> '<span class="badge badge-success">Completed</span>',
+                   ]; 
+                   return $status[$row->status] ?? null;
+                })
+                ->rawColumns(['status'])
+                ->make(true);
+        }
+    }
 }

@@ -139,14 +139,8 @@ $(function () {
         ajax: {
             url: $("#route_name").val(),
             data: function (d) {
-                var formDataArray = $('#stock-orders-filter-Form').find(':input:not(select[multiple])').serializeArray();
+                var formDataArray = $('#filter-Form').find(':input:not(select[multiple])').serializeArray();
 
-                // Filter out non-multiple-select elements and create a single array
-                var multipleSelectValues = $('#filterForm select[multiple]').map(function () {
-                    return { name: $(this).attr('name'), value: $(this).val() };
-                }).get();
-
-                formDataArray = formDataArray.concat(multipleSelectValues);
                 var formData = {};
                 $.each(formDataArray, function(i, field){
                     formData[field.name] = field.value;
@@ -192,14 +186,8 @@ $(function () {
         ajax: {
             url: $("#route_name").val(),
             data: function (d) {
-                var formDataArray = $('#reports-filter-Form').find(':input:not(select[multiple])').serializeArray();
+                var formDataArray = $('#filter-Form').find(':input:not(select[multiple])').serializeArray();
 
-                // Filter out non-multiple-select elements and create a single array
-                var multipleSelectValues = $('#reports-filter-Form select[multiple]').map(function () {
-                    return { name: $(this).attr('name'), value: $(this).val() };
-                }).get();
-
-                formDataArray = formDataArray.concat(multipleSelectValues);
                 var formData = {};
                 $.each(formDataArray, function(i, field){
                     formData[field.name] = field.value;
@@ -208,6 +196,42 @@ $(function () {
                 
                 return d;
             },
+        },
+        columns: [
+            {
+                data: 'id', width: '10%', name: 'id',
+                render: function(data, type, row) {
+                    return '#' + data; // Prepend '#' to the 'id' data
+                }
+            },            
+            {data: 'supplier.full_name', name: 'supplier.full_name',
+                render: data => {
+                    const [name, email] = data.split(' (');
+                    return `${name}<br>${email.slice(0, -1)}`;
+                }
+            },
+            {data: 'brand.name', name: 'brand'},
+            {data: 'practice.full_name', name: 'practice.full_name',
+                render: data => {
+                    const [name, email] = data.split(' (');
+                    return `${name}<br>${email.slice(0, -1)}`;
+                }
+            },
+            {data: 'status', "width": "10%", name: 'status', orderable: false},
+            {data: 'created_at', "width": "15%", name: 'created_at'},
+        ],
+        "order": [[0, "DESC"]]
+    });
+
+    //Dashboard Stock Order Table
+    var dashboard_stock_orders_table = $('#dashboardStockOrderTable').DataTable({
+        processing: true,
+        serverSide: true,
+        searching: false, // Hide search box
+        paging: false, // Hide pagination
+        info: false, // Hide information about number of records
+        ajax: {
+            url: $("#route_name").val()
         },
         columns: [
             {
@@ -507,16 +531,27 @@ $(function () {
 
     // stock order filter
     $('#apply-filter').click(function() {
-        stock_orders_table.ajax.reload(null, false);
-        reports_table.ajax.reload(null, false);
+        var dataType = $(this).data('type');
+
+        if(dataType=='stock-orders'){
+            stock_orders_table.ajax.reload(null, false);
+        } else if(dataType=='reports'){
+            reports_table.ajax.reload(null, false);
+        }
     });
 
     // clear filter
     $('#clear-filter').click(function() {
-         $('#stock-orders-filter-Form')[0].reset();
-        $(".select2").val([]).trigger('change');
-        stock_orders_table.ajax.reload(null, false);
-        reports_table.ajax.reload(null, false);
+        var dataType = $(this).data('type');
+
+        $('#filter-Form')[0].reset();
+        $(".select2").val("").trigger("change");
+
+        if(dataType=='stock-orders'){
+            stock_orders_table.ajax.reload(null, false);
+        } else if(dataType=='reports'){
+            reports_table.ajax.reload(null, false);
+        }
     });
 });
 

@@ -24,8 +24,8 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            {!! Form::open(['url' => null, 'id' => 'stock-orders-filter-Form', 'class' => 'form-horizontal','files'=>true]) !!}
-                                @include ('admin.stock-order.filter')
+                            {!! Form::open(['url' => null, 'id' => 'filter-Form', 'class' => 'form-horizontal','files'=>true]) !!}
+                                @include('admin.stock-order.filter', ['type' => 'stock-orders'])
                             {!! Form::close() !!}
                         </div>
                     </div>

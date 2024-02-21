@@ -35,7 +35,7 @@ class ProfileUpdateController extends Controller
 
     public function edit($id)
     {
-        $data['menu']="Admin Profile";
+        $data['menu']="Edit Profile";
         $data['user'] = User::findorFail($id);
         return view('admin.user.profile_edit',$data);
     }

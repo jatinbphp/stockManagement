@@ -46,9 +46,9 @@ class ReportController extends Controller
                 })
                 ->editColumn('status', function($row){
                    $status = [
-                        'open'          => '<span class="badge badge-primary">Open</span>',
-                        'completed'     => '<span class="badge badge-success">Completed</span>',
-                        'incomplete'    => '<span class="badge badge-danger">Incomplete</span>',
+                        'open' => '<span class="badge badge-primary">Open</span>',
+                        'completed' => '<span class="badge badge-success">Completed</span>',
+                        'incomplete' => '<span class="badge badge-danger">Incomplete</span>',
                    ]; 
                    return $status[$row->status] ?? null;
                 })
@@ -56,10 +56,10 @@ class ReportController extends Controller
                 ->make(true);
         }
         
-        $data['practice']   = Practice::where('status', 'active')->pluck('name', 'id');
-        $data['brand']      = Brand::where('status', 'active')->pluck('name', 'id');
-        $data['supplier']   = Supplier::where('status', 'active')->pluck('name', 'id');
-        $data['status']     = StockOrder::$status;   
+        $data['practice'] = Practice::where('status', 'active')->pluck('name', 'id');
+        $data['brand'] = Brand::where('status', 'active')->pluck('name', 'id');
+        $data['supplier'] = Supplier::where('status', 'active')->pluck('name', 'id');
+        $data['status'] = StockOrder::$status;   
 
         return view('admin.report.index', $data);
     }

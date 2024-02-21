@@ -84,6 +84,7 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::post('stock-orders/add_history', [StockOrderController::class,'addStockOrderStatusHistory'])->name('stock-orders.add_history');
     Route::get('stock-orders/get_history/{id}', [StockOrderController::class,'getStockOrderStatusHistory'])->name('stock-orders.get_history');
     Route::post('stock-orders/update_status', [StockOrderController::class,'updateStockOrderStatus'])->name('stock-orders.update_status');
+    Route::get('/index_stock_order_dashborad', [StockOrderController::class, 'index_stock_order_dashborad'])->name('stock-orders.index_dashboard');
     Route::resource('stock-orders', StockOrderController::class);
 
     /* report */
