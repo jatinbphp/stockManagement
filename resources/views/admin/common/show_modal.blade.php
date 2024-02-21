@@ -37,6 +37,16 @@
                                                         @case('role')
                                                             {{ ucwords(str_replace('_', ' ', $section_info[$key])) }}
                                                             @break
+                                                        @case('access_rights')
+                                                            @if(!empty($section_info[$key]))
+                                                                @php
+                                                                    $access_rights = json_decode($section_info[$key]);
+                                                                @endphp
+                                                                @foreach($access_rights as $accessRight)
+                                                                    <span class="badge badge-success p-2">{{ ucfirst($accessRight) }}</span>
+                                                                @endforeach
+                                                            @endif
+                                                            @break
                                                         @case('supplier')
                                                             @if(is_array($section_info[$key]))
                                                                 {{ $section_info[$key]['name'] }} <br>

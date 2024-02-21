@@ -74,7 +74,7 @@ class RoleController extends Controller
         return view('admin.common.show_modal', [
             'section_info' => $role->toArray(),
             'type' => 'Role',
-            'required_columns' => ['id', 'name', 'status', 'created_at']
+            'required_columns' => ['id', 'name', 'access_rights', 'status']
         ]);
     }
 
