@@ -37,7 +37,6 @@ class UserController extends Controller
                 ->addColumn('action', function($row){
                     $row['section_name'] = 'users';
                     $row['section_title'] = 'User';
-
                     return view('admin.common.action-buttons', $row);
                 })
                 ->make(true);

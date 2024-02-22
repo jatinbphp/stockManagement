@@ -35,7 +35,6 @@ class BrandController extends Controller
                 ->addColumn('action', function($row){
                     $row['section_name'] = 'brands';
                     $row['section_title'] = 'Brand';
-
                     return view('admin.common.action-buttons', $row);
                 })
                 ->make(true);
@@ -51,7 +50,7 @@ class BrandController extends Controller
     }
 
     public function store(BrandRequest $request){
-        $input   = $request->all();
+        $input = $request->all();
         if($file = $request->file('image')){
             $input['image'] = $this->fileMove($file,'brands');
         }

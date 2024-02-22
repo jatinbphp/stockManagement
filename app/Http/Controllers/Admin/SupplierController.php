@@ -33,7 +33,6 @@ class SupplierController extends Controller
                 ->addColumn('action', function($row){
                     $row['section_name'] = 'suppliers';
                     $row['section_title'] = 'Supplier';
-
                     return view('admin.common.action-buttons', $row);
                 })
                 ->make(true);

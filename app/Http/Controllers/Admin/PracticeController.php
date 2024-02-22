@@ -30,13 +30,11 @@ class PracticeController extends Controller
                 ->addColumn('action', function($row){
                     $row['section_name'] = 'practices';
                     $row['section_title'] = 'Practice';
-
                     return view('admin.common.action-buttons', $row);
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
-
         return view('admin.practice.index', $data);
     }
 

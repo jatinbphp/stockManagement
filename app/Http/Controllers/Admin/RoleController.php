@@ -39,10 +39,9 @@ class RoleController extends Controller
                     $row['section_name'] = 'roles';
                     $row['section_title'] = 'Role';
 
-                    if($row->alias=='admin'){
+                    if($row->alias == 'admin'){
                         $row['login_user'] = 'Admin';
                     }
-
                     return view('admin.common.action-buttons', $row);
                 })
                 ->rawColumns(['access_rights'])

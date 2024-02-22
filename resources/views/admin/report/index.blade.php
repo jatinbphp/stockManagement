@@ -37,6 +37,11 @@
                     <div class="card card-info card-outline">
                         <div class="card-header">
                             <h3 class="card-title">Manage {{$menu}}</h3>
+                            <!-- <div class="row">
+                                <div class="col-md-12">
+                                    <a href="{{ route('stock-orders.create') }}" class="btn btn-sm btn-info float-right">Export</a>
+                                </div>
+                            </div> -->
                         </div>
                         <div class="card-body table-responsive">
                             <input type="hidden" id="route_name" value="{{ route('reports.index') }}">

@@ -41,6 +41,9 @@ class ReportController extends Controller
 
             return datatables()->of($collection)
                 ->addIndexColumn()
+                ->addColumn('so_id', function($order) {
+                    return env('ORDER_PREFIX').'-'.date("Y", strtotime($order->created_at)).'-'.$order->id; 
+                })
                 ->addColumn('created_at', function($row) {
                     return date("Y-m-d H:i:s", strtotime($row->created_at)); 
                 })

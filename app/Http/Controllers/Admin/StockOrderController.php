@@ -47,6 +47,9 @@ class StockOrderController extends Controller
 
             return datatables()->of($collection)
                 ->addIndexColumn()
+                ->addColumn('so_id', function($order) {
+                    return env('ORDER_PREFIX').'-'.date("Y", strtotime($order->created_at)).'-'.$order->id; 
+                })
                 ->addColumn('created_at', function($row) {
                     return date("Y-m-d H:i:s", strtotime($row->created_at)); 
                 })
@@ -58,7 +61,6 @@ class StockOrderController extends Controller
                     $row['section_name'] = 'stock-orders';
                     $row['section_title'] = 'Stock Order';
                     $row['order_status'] = $row->status;
-
                     return view('admin.common.action-buttons', $row);
                 })
                 ->rawColumns(['status'])
@@ -305,6 +307,9 @@ class StockOrderController extends Controller
         if ($request->ajax()) {
             return datatables()->of(StockOrder::with(['supplier', 'brand', 'practice'])->orderBy('id', 'DESC')->take(5))
                 ->addIndexColumn()
+                ->addColumn('so_id', function($order) {
+                    return env('ORDER_PREFIX').'-'.date("Y", strtotime($order->created_at)).'-'.$order->id; 
+                })
                 ->addColumn('created_at', function($row) {
                     return date("Y-m-d H:i:s", strtotime($row->created_at)); 
                 })

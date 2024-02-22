@@ -152,7 +152,7 @@ $(function () {
         },
         columns: [
             {
-                data: 'id', width: '10%', name: 'id',
+                data: 'so_id', width: '12%', name: 'so_id',
                 render: function(data, type, row) {
                     return '#' + data; // Prepend '#' to the 'id' data
                 }
@@ -199,7 +199,7 @@ $(function () {
         },
         columns: [
             {
-                data: 'id', width: '10%', name: 'id',
+                data: 'so_id', width: '12%', name: 'so_id',
                 render: function(data, type, row) {
                     return '#' + data; // Prepend '#' to the 'id' data
                 }
@@ -235,7 +235,7 @@ $(function () {
         },
         columns: [
             {
-                data: 'id', width: '10%', name: 'id',
+                data: 'so_id', width: '12%', name: 'so_id',
                 render: function(data, type, row) {
                     return '#' + data; // Prepend '#' to the 'id' data
                 }
