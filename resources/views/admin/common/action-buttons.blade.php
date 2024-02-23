@@ -20,12 +20,3 @@
         <i class="fa fa-eye"></i>
     </a>
 </div>
-
-<!-- below button only for stock-order management -->
-@if(isset($order_status))
-    <div class="btn-group btn-group-sm">
-        <a href="{{ url('admin/stock-orders/'.$id.'/receive') }}" title="Recive Documents" data-id="{{$id}}" class="btn btn-sm btn-success tip ">
-            Receive
-        </a>
-    </div>
-@endif

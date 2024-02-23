@@ -170,9 +170,10 @@ $(function () {
                     return `${name}<br>${email.slice(0, -1)}`;
                 }
             },
-            {data: 'status', "width": "23%", name: 'status', orderable: false},
+            {data: 'status', "width": "10%", name: 'status', orderable: false},
             {data: 'created_at', "width": "20%", name: 'created_at'},
-            {data: 'action', "width": "26%", orderable: false},
+            {data: 'stock_order_receive_created_at', "width": "20%", name: 'stock_order_receive_created_at'},
+            {data: 'action', orderable: false},
         ],
         "order": [[0, "DESC"]]
     });

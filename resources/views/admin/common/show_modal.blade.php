@@ -18,7 +18,7 @@
                                         @if (array_key_exists($key, $section_info))
                                             <tr>
                                                 <th style="width: 25%;">
-                                                    {!! $key != 'created_at' ? ucwords(str_replace('_', ' ', $key)) : 'Created Date' !!} :
+                                                    {!! $key != 'created_at' ? ucwords(str_replace('_', ' ', $key)) : 'Date Created' !!} :
                                                 </th>
                                                 <td>
                                                     @switch($key)

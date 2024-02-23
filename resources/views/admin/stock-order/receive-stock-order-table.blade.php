@@ -5,7 +5,7 @@
 <th>Invoice Number</th>
 <th>GRV Number</th>
 <th>Notes</th>
-<th>Created Date</th>
+<th>Date Created</th>
 <th>Action</th>
 </tr>
 </thead>

@@ -65,32 +65,34 @@
                     @endif
                 </div>
 
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card card-info card-outline">
-                            <div class="card-header">
-                                <h3 class="card-title">Latest Stock Orders</h3>
-                            </div>
-                            <div class="card-body table-responsive">
-                                <input type="hidden" id="route_name" value="{{ route('stock-orders.index_dashboard') }}">
-                                <table id="dashboardStockOrderTable" class="table table-bordered table-striped datatable-dynamic">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Supplier Information</th>
-                                            <th>Brand</th>
-                                            <th>Practice Information</th>
-                                            <th>Status</th>
-                                            <th>Created Date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                @if(in_array('stock-orders', $access_rights))
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-info card-outline">
+                                <div class="card-header">
+                                    <h3 class="card-title">Latest Stock Orders</h3>
+                                </div>
+                                <div class="card-body table-responsive">
+                                    <input type="hidden" id="route_name" value="{{ route('stock-orders.index_dashboard') }}">
+                                    <table id="dashboardStockOrderTable" class="table table-bordered table-striped datatable-dynamic">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Supplier Information</th>
+                                                <th>Brand</th>
+                                                <th>Practice Information</th>
+                                                <th>Status</th>
+                                                <th>Date Created</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endif
             </div>
         </section>
     </div>

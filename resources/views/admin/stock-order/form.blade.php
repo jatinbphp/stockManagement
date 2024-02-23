@@ -27,7 +27,7 @@
 <div class="row">
     <div class="col-md-6">
         <div class="form-group{{ $errors->has('practice_id') ? ' has-error' : '' }}">
-            <label class="control-label" for="practice_id">Select  Practice :<span class="text-red">*</span></label>
+            <label class="control-label" for="practice_id">Select Practice :<span class="text-red">*</span></label>
             {!! Form::select('practice_id', $practice ?? [], null, ['class' => 'form-control', 'placeholder' => 'Please Select', 'id' => 'practice_id']) !!}
             @if ($errors->has('practice_id'))
                 <span class="text-danger">
@@ -60,13 +60,8 @@
 <div class="row">
     <div class="col-md-12">
         <div class="form-group{{ $errors->has('instructions') ? ' has-error' : '' }}">
-            <label class="control-label" for="instructions">Instructions : <span class="text-red">*</span></label>
-            {!! Form::textarea('instructions', null, ['class' => 'form-control', 'placeholder' => 'Enter instructions', 'rows' => 2, 'id' => 'instructions']) !!}
-            @if ($errors->has('instructions'))
-                <span class="text-danger">
-                    <strong>{{ $errors->first('instructions') }}</strong>
-                </span>
-            @endif
+            <label class="control-label" for="instructions">Instructions : </label>
+            {!! Form::textarea('instructions', null, ['class' => 'form-control', 'placeholder' => 'Enter instructions', 'rows' => 2, 'id' => 'instructions']) !!}            
         </div>
     </div>
 </div>

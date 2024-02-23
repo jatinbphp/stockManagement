@@ -65,7 +65,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Created Date:</th>
+                                        <th>Date Created:</th>
                                         <td>{{ $stock_order->created_at->format('Y-m-d H:i:s') }}</td>
                                     </tr>
                                 </tbody>

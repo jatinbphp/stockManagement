@@ -53,7 +53,7 @@
                                         <th>Brand</th>
                                         <th>Practice Information</th>
                                         <th>Status</th>
-                                        <th>Created Date</th>
+                                        <th>Date Created</th>
                                     </tr>
                                 </thead>
                                 <tbody>

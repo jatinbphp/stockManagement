@@ -20,7 +20,6 @@ class StockOrderRequest extends FormRequest
             'brand_id'      => 'required|exists:brands,id',
             'supplier_id'   => 'required|exists:suppliers,id',
             'practice_id'   => 'required|exists:practices,id',
-            'instructions'  => 'required',
             'order_copy'    => 'required|file|mimes:jpg,pdf,doc,docx|max:10240', 
         ];
 

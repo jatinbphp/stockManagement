@@ -34,4 +34,8 @@ class StockOrder extends Model
     public function practice(){
         return $this->belongsTo(Practice::class);
     }
+
+    public function stock_order_receive(){
+        return $this->hasOne(StockOrderReceive::class)->latest();
+    }
 }

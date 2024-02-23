@@ -76,6 +76,25 @@ $documentCounter = 1;
                                 </div>
 
                                 <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group{{ $errors->has('stock_order_status') ? ' has-error' : '' }}">
+                                            <label class="control-label" for="stock_order_status">Stock Order Status :</label>
+                                            <select class="form-control" name="stock_order_status" id="stock_order_status">
+                                                @foreach($stock_order_status as $statusName)
+                                                    @php $selected = (strtolower($statusName) == $stockOrder->status) ? ' selected="selected"' : ''; @endphp
+                                                    <option {{$selected}} value="{{strtolower($statusName)}}">{{ucfirst($statusName)}}</option>
+                                                @endforeach
+                                            </select>
+                                            @if ($errors->has('stock_order_status'))
+                                                <span class="text-danger">
+                                                    <strong>{{ $errors->first('stock_order_status') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="card">
                                             <div class="card-body">
@@ -110,6 +129,37 @@ $documentCounter = 1;
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="{{ route('stock-orders.index') }}" class="btn btn-default">Back</a>
+                                <button class="btn btn-info float-right" type="submit">Save</button>
+                            </div>
+                        {!! Form::close() !!}
+                    </div>
+                @else 
+                    <div class="card card-info card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">Receive {{$menu}}</h3>
+                        </div>
+                        {!! Form::model($stockOrder, ['route' => ['stock-orders.update_status'], 'method' => 'post', 'id' => 'stockOrdersForm', 'class' => 'form-horizontal', 'files' => true]) !!}
+
+                            <div class="card-body">
+                                {!! Form::hidden('redirects_to', URL::previous()) !!}
+                                {!! Form::hidden('id', $stockOrder->id, []) !!}
+                               
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
+                                            <label class="control-label" for="status">Stock Order Status :</label>
+                                            <select class="form-control" name="status" id="status">
+                                                @foreach($stock_order_status as $statusName)
+                                                    @php $selected = (strtolower($statusName) == $stockOrder->status) ? ' selected="selected"' : ''; @endphp
+                                                    <option {{$selected}} value="{{strtolower($statusName)}}">{{ucfirst($statusName)}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
