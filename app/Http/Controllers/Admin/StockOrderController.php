@@ -40,10 +40,16 @@ class StockOrderController extends Controller
                 })
                 ->when($request->input('daterange'), function ($query, $daterange) {
                     $start_date = explode("-", $daterange)[0];
+                    $end_date = date('Y-m-d', strtotime(explode("-", $daterange)[1] . ' +1 day')); // Increment end date by one day
+                    return $query->whereDate('created_at', '>=', $start_date)
+                                 ->whereDate('created_at', '<', $end_date); // Use < instead of <=
+                });
+                /*->when($request->input('daterange'), function ($query, $daterange) {
+                    $start_date = explode("-", $daterange)[0];
                     $end_date = explode("-", $daterange)[1];
                     return $query->whereDate('created_at', '>=', $start_date)
                         ->whereDate('created_at', '<=', $end_date);
-                });
+                });*/
 
             return datatables()->of($collection)
                 ->addIndexColumn()

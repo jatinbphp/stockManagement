@@ -19,7 +19,7 @@ class ReportController extends Controller
     public function index(Request $request){
         $data['menu'] = 'Reports';
         if ($request->ajax()) {
-            $collection = StockOrder::with(['supplier', 'brand', 'practice'])
+            $collection = StockOrder::with(['supplier', 'brand', 'practice', 'stock_order_receive'])
                 ->when($request->input('status'), function ($query, $status) {
                     return $query->where('status', $status);
                 })
@@ -34,10 +34,16 @@ class ReportController extends Controller
                 })
                 ->when($request->input('daterange'), function ($query, $daterange) {
                     $start_date = explode("-", $daterange)[0];
+                    $end_date = date('Y-m-d', strtotime(explode("-", $daterange)[1] . ' +1 day')); // Increment end date by one day
+                    return $query->whereDate('created_at', '>=', $start_date)
+                                 ->whereDate('created_at', '<', $end_date); // Use < instead of <=
+                });
+                /*->when($request->input('daterange'), function ($query, $daterange) {
+                    $start_date = explode("-", $daterange)[0];
                     $end_date = explode("-", $daterange)[1];
                     return $query->whereDate('created_at', '>=', $start_date)
                         ->whereDate('created_at', '<=', $end_date);
-                });
+                });*/
 
             return datatables()->of($collection)
                 ->addIndexColumn()
@@ -46,6 +52,9 @@ class ReportController extends Controller
                 })
                 ->addColumn('created_at', function($row) {
                     return date("Y-m-d H:i:s", strtotime($row->created_at)); 
+                })
+                ->addColumn('stock_order_receive_created_at', function($row) {
+                    return !empty($row->stock_order_receive->created_at) ? date("Y-m-d H:i:s", strtotime($row->stock_order_receive->created_at)) : '-';
                 })
                 ->editColumn('status', function($row){
                    $status = [

@@ -220,6 +220,7 @@ $(function () {
             },
             {data: 'status', "width": "10%", name: 'status', orderable: false},
             {data: 'created_at', "width": "15%", name: 'created_at'},
+            {data: 'stock_order_receive_created_at', "width": "20%", name: 'stock_order_receive_created_at'},
         ],
         "order": [[0, "DESC"]]
     });
