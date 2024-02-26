@@ -22,7 +22,7 @@ class ReportController extends Controller
     public function index(Request $request){
         $data['menu'] = 'Reports';
         if ($request->ajax()) {
-            $collection = StockOrder::with(['supplier', 'brand', 'practice', 'stock_order_receive'])
+            $collection = StockOrder::with(['supplier', 'brand', 'practice', 'stock_order_receive'])->orderBy('id', 'DESC')
                 ->when($request->input('status'), function ($query, $status) {
                     return $query->where('status', $status);
                 })
