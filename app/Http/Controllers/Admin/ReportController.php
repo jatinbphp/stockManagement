@@ -71,9 +71,9 @@ class ReportController extends Controller
                 ->make(true);
         }
 
-        $data['practice'] = Practice::where('status', 'active')->orderBy('name', 'ASC')->pluck('name', 'id');
         $data['brand'] = Brand::where('status', 'active')->orderBy('name', 'ASC')->pluck('name', 'id');
-        $data['supplier'] = Supplier::where('status', 'active')->orderBy('name', 'ASC')->pluck('name', 'id');
+        $data['supplier'] = Supplier::where('status', 'active')->orderBy('name', 'ASC')->get()->pluck('full_name', 'id');
+        $data['practice'] = Practice::where('status', 'active')->orderBy('name', 'ASC')->get()->pluck('full_name', 'id');
         $data['status'] = StockOrder::$status;
 
         return view('admin.report.index', $data);
