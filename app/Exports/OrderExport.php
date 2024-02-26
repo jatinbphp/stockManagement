@@ -8,8 +8,9 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithStyles;
 
-class OrderExport implements FromCollection, WithHeadings, WithCustomCsvSettings
+class OrderExport implements FromCollection, WithHeadings, WithCustomCsvSettings, WithStyles
 {
     protected $data;
 
@@ -44,6 +45,13 @@ class OrderExport implements FromCollection, WithHeadings, WithCustomCsvSettings
     {
         return [
             'encoding' => 'UTF-8',
+        ];
+    }
+
+    public function styles($sheet)
+    {
+        return [
+            1 => ['font' => ['bold' => true]],
         ];
     }
 }
