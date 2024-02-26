@@ -45,6 +45,9 @@ class PracticeController extends Controller
 
     public function store(PracticeRequest $request){
         $input = $request->all();
+        if($file = $request->file('image')){
+            $input['image'] = $this->fileMove($file,'practice');
+        }
         Practice::create($input);
 
         \Session::flash('success', 'Practice has been inserted successfully!');
@@ -56,7 +59,7 @@ class PracticeController extends Controller
         return view('admin.common.show_modal', [
             'section_info' => $practice->toArray(),
             'type' => 'Practice',
-            'required_columns' => ['id', 'name', 'manager_name', 'address', 'email', 'telephone', 'status', 'created_at']
+            'required_columns' => ['id', 'image', 'name', 'manager_name', 'address', 'email', 'telephone', 'status', 'created_at']
         ]);
     }
 
@@ -69,6 +72,12 @@ class PracticeController extends Controller
     public function update(PracticeRequest $request, string $id){
         $input = $request->all();
         $practice = Practice::findOrFail($id);
+        if($file = $request->file('image')){
+            if (!empty($practice['image']) && file_exists($practice['image'])) {
+                unlink($practice['image']);
+            }
+            $input['image'] = $this->fileMove($file,'practice');
+        }
         $practice->update($input);
         
         \Session::flash('success', 'Practice has been updated successfully!');

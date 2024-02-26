@@ -68,8 +68,30 @@
                                         <th>Date Created:</th>
                                         <td>{{ $stock_order->created_at->format('Y-m-d H:i:s') }}</td>
                                     </tr>
+                                    <tr>
+                                        <th>Goods Received:</th>
+                                        <td>
+                                            <a class="btn-sm btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" onclick="reloadStockOrdersTable();">
+                                                Click here
+                                            </a>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                    <div class="row collapse" id="collapseExample">
+                        <div class="col-12">
+                            <div class="card card-info card-outline">
+                                <div class="card-header">
+                                    <h3 class="card-title">Uploaded Documents</h3>
+                                </div>
+                                <div class="card card-body">
+                                    <input type="hidden" id="receive_route_name" value="{{ route('stock-orders.index_receive_stock_order') }}">
+                                    <input type="hidden" id="stock_order_id" value="{{$stock_order->id}}">
+                                    @include ('admin.stock-order.receive-stock-order-table')
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

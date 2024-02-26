@@ -1,4 +1,4 @@
-<table id="receiveStockOrderTable" class="table table-bordered table-striped datatable-dynamic">
+<table id="receiveStockOrderTable" class="table table-bordered table-striped datatable-dynamic w-100">
 <thead>
 <tr>
 <th>#</th>
