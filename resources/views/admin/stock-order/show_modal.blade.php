@@ -56,13 +56,13 @@
                                         <th>Status:</th>
                                         <td>
                                             @if($stock_order->status == 'incomplete')
-                                                <span class="badge badge-warning">{{ ucfirst($stock_order->status) }}</span>
+                                                <span class="badge badge-warning">Order Received Incomplete</span>
                                             @elseif($stock_order->status == 'completed')
-                                                <span class="badge badge-success">{{ ucfirst($stock_order->status) }}</span>
+                                                <span class="badge badge-success">Order Received Complete</span>
                                             @elseif($stock_order->status == 'open')
-                                                <span class="badge badge-primary">{{ ucfirst($stock_order->status) }}</span>
+                                                <span class="badge badge-primary">Dispatched</span>
                                             @elseif($stock_order->status == 'newone')
-                                                <span class="badge badge-secondary">New One</span>
+                                                <span class="badge badge-secondary">Displayed</span>
                                             @endif
                                         </td>
                                     </tr>

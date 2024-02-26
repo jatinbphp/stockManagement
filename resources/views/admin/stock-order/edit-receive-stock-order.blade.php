@@ -81,9 +81,9 @@ $documentCounter = 1;
                                         <div class="form-group{{ $errors->has('stock_order_status') ? ' has-error' : '' }}">
                                             <label class="control-label" for="stock_order_status">Stock Order Status :</label>
                                             <select class="form-control" name="stock_order_status" id="stock_order_status">
-                                                @foreach($stock_order_status as $statusName)
-                                                    @php $selected = (strtolower($statusName) == $receiveStockOrder->stock_order->status) ? ' selected="selected"' : ''; @endphp
-                                                    <option {{$selected}} value="{{strtolower($statusName)}}">{{ucfirst($statusName)}}</option>
+                                                @foreach($stock_order_status as $key => $statusName)
+                                                    @php $selected = ($key == $receiveStockOrder->stock_order->status) ? 'selected' : ''; @endphp
+                                                    <option {{$selected}} value="{{$key}}">{{$statusName}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -173,9 +173,9 @@ $documentCounter = 1;
                                         <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
                                             <label class="control-label" for="status">Stock Order Status :</label>
                                             <select class="form-control" name="status" id="status">
-                                                @foreach($stock_order_status as $statusName)
-                                                    @php $selected = (strtolower($statusName) == $receiveStockOrder->stock_order->status) ? ' selected="selected"' : ''; @endphp
-                                                    <option {{$selected}} value="{{strtolower($statusName)}}">{{ucfirst($statusName)}}</option>
+                                                @foreach($stock_order_status as $key => $statusName)
+                                                    @php $selected = (key == $receiveStockOrder->stock_order->status) ? 'selected' : ''; @endphp
+                                                    <option {{$selected}} value="{{$key}}">{{$statusName}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
