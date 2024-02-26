@@ -4,8 +4,9 @@ namespace App\Exports;
 
 use App\Models\StockOrder;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
 
-class OrderExport implements FromCollection
+class OrderExport implements FromCollection, WithCustomCsvSettings
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -21,9 +22,10 @@ class OrderExport implements FromCollection
     {
         return collect($this->data);
     }
-    public function headings(): array
-    {
-        return ["Ref#", "Date Ordered", "Supplier", "Brand", "Practice", "Comments", "Date Received", "Invoice Number",
-         "GRV Number", 'Additional Notes'];
+
+    public function getCsvSettings(): array{
+        return [
+            'encoding' => 'UTF-8', // Specify the encoding format here
+        ];
     }
 }

@@ -60,11 +60,7 @@ class ReportController extends Controller
                     return !empty($row->stock_order_receive->created_at) ? date("Y-m-d H:i:s", strtotime($row->stock_order_receive->created_at)) : '-';
                 })
                 ->editColumn('status', function($row){
-                   $status = [
-                        'open' => '<span class="badge badge-primary">Open</span>',
-                        'completed' => '<span class="badge badge-success">Completed</span>',
-                        'incomplete' => '<span class="badge badge-danger">Incomplete</span>',
-                   ];
+                   $status = $this->statusArray();
                    return $status[$row->status] ?? null;
                 })
                 ->rawColumns(['status'])
@@ -101,12 +97,12 @@ class ReportController extends Controller
             })->get();
 
         $data = [];
-
-        //"Ref#", "Date Ordered", "Supplier", "Brand", "Practice", "Comments",
-        // "Date Received", "Invoice Number",  "GRV Number", 'Additional Notes'
+        $data[] = ["Ref#", "Date Ordered", "Supplier", "Brand", "Practice", "Comments", "Date Received", "Invoice Number",
+            "GRV Number", 'Additional Notes'];
 
         if(count($orders) > 0){
             foreach ($orders as $order){
+                $so_id = env('ORDER_PREFIX').'-'.date("Y", strtotime($order->created_at)).'-'.$order->id;
                 $oDate = $order['created_at']->format('Y-m-d h:i:s');
                 $sName = $order['supplier']['name'];
                 $bName = $order['brand']['name'];
@@ -118,10 +114,10 @@ class ReportController extends Controller
                         $iNumber = $receive['inv_number'];
                         $gNumber = $receive['grv_number'];
                         $notes = $receive['notes'];
-                        $data[] = [$order['so_id'], $oDate, $sName, $bName, $pName,$order['instructions'], $rDate, $iNumber, $gNumber, $notes];
+                        $data[] = [$so_id, $oDate, $sName, $bName, $pName,$order['instructions'], $rDate, $iNumber, $gNumber, $notes];
                     }
                 }else{
-                    $data[] = [$order['so_id'], $oDate, $sName, $bName, $pName,$order['instructions'],'','','',''];
+                    $data[] = [$so_id, $oDate, $sName, $bName, $pName,$order['instructions'],'','','',''];
                 }
             }
 

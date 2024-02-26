@@ -99,13 +99,22 @@
         $.ajax({
             url: '{{route('reports.export')}}',
             type: "post",
+            data: formData,
             headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+            xhrFields: {
+                responseType: 'blob' // Set the response type to blob
+            },
             success: function(data){
-                var blob = new Blob([data]);
+                //var blob = new Blob([data]);
+                var blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                 var link = document.createElement('a');
                 link.href = window.URL.createObjectURL(blob);
                 link.download = 'stock_order_report.xlsx';
                 link.click();
+            },
+            error: function(xhr, status, error) {
+                console.error('Export request failed:', error);
+                // Handle the error, e.g., display an error message to the user
             }
         });
     });

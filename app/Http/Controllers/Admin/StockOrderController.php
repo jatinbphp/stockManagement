@@ -57,12 +57,7 @@ class StockOrderController extends Controller
                     return !empty($row->stock_order_receive->created_at) ? date("Y-m-d H:i:s", strtotime($row->stock_order_receive->created_at)) : '-';
                 })
                 ->editColumn('status', function($row){
-                    $status = [
-                        'newone' => '<span class="badge badge-secondary">New One</span>',
-                        'open' => '<span class="badge badge-primary">Open</span>',
-                        'incomplete'  => '<span class="badge badge-warning">Incomplete</span>',
-                        'completed'=> '<span class="badge badge-success">Completed</span>',
-                   ];
+                    $status = $this->statusArray();
                    return $status[$row->status] ?? null;
                 })
                 /*->editColumn('status', function($row){
@@ -330,12 +325,7 @@ class StockOrderController extends Controller
                     return date("Y-m-d H:i:s", strtotime($row->created_at));
                 })
                 ->editColumn('status', function($row){
-                    $status = [
-                        'newone' => '<span class="badge badge-secondary">New One</span>',
-                        'open' => '<span class="badge badge-primary">Open</span>',
-                        'incomplete'  => '<span class="badge badge-warning">Incomplete</span>',
-                        'completed'=> '<span class="badge badge-success">Completed</span>',
-                   ];
+                    $status = $this->statusArray();
                    return $status[$row->status] ?? null;
                 })
                 ->rawColumns(['status'])
