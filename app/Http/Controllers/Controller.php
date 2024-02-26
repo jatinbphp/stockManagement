@@ -48,4 +48,19 @@ class Controller extends BaseController
         ];
         return $status;
     }
+
+    public function getStatus($oStatus){
+        $status = 'Displayed';
+        if($oStatus == 'open'){
+            $status = 'Dispatched';
+        }elseif($oStatus == 'incomplete'){
+            $status = 'Order Received Complete';
+        }elseif($oStatus == 'incomplete'){
+            $status = 'Order Received Complete';
+        }elseif($oStatus == 'completed'){
+            $status = 'Order Received Incomplete';
+        }
+
+        return $status;
+    }
 }

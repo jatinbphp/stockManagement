@@ -3,14 +3,14 @@
 namespace App\Exports;
 
 use App\Models\StockOrder;
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
 
-class OrderExport implements FromCollection, WithCustomCsvSettings
+class OrderExport implements FromCollection, WithHeadings, WithCustomCsvSettings
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
     protected $data;
 
     public function __construct(array $data)
@@ -18,14 +18,32 @@ class OrderExport implements FromCollection, WithCustomCsvSettings
         $this->data = $data;
     }
 
-    public function collection()
+    public function collection(): Collection
     {
         return collect($this->data);
     }
 
-    public function getCsvSettings(): array{
+    public function headings(): array
+    {
         return [
-            'encoding' => 'UTF-8', // Specify the encoding format here
+            "Ref#",
+            "Date Ordered",
+            "Supplier",
+            "Brand",
+            "Practice",
+            "Comments",
+            "Status",
+            "Date Received",
+            "Invoice Number",
+            "GRV Number",
+            "Additional Notes",
+        ];
+    }
+
+    public function getCsvSettings(): array
+    {
+        return [
+            'encoding' => 'UTF-8',
         ];
     }
 }

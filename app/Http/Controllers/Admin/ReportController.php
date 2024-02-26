@@ -97,16 +97,15 @@ class ReportController extends Controller
             })->get();
 
         $data = [];
-        $data[] = ["Ref#", "Date Ordered", "Supplier", "Brand", "Practice", "Comments", "Date Received", "Invoice Number",
-            "GRV Number", 'Additional Notes'];
 
         if(count($orders) > 0){
             foreach ($orders as $order){
                 $so_id = env('ORDER_PREFIX').'-'.date("Y", strtotime($order->created_at)).'-'.$order->id;
                 $oDate = $order['created_at']->format('Y-m-d h:i:s');
-                $sName = $order['supplier']['name'];
-                $bName = $order['brand']['name'];
-                $pName = $order['practice']['name'];
+                $sName = $order['supplier']['name'].' ('.$order['supplier']['email'].')';
+                $bName = $order['brand']['name'].' ('.$order['brand']['email'].')';
+                $pName = $order['practice']['name'].' ('.$order['practice']['email'].')';
+                $oStatus = $this->getStatus($order['status']);
 
                 if(count($order['stock_order_multi_receive']) > 0){
                     foreach ($order['stock_order_multi_receive'] as $receive){
@@ -114,10 +113,11 @@ class ReportController extends Controller
                         $iNumber = $receive['inv_number'];
                         $gNumber = $receive['grv_number'];
                         $notes = $receive['notes'];
-                        $data[] = [$so_id, $oDate, $sName, $bName, $pName,$order['instructions'], $rDate, $iNumber, $gNumber, $notes];
+
+                        $data[] = [$so_id, $oDate, $sName, $bName, $pName,$order['instructions'], $oStatus, $rDate, $iNumber, $gNumber, $notes];
                     }
                 }else{
-                    $data[] = [$so_id, $oDate, $sName, $bName, $pName,$order['instructions'],'','','',''];
+                    $data[] = [$so_id, $oDate, $sName, $bName, $pName,$order['instructions'], $oStatus,'','','','', ''];
                 }
             }
 
