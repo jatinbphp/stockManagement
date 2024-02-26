@@ -88,5 +88,6 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::resource('stock-orders', StockOrderController::class);
 
     /* report */
+    Route::post('export', [ReportController::class, 'export'])->name('reports.export');
     Route::resource('reports', ReportController::class);
 });

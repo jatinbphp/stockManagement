@@ -16,12 +16,12 @@ use App\Http\Requests\StockOrderReceiveRequest;
 use Illuminate\Support\Facades\Auth;
 
 class StockOrderController extends Controller
-{   
+{
     public function __construct(Request $request){
         $this->middleware('auth');
         $this->middleware('accessright:stock-orders');
     }
-    
+
     public function index(Request $request){
         $data['menu'] = 'Stock Orders';
         if ($request->ajax()) {
@@ -48,20 +48,21 @@ class StockOrderController extends Controller
             return datatables()->of($collection)
                 ->addIndexColumn()
                 ->addColumn('so_id', function($order) {
-                    return env('ORDER_PREFIX').'-'.date("Y", strtotime($order->created_at)).'-'.$order->id; 
+                    return env('ORDER_PREFIX').'-'.date("Y", strtotime($order->created_at)).'-'.$order->id;
                 })
                 ->addColumn('created_at', function($row) {
-                    return date("Y-m-d H:i:s", strtotime($row->created_at)); 
+                    return date("Y-m-d H:i:s", strtotime($row->created_at));
                 })
                 ->addColumn('stock_order_receive_created_at', function($row) {
                     return !empty($row->stock_order_receive->created_at) ? date("Y-m-d H:i:s", strtotime($row->stock_order_receive->created_at)) : '-';
                 })
                 ->editColumn('status', function($row){
                     $status = [
-                        'open' => '<span class="badge badge-info">Open</span>',
-                        'incomplete'  => '<span class="badge badge-secondary">Incomplete</span>',
+                        'newone' => '<span class="badge badge-secondary">New One</span>',
+                        'open' => '<span class="badge badge-primary">Open</span>',
+                        'incomplete'  => '<span class="badge badge-warning">Incomplete</span>',
                         'completed'=> '<span class="badge badge-success">Completed</span>',
-                   ]; 
+                   ];
                    return $status[$row->status] ?? null;
                 })
                 /*->editColumn('status', function($row){
@@ -77,20 +78,20 @@ class StockOrderController extends Controller
                 ->rawColumns(['status', 'stock_order_receive_created_at'])
                 ->make(true);
         }
-        
-        $data['practice'] = Practice::where('status', 'active')->pluck('name', 'id');
-        $data['brand'] = Brand::where('status', 'active')->pluck('name', 'id');
-        $data['supplier'] = Supplier::where('status', 'active')->pluck('name', 'id');
-        $data['status'] = StockOrder::$status;   
+
+        $data['practice'] = Practice::where('status', 'active')->orderBy('name', 'ASC')->pluck('name', 'id');
+        $data['brand'] = Brand::where('status', 'active')->orderBy('name', 'ASC')->pluck('name', 'id');
+        $data['supplier'] = Supplier::where('status', 'active')->orderBy('name', 'ASC')->pluck('name', 'id');
+        $data['status'] = StockOrder::$status;
 
         return view('admin.stock-order.index', $data);
     }
 
     public function create(){
         $data['menu'] = 'Stock Orders';
-        $data['brand'] = Brand::where('status', 'active')->pluck('name', 'id');
-        $data['supplier'] = Supplier::where('status', 'active')->get()->pluck('full_name', 'id');
-        $data['practice'] = Practice::where('status', 'active')->get()->pluck('full_name', 'id');
+        $data['brand'] = Brand::where('status', 'active')->orderBy('name', 'ASC')->pluck('name', 'id');
+        $data['supplier'] = Supplier::where('status', 'active')->orderBy('name', 'ASC')->get()->pluck('full_name', 'id');
+        $data['practice'] = Practice::where('status', 'active')->orderBy('name', 'ASC')->get()->pluck('full_name', 'id');
         return view("admin.stock-order.create",$data);
     }
 
@@ -110,11 +111,11 @@ class StockOrderController extends Controller
         return view('admin.stock-order.show_modal', $data);
     }
 
-    public function edit(string $id){        
+    public function edit(string $id){
         $data['menu'] = 'Stock Orders';
-        $data['brand'] = Brand::where('status', 'active')->pluck('name', 'id');
-        $data['supplier'] = Supplier::where('status', 'active')->get()->pluck('full_name', 'id');
-        $data['practice'] = Practice::where('status', 'active')->get()->pluck('full_name', 'id');
+        $data['brand'] = Brand::where('status', 'active')->orderBy('name', 'ASC')->pluck('name', 'id');
+        $data['supplier'] = Supplier::where('status', 'active')->orderBy('name', 'ASC')->get()->pluck('full_name', 'id');
+        $data['practice'] = Practice::where('status', 'active')->orderBy('name', 'ASC')->get()->pluck('full_name', 'id');
         $data['stockOrder'] = StockOrder::findOrFail($id);
         return view('admin.stock-order.edit', $data);
     }
@@ -137,19 +138,19 @@ class StockOrderController extends Controller
 
     public function destroy(string $id){
         $stockOrder = StockOrder::findOrFail($id);
-        
+
         if(!empty($stockOrder)){
             if (!empty($stockOrder->order_copy) && file_exists($stockOrder->order_copy)) {
                 unlink($stockOrder->order_copy);
             }
             $stockOrder->delete();
             return 1;
-        } else {  
+        } else {
             return 0;
         }
     }
 
-    public function updateStockOrderStatus(Request $request){ 
+    public function updateStockOrderStatus(Request $request){
         $order = StockOrder::findOrFail($request->id);
         $input = $request->all();
         $order->update(['status' => $request->status]);
@@ -164,7 +165,7 @@ class StockOrderController extends Controller
         return StockOrderStatusHistory::create($input);
     }
 
-    public function getStockOrderStatusHistory($stock_order_id){   
+    public function getStockOrderStatusHistory($stock_order_id){
         $datas = StockOrderStatusHistory::with('user')->where('stock_order_id', $stock_order_id)->latest()->get();
         return response()->json([
             'status' => true,
@@ -174,21 +175,21 @@ class StockOrderController extends Controller
         ], 200);
     }
 
-    public function receiveStockOrder(string $id){        
+    public function receiveStockOrder(string $id){
         $data['menu'] = 'Stock Orders';
         $data['stockOrder'] = StockOrder::findOrFail($id);
         $data['stock_order_status'] = StockOrder::$status;
         return view('admin.stock-order.receive', $data);
     }
 
-    public function receiveStockOrderEdit(string $id){        
+    public function receiveStockOrderEdit(string $id){
         $data['menu'] = 'Stock Orders';
-        $data['receiveStockOrder'] = StockOrderReceive::with(['stock_order','stock_order_receive_documents'])->find($id); 
+        $data['receiveStockOrder'] = StockOrderReceive::with(['stock_order','stock_order_receive_documents'])->find($id);
         $data['stock_order_status'] = StockOrder::$status;
         return view('admin.stock-order.edit-receive-stock-order', $data);
     }
 
-    public function storeReceiveDocuments(StockOrderReceiveRequest $request){               
+    public function storeReceiveDocuments(StockOrderReceiveRequest $request){
         $input = $request->all();
         $input['added_by'] = Auth::user()->id;
         $StockOrderReceive = StockOrderReceive::create($input);
@@ -197,7 +198,7 @@ class StockOrderController extends Controller
         if (!empty($input['documents'])) {
             $input['stock_order_receive_id'] = $StockOrderReceive->id;
             $this->addDocumentAddUpdate($input);
-        } 
+        }
 
         if (!empty($input['stock_order_status'])) {
             $stockOrder = StockOrder::findOrFail($input['stock_order_id']);
@@ -210,12 +211,12 @@ class StockOrderController extends Controller
     }
 
     public function index_receive_stock_order(Request $request){
-        $data['menu'] = 'Stock Orders';    
+        $data['menu'] = 'Stock Orders';
         if ($request->ajax()) {
             return datatables()->of(StockOrderReceive::with('stock_order')->where('stock_order_id', $request->stock_order_id))
                 ->addIndexColumn()
                 ->addColumn('created_at', function($row) {
-                    return date("Y-m-d H:i:s", strtotime($row->created_at)); 
+                    return date("Y-m-d H:i:s", strtotime($row->created_at));
                 })
                 ->addColumn('action', function ($row) {
                     $row['section_name'] = 'receive-stock-orders';
@@ -232,7 +233,7 @@ class StockOrderController extends Controller
     }
 
     // receive document view popup
-    public function getReceiveStockOrderDocuments($stock_order_receive_id){   
+    public function getReceiveStockOrderDocuments($stock_order_receive_id){
         $datas = StockOrderReceiveDocument::with('user')->where('stock_order_receive_id', $stock_order_receive_id)->latest()->get();
         foreach ($datas as $data) {
             $data->document_path = asset($data->document_name);
@@ -247,11 +248,11 @@ class StockOrderController extends Controller
     }
 
     // delete receive documents
-    public function deleteReceiveStockOrderDocuments(Request $request, $id, $type){   
+    public function deleteReceiveStockOrderDocuments(Request $request, $id, $type){
         if($type=='receive_stock_order'){
-            $deleteData = StockOrderReceive::find($id);    
+            $deleteData = StockOrderReceive::find($id);
         } else {
-            $deleteData = StockOrderReceiveDocument::find($id);    
+            $deleteData = StockOrderReceiveDocument::find($id);
         }
 
         if ($deleteData) {
@@ -263,14 +264,14 @@ class StockOrderController extends Controller
     }
 
     // get brand using supplier
-    public function getBrandsBySupplier($supplierId){   
+    public function getBrandsBySupplier($supplierId){
         $supplier = Supplier::with('brand')->where('id', $supplierId)->first();
         $brands = $supplier->brand;
         return response()->json($brands);
     }
 
     // update receive documents
-    public function updateReceiveDocuments(StockOrderReceiveRequest $request){        
+    public function updateReceiveDocuments(StockOrderReceiveRequest $request){
         $input = $request->all();
         $StockOrderReceive = StockOrderReceive::findorFail($input['stock_order_receive_id']);
         $StockOrderReceive->update($input);
@@ -323,17 +324,18 @@ class StockOrderController extends Controller
             return datatables()->of(StockOrder::with(['supplier', 'brand', 'practice'])->orderBy('id', 'DESC')->take(5))
                 ->addIndexColumn()
                 ->addColumn('so_id', function($order) {
-                    return env('ORDER_PREFIX').'-'.date("Y", strtotime($order->created_at)).'-'.$order->id; 
+                    return env('ORDER_PREFIX').'-'.date("Y", strtotime($order->created_at)).'-'.$order->id;
                 })
                 ->addColumn('created_at', function($row) {
-                    return date("Y-m-d H:i:s", strtotime($row->created_at)); 
+                    return date("Y-m-d H:i:s", strtotime($row->created_at));
                 })
                 ->editColumn('status', function($row){
                     $status = [
-                        'open' => '<span class="badge badge-info">Open</span>',
-                        'incomplete'  => '<span class="badge badge-secondary">Incomplete</span>',
+                        'newone' => '<span class="badge badge-secondary">New One</span>',
+                        'open' => '<span class="badge badge-primary">Open</span>',
+                        'incomplete'  => '<span class="badge badge-warning">Incomplete</span>',
                         'completed'=> '<span class="badge badge-success">Completed</span>',
-                   ]; 
+                   ];
                    return $status[$row->status] ?? null;
                 })
                 ->rawColumns(['status'])

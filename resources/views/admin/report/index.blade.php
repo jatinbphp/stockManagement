@@ -37,11 +37,11 @@
                     <div class="card card-info card-outline">
                         <div class="card-header">
                             <h3 class="card-title">Manage {{$menu}}</h3>
-                            <!-- <div class="row">
+                            <div class="row">
                                 <div class="col-md-12">
-                                    <a href="{{ route('stock-orders.create') }}" class="btn btn-sm btn-info float-right">Export</a>
+                                    <a href="javascript:void(0)" class="btn btn-sm btn-info float-right" id="reportExport">Export</a>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                         <div class="card-body table-responsive">
                             <input type="hidden" id="route_name" value="{{ route('reports.index') }}">
@@ -80,7 +80,7 @@
                     _token: '{{csrf_token()}}',
                     'supplier_id': supplier_id,
                  },
-                success: function(data){                        
+                success: function(data){
                     $('#brand_id').empty().append('<option value="">Please Select</option>');
                     $('#brand_id').select2('destroy').select2();
                     data.forEach(function(brand) {
@@ -92,6 +92,22 @@
             $('#brand_id').empty().append('<option value="">Please Select</option>');
             $('#brand_id').select2('destroy').select2();
         }
+    });
+
+    $('#reportExport').on('click', function(){
+        var formData = $('#filter-Form').serialize();
+        $.ajax({
+            url: '{{route('reports.export')}}',
+            type: "post",
+            headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+            success: function(data){
+                var blob = new Blob([data]);
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'stock_order_report.xlsx';
+                link.click();
+            }
+        });
     });
 </script>
 @endsection

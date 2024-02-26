@@ -38,4 +38,8 @@ class StockOrder extends Model
     public function stock_order_receive(){
         return $this->hasOne(StockOrderReceive::class)->latest();
     }
+
+    public function stock_order_multi_receive(){
+        return $this->hasMany(StockOrderReceive::class);
+    }
 }
