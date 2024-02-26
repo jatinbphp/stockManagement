@@ -44,12 +44,6 @@ class StockOrderController extends Controller
                     return $query->whereDate('created_at', '>=', $start_date)
                                  ->whereDate('created_at', '<', $end_date); // Use < instead of <=
                 });
-                /*->when($request->input('daterange'), function ($query, $daterange) {
-                    $start_date = explode("-", $daterange)[0];
-                    $end_date = explode("-", $daterange)[1];
-                    return $query->whereDate('created_at', '>=', $start_date)
-                        ->whereDate('created_at', '<=', $end_date);
-                });*/
 
             return datatables()->of($collection)
                 ->addIndexColumn()
