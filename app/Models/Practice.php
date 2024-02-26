@@ -13,7 +13,7 @@ class Practice extends Model
 
     protected $appends = ['full_name'];
 
-    protected $fillable = ['name', 'address', 'email', 'telephone', 'manager_name', 'status'];
+    protected $fillable = ['name', 'address', 'email', 'telephone', 'manager_name', 'image', 'status'];
 
     protected $dates = ['deleted_at'];
 

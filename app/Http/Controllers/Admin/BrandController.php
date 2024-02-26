@@ -45,7 +45,7 @@ class BrandController extends Controller
 
     public function create(){
         $data['menu'] = 'Brands';
-        $data['supplier'] = Supplier::where('status', 'active')->get()->pluck('full_name', 'id');
+        $data['supplier'] = Supplier::where('status', 'active')->orderBy('name', 'ASC')->get()->pluck('full_name', 'id');
         return view("admin.brand.create",$data);
     }
 
@@ -72,7 +72,7 @@ class BrandController extends Controller
 
     public function edit(string $id){        
         $data['menu'] = 'Brands';
-        $data['supplier'] = Supplier::where('status', 'active')->get()->pluck('full_name', 'id');
+        $data['supplier'] = Supplier::where('status', 'active')->orderBy('name', 'ASC')->get()->pluck('full_name', 'id');
         $data['brand'] = Brand::where('id',$id)->first();
         return view('admin.brand.edit',$data);
     }

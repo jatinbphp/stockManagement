@@ -51,10 +51,10 @@
 </div>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
             <label class="control-label" for="address">Address :</label>
-            {!! Form::textarea('address', null, ['class' => 'form-control', 'placeholder' => 'Enter Address', 'rows' => 2, 'id' => 'address']) !!}
+            {!! Form::textarea('address', null, ['class' => 'form-control', 'placeholder' => 'Enter Address', 'rows' => 1, 'id' => 'address']) !!}
             @if ($errors->has('address'))
                 <span class="text-danger">
                     <strong>{{ $errors->first('address') }}</strong>
@@ -62,6 +62,30 @@
             @endif
         </div>
     </div>
+
+    <div class="col-md-6">
+        <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
+            <label class="control-label" for="image">Image :</label>
+            <div class="">
+                <div class="fileError">
+                    {!! Form::file('image', ['class' => '', 'id'=> 'image','accept'=>'image/*', 'onChange'=>'AjaxUploadImage(this)']) !!}
+                </div>
+
+                @if(!empty($practice['image']) && file_exists($practice['image']))
+                    <img src="{{asset($practice['image'])}}" alt="Practice Image" style="border: 1px solid #ccc;margin-top: 5px;" width="150" id="DisplayImage">
+                @else
+                    <img src=" {{url('assets/admin/dist/img/no-image.png')}}" alt="Practice Image" style="border: 1px solid #ccc;margin-top: 5px;padding: 20px;" width="150" id="DisplayImage">
+                @endif
+                
+                @if ($errors->has('image'))
+                    <span class="text-danger">
+                        <strong>{{ $errors->first('image') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
+    </div>
+
     <div class="col-md-6">
         <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
             <label class="col-md-12 control-label" for="status">Status :<span class="text-red">*</span></label>
