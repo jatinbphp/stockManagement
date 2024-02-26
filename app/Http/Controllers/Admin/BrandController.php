@@ -109,7 +109,7 @@ class BrandController extends Controller
         if (!empty($image) && file_exists($image)) {
             return url($image);
         } else {
-            return url('uploads/default-image.jpeg');
+            return url('assets/admin/dist/img/no-image.png');
         }
     }
 }

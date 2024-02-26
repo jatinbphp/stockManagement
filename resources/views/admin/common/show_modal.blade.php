@@ -81,7 +81,7 @@ function renderImageColumn($info) {
     if (!empty($info) && file_exists($info)) {
         return '<img src="' . url($info) . '" height="50">';
     } else {
-        return '<img src="' . url('uploads/no-image.png') . '" height="50">';
+        return '<img src="' . url('assets/admin/dist/img/no-image.png') . '" height="50">';
     }
 }
 

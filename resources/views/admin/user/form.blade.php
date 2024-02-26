@@ -77,7 +77,7 @@
                 @if(!empty($user['image']) && file_exists($user['image']))
                     <img src="{{asset($user['image'])}}" alt="User Image" style="border: 1px solid #ccc;margin-top: 5px;" width="150" id="DisplayImage">
                 @else
-                    <img src=" {{url('uploads/no-image.png')}}" alt="User Image" style="border: 1px solid #ccc;margin-top: 5px;padding: 20px;" width="150" id="DisplayImage">
+                    <img src=" {{url('assets/admin/dist/img/no-image.png')}}" alt="User Image" style="border: 1px solid #ccc;margin-top: 5px;padding: 20px;" width="150" id="DisplayImage">
                 @endif
                 
                 @if ($errors->has('image'))

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="icon" href="{{asset('uploads/favicon.png')}}" type="image/x-icon" />
+    <link rel="icon" href="{{asset('assets/admin/dist/img/favicon.png')}}" type="image/x-icon" />
     <title>@if(isset($menu)) {{$menu}} | @endif {{ config('app.name', 'SRS') }}</title>
     <meta name="_token" content="{!! csrf_token() !!}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,7 +44,7 @@
     </nav>
     <aside class="main-sidebar sidebar-dark-primary elevation-4" id="left-menubar" style="height: 100%; min-height:0!important; overflow-x: hidden;">
         <a href="{{ url('admin/dashboard') }}" class="brand-link" style="text-align: center">
-            <img src="{{url('uploads/small_logo.png')}}" style="width: 40%;" />
+            <img src="{{url('assets/admin/dist/img/small_logo.png')}}" style="width: 40%;" />
         </a>
 
         <div class="sidebar">
@@ -56,7 +56,7 @@
                             @if(!empty(Auth::user()->image) && file_exists(Auth::user()->image))
                                 <img src=" {{asset(Auth::user()->image)}}" class="img-circle elevation-2" alt="User Image" style="width: 2.1rem; margin-right: 1.5%;">
                             @else
-                                <img src=" {{url('uploads/no-image.png')}}" class="img-circle elevation-2" alt="User Image" style="width: 2.1rem; margin-right: 1.5%;">
+                                <img src=" {{url('assets/admin/dist/img/no-image.png')}}" class="img-circle elevation-2" alt="User Image" style="width: 2.1rem; margin-right: 1.5%;">
                             @endif
                             <p style="padding-right: 6.5%;">
                                 {{ ucfirst(Auth::user()->name) }}

@@ -12,7 +12,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Updated By</th>
-                                <th>Updated Date</th>
+                                <th>Date Updated</th>
                                 <th>Action</th>
                             </tr>
                         </thead>

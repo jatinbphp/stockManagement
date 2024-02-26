@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="icon" href="{{asset('uploads/favicon.png')}}" type="image/x-icon" />
+    <link rel="icon" href="{{asset('assets/admin/dist/img/favicon.png')}}" type="image/x-icon" />
     <title>Log in | {{ config('app.name', 'SRS') }}</title>
     <meta name="_token" content="{!! csrf_token() !!}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,7 +17,7 @@
 <div class="login-box">
     <div class="login-logo">
         <a href="{{ URL::to('/admin') }}">
-            <img src="{{url('uploads/logo.png')}}" style="width: 100%;" />
+            <img src="{{url('assets/admin/dist/img/logo.png')}}" style="width: 100%;" />
         </a>
     </div>
     <!-- /.login-logo -->
