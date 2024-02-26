@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="{{ URL::asset('assets/admin/plugins/ladda/ladda-themeless.min.css')}}">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    @yield('style')
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse" id="bodyid">
 <div class="wrapper">

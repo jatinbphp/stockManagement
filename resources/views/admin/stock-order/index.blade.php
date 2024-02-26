@@ -1,10 +1,12 @@
 @extends('admin.layouts.app')
 @section('content')
+@section('style')
 <style type="text/css">
 #receiveStockOrderTable .btn {display: none;}
 .view-documents {display: block !important;}
 .deleteStockOrderDocumentRecord {display: none;}
 </style>
+@endsection
     <div class="content-wrapper">
         <section class="content-header">
             <div class="container-fluid">
@@ -105,8 +107,8 @@
             </div>
         </div>
     </div>
+    @include ('admin.stock-order.view-documents-list')
 @endsection
-@include ('admin.stock-order.view-documents-list')
 @section('jquery')
 <script type="text/javascript">
 $('#supplier_id').change(function(){
