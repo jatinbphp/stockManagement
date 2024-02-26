@@ -94,7 +94,7 @@ function renderIdColumn($info) {
 }
 
 function renderStatusColumn($info) {
-    $class = $info == 'active' ? 'btn btn-success' : 'btn btn-danger';
-    return '<span class="btn-sm ' . $class . '">' . ucfirst($info) . '</span>';
+    $class = $info == 'active' ? 'success' : 'danger';
+    return '<span class="badge badge-' . $class . '">' . ucfirst($info) . '</span>';
 }
 @endphp

@@ -22,7 +22,7 @@ class ReportController extends Controller
     public function index(Request $request){
         $data['menu'] = 'Reports';
         if ($request->ajax()) {
-            $collection = StockOrder::with(['supplier', 'brand', 'practice', 'stock_order_receive'])
+            $collection = StockOrder::with(['supplier', 'brand', 'practice', 'stock_order_receive'])->orderBy('id', 'DESC')
                 ->when($request->input('status'), function ($query, $status) {
                     return $query->where('status', $status);
                 })
@@ -67,9 +67,9 @@ class ReportController extends Controller
                 ->make(true);
         }
 
-        $data['practice'] = Practice::where('status', 'active')->orderBy('name', 'ASC')->pluck('name', 'id');
         $data['brand'] = Brand::where('status', 'active')->orderBy('name', 'ASC')->pluck('name', 'id');
-        $data['supplier'] = Supplier::where('status', 'active')->orderBy('name', 'ASC')->pluck('name', 'id');
+        $data['supplier'] = Supplier::where('status', 'active')->orderBy('name', 'ASC')->get()->pluck('full_name', 'id');
+        $data['practice'] = Practice::where('status', 'active')->orderBy('name', 'ASC')->get()->pluck('full_name', 'id');
         $data['status'] = StockOrder::$status;
 
         return view('admin.report.index', $data);
