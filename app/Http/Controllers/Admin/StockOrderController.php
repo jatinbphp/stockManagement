@@ -38,12 +38,28 @@ class StockOrderController extends Controller
                 ->when($request->input('practice_id'), function ($query, $practice_id) {
                     return $query->where('practice_id', $practice_id);
                 })
-                ->when($request->input('daterange'), function ($query, $daterange) {
+                ->when($request->input('daterange'), function ($query, $daterange) use ($request) {
+                    if ($request->input('datetype') === 'date-created') {
+                        $start_date = explode("-", $daterange)[0];
+                        $end_date = date('Y-m-d', strtotime(explode("-", $daterange)[1] . ' +1 day'));
+                        return $query->whereDate('created_at', '>=', $start_date)
+                                     ->whereDate('created_at', '<', $end_date);
+                    } elseif ($request->input('datetype') === 'date-received') {
+                        $start_date = explode("-", $daterange)[0];
+                        $end_date = date('Y-m-d', strtotime(explode("-", $daterange)[1] . ' +1 day'));
+                        // Assuming 'stock_order_receive' is a relationship, adjust this according to your actual relationship structure
+                        return $query->whereHas('stock_order_receive', function ($subquery) use ($start_date, $end_date) {
+                            $subquery->whereDate('created_at', '>=', $start_date)
+                                     ->whereDate('created_at', '<', $end_date);
+                        });
+                    }
+                });
+                /*->when($request->input('daterange'), function ($query, $daterange) {
                     $start_date = explode("-", $daterange)[0];
                     $end_date = date('Y-m-d', strtotime(explode("-", $daterange)[1] . ' +1 day')); // Increment end date by one day
                     return $query->whereDate('created_at', '>=', $start_date)
                                  ->whereDate('created_at', '<', $end_date); // Use < instead of <=
-                });
+                });*/
 
             return datatables()->of($collection)
                 ->addIndexColumn()
