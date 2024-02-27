@@ -25,7 +25,7 @@ class StockOrderController extends Controller
     public function index(Request $request){
         $data['menu'] = 'Stock Orders';
         if ($request->ajax()) {
-            $collection = StockOrder::with(['supplier', 'brand', 'practice', 'stock_order_receive'])
+            $collection = StockOrder::with(['supplier', 'brand', 'practice'])
                 ->select('stock_orders.*', 'suppliers.name as supplier_full_name', 'suppliers.email as supplier_email')
                 ->leftJoin('suppliers', 'stock_orders.supplier_id', '=', 'suppliers.id')
                 ->when($request->input('status'), function ($query, $status) {
@@ -61,9 +61,6 @@ class StockOrderController extends Controller
                 })
                 ->editColumn('created_at', function($row) {
                     return date("Y-m-d H:i:s", strtotime($row->created_at));
-                })
-                ->addColumn('stock_order_receive_created_at', function($row) {
-                    return !empty($row->stock_order_receive->created_at) ? date("Y-m-d H:i:s", strtotime($row->stock_order_receive->created_at)) : '-';
                 })
                 ->editColumn('status', function($row){
                     $status = $this->statusArray();
