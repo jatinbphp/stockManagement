@@ -157,10 +157,13 @@ $(function () {
                     return '#' + data; // Prepend '#' to the 'id' data
                 }
             },            
-            {data: 'supplier_full_name', name: 'supplier_full_name',
-                render: data => {
-                    const [name, email] = data.split(' (');
-                    return `${name}<br>${email.slice(0, -1)}`;
+            {
+                data: null,
+                name: 'supplier_full_name',
+                render: function(data, type, row) {
+                    var fullName = data.supplier_full_name || '';
+                    var email = data.supplier_email || '';
+                    return fullName + "<br>" + email;
                 }
             },
             {data: 'brand.name', name: 'brand.name'},
@@ -205,10 +208,13 @@ $(function () {
                     return '#' + data; // Prepend '#' to the 'id' data
                 }
             },            
-            {data: 'supplier.full_name', name: 'supplier.name',
-                render: data => {
-                    const [name, email] = data.split(' (');
-                    return `${name}<br>${email.slice(0, -1)}`;
+            {
+                data: null,
+                name: 'supplier_full_name',
+                render: function(data, type, row) {
+                    var fullName = data.supplier_full_name || '';
+                    var email = data.supplier_email || '';
+                    return fullName + "<br>" + email;
                 }
             },
             {data: 'brand.name', name: 'brand.name'},

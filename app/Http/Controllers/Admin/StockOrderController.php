@@ -26,7 +26,7 @@ class StockOrderController extends Controller
         $data['menu'] = 'Stock Orders';
         if ($request->ajax()) {
             $collection = StockOrder::with(['supplier', 'brand', 'practice', 'stock_order_receive'])
-                    ->select('stock_orders.*', 'suppliers.name as supplier_full_name')
+                    ->select('stock_orders.*', 'suppliers.name as supplier_full_name', 'suppliers.email as supplier_email')
                     ->leftJoin('suppliers', 'stock_orders.supplier_id', '=', 'suppliers.id')
                 ->when($request->input('status'), function ($query, $status) {
                     return $query->where('status', $status);
