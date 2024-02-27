@@ -25,7 +25,9 @@ class StockOrderController extends Controller
     public function index(Request $request){
         $data['menu'] = 'Stock Orders';
         if ($request->ajax()) {
-            $collection = StockOrder::with(['supplier', 'brand', 'practice', 'stock_order_receive'])->orderBy('id', 'DESC')
+            $collection = StockOrder::with(['supplier', 'brand', 'practice', 'stock_order_receive'])
+                    ->select('stock_orders.*', 'suppliers.name as supplier_full_name')
+                    ->leftJoin('suppliers', 'stock_orders.supplier_id', '=', 'suppliers.id')
                 ->when($request->input('status'), function ($query, $status) {
                     return $query->where('status', $status);
                 })
@@ -54,19 +56,13 @@ class StockOrderController extends Controller
                         });
                     }
                 });
-                /*->when($request->input('daterange'), function ($query, $daterange) {
-                    $start_date = explode("-", $daterange)[0];
-                    $end_date = date('Y-m-d', strtotime(explode("-", $daterange)[1] . ' +1 day')); // Increment end date by one day
-                    return $query->whereDate('created_at', '>=', $start_date)
-                                 ->whereDate('created_at', '<', $end_date); // Use < instead of <=
-                });*/
 
             return datatables()->of($collection)
                 ->addIndexColumn()
                 ->addColumn('so_id', function($order) {
                     return env('ORDER_PREFIX').'-'.date("Y", strtotime($order->created_at)).'-'.$order->id;
                 })
-                ->addColumn('created_at', function($row) {
+                ->editColumn('created_at', function($row) {
                     return date("Y-m-d H:i:s", strtotime($row->created_at));
                 })
                 ->addColumn('stock_order_receive_created_at', function($row) {
@@ -76,21 +72,17 @@ class StockOrderController extends Controller
                     $status = $this->statusArray();
                    return $status[$row->status] ?? null;
                 })
-                /*->editColumn('status', function($row){
-                    $row['stock_order_status'] = StockOrder::$status;
-                    return view('admin.stock-order.status-dropdown', $row);
-                })*/
                 ->addColumn('action', function($row){
                     $row['section_name'] = 'stock-orders';
                     $row['section_title'] = 'Stock Order';
                     $row['order_status'] = $row->status;
                     return view('admin.common.stock-orders-buttons', $row);
                 })
-                ->rawColumns(['status', 'stock_order_receive_created_at'])
+                ->rawColumns(['status'])
                 ->make(true);
         }
 
-        $data['brand'] = Brand::where('status', 'active')->orderBy('name', 'ASC')->pluck('name', 'id');
+        //$data['brand'] = Brand::where('status', 'active')->orderBy('name', 'ASC')->pluck('name', 'id');
         $data['supplier'] = Supplier::where('status', 'active')->orderBy('name', 'ASC')->get()->pluck('full_name', 'id');
         $data['practice'] = Practice::where('status', 'active')->orderBy('name', 'ASC')->get()->pluck('full_name', 'id');
         $data['status'] = StockOrder::$status;

@@ -20,7 +20,7 @@ class PracticeController extends Controller
         if ($request->ajax()) {
             return DataTables::of(Practice::all())
                 ->addIndexColumn()
-                ->addColumn('created_at', function($row) {
+                ->editColumn('created_at', function($row) {
                     return date("Y-m-d H:i:s", strtotime($row->created_at)); 
                 })
                 ->editColumn('status', function ($row) {

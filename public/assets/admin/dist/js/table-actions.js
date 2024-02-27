@@ -152,19 +152,19 @@ $(function () {
         },
         columns: [
             {
-                data: 'so_id', width: '12%', name: 'so_id',
+                data: 'so_id', width: '12%', name: 'id',
                 render: function(data, type, row) {
                     return '#' + data; // Prepend '#' to the 'id' data
                 }
             },            
-            {data: 'supplier.full_name', name: 'supplier.full_name',
+            {data: 'supplier_full_name', name: 'supplier_full_name',
                 render: data => {
                     const [name, email] = data.split(' (');
                     return `${name}<br>${email.slice(0, -1)}`;
                 }
             },
-            {data: 'brand.name', name: 'brand'},
-            {data: 'practice.full_name', name: 'practice.full_name',
+            {data: 'brand.name', name: 'brand.name'},
+            {data: 'practice.full_name', name: 'practice.name',
                 render: data => {
                     const [name, email] = data.split(' (');
                     return `${name}<br>${email.slice(0, -1)}`;
@@ -200,19 +200,19 @@ $(function () {
         },
         columns: [
             {
-                data: 'so_id', width: '12%', name: 'so_id',
+                data: 'so_id', width: '12%', name: 'id',
                 render: function(data, type, row) {
                     return '#' + data; // Prepend '#' to the 'id' data
                 }
             },            
-            {data: 'supplier.full_name', name: 'supplier.full_name',
+            {data: 'supplier.full_name', name: 'supplier.name',
                 render: data => {
                     const [name, email] = data.split(' (');
                     return `${name}<br>${email.slice(0, -1)}`;
                 }
             },
-            {data: 'brand.name', name: 'brand'},
-            {data: 'practice.full_name', name: 'practice.full_name',
+            {data: 'brand.name', name: 'brand.name'},
+            {data: 'practice.full_name', name: 'practice.name',
                 render: data => {
                     const [name, email] = data.split(' (');
                     return `${name}<br>${email.slice(0, -1)}`;
@@ -237,26 +237,26 @@ $(function () {
         },
         columns: [
             {
-                data: 'so_id', width: '12%', name: 'so_id',
+                data: 'so_id', width: '12%', name: 'so_id', orderable: false,
                 render: function(data, type, row) {
                     return '#' + data; // Prepend '#' to the 'id' data
                 }
             },            
-            {data: 'supplier.full_name', name: 'supplier.full_name',
+            {data: 'supplier.full_name', name: 'supplier.full_name', orderable: false,
                 render: data => {
                     const [name, email] = data.split(' (');
                     return `${name}<br>${email.slice(0, -1)}`;
                 }
             },
-            {data: 'brand.name', name: 'brand'},
-            {data: 'practice.full_name', name: 'practice.full_name',
+            {data: 'brand.name', name: 'brand', orderable: false},
+            {data: 'practice.full_name', name: 'practice.full_name', orderable: false,
                 render: data => {
                     const [name, email] = data.split(' (');
                     return `${name}<br>${email.slice(0, -1)}`;
                 }
             },
             {data: 'status', "width": "10%", name: 'status', orderable: false},
-            {data: 'created_at', "width": "15%", name: 'created_at'},
+            {data: 'created_at', "width": "15%", name: 'created_at', orderable: false},
         ],
         "order": [[0, "DESC"]]
     });

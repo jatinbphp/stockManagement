@@ -32,7 +32,7 @@ use App\Http\Controllers\Admin\ContentManagementController;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    return redirect(route('admin.login'));
 });
 
 Auth::routes();

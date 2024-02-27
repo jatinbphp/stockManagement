@@ -26,15 +26,15 @@ class StockOrder extends Model
     ];
 
     public function brand(){
-        return $this->belongsTo(Brand::class);
+        return $this->belongsTo(Brand::class, 'brand_id')->select('id', 'name');
     }
 
     public function supplier(){
-        return $this->belongsTo(Supplier::class);
+        return $this->belongsTo(Supplier::class, 'supplier_id')->select('id', 'name', 'email');
     }
 
     public function practice(){
-        return $this->belongsTo(Practice::class);
+        return $this->belongsTo(Practice::class, 'practice_id')->select('id', 'name', 'email');
     }
 
     public function stock_order_receive(){

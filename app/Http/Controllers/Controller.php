@@ -43,8 +43,8 @@ class Controller extends BaseController
         $status = [
             'newone' => '<span class="badge badge-secondary">Displayed</span>',
             'open' => '<span class="badge badge-primary">Dispatched</span>',
-            'incomplete'  => '<span class="badge badge-warning">Order Received Complete</span>',
-            'completed'=> '<span class="badge badge-success">Order Received Incomplete</span>',
+            'incomplete'  => '<span class="badge badge-warning">Order Received Incomplete</span>',
+            'completed'=> '<span class="badge badge-success">Order Received Complete</span>',
         ];
         return $status;
     }

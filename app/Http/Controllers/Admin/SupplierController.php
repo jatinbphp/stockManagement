@@ -23,7 +23,7 @@ class SupplierController extends Controller
         if ($request->ajax()) {
             return Datatables::of(Supplier::all())
                 ->addIndexColumn()
-                ->addColumn('created_at', function($row) {
+                ->editColumn('created_at', function($row) {
                     return date("Y-m-d H:i:s", strtotime($row->created_at)); 
                 })
                 ->editColumn('status', function ($row) {

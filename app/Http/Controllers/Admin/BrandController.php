@@ -22,10 +22,10 @@ class BrandController extends Controller
         if ($request->ajax()) {
             return Datatables::of(Brand::with('supplier')->get())
                 ->addIndexColumn()   
-                ->addColumn('created_at', function($row) {
+                ->editColumn('created_at', function($row) {
                     return date("Y-m-d H:i:s", strtotime($row->created_at)); 
                 })             
-                ->addColumn('image', function($row){
+                ->editColumn('image', function($row){
                     return $this->getImageUrl($row['image']);
                 })
                 ->editColumn('status', function($row){

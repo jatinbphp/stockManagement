@@ -20,10 +20,10 @@ class UserController extends Controller
         if ($request->ajax()) {
             return Datatables::of(User::select()->where('role', '!=', 'admin'))
                 ->addIndexColumn()
-                ->addColumn('created_at', function($row) {
+                ->editColumn('created_at', function($row) {
                     return date("Y-m-d H:i:s", strtotime($row->created_at)); 
                 })
-                ->addColumn('image', function($row){
+                ->editColumn('image', function($row){
                     if (!empty($row['image']) && file_exists($row['image'])) {
                         return url($row['image']);
                     } else {

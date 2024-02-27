@@ -25,7 +25,7 @@ class Supplier extends Model
     ];
 
     public function brand(){
-        return $this->hasMany(Brand::class);
+        return $this->hasMany(Brand::class)->orderBy('name');
     }
 
     public function stockOrder(){

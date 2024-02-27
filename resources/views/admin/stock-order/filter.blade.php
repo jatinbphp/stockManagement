@@ -31,7 +31,7 @@
     </div>
     <div class="col-md-3">
         <div class="form-group">
-            <label class="control-label" for="datetype">Date Type :</label>
+            <label class="control-label" for="datetype">Date Search Type :</label>
             <select class="form-control select2" id="datetype" name="datetype">
                 <option value="date-created">Date Created</option>
                 <option value="date-received">Date Received</option>
