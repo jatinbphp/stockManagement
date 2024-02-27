@@ -29,7 +29,7 @@ class StockOrderController extends Controller
                 ->select('stock_orders.*', 'suppliers.name as supplier_full_name', 'suppliers.email as supplier_email')
                 ->leftJoin('suppliers', 'stock_orders.supplier_id', '=', 'suppliers.id')
                 ->when($request->input('status'), function ($query, $status) {
-                    return $query->where('status', $status);
+                    return $query->where('stock_orders.status', $status);
                 })
                 ->when($request->input('brand_id'), function ($query, $brand_id) {
                     return $query->where('brand_id', $brand_id);

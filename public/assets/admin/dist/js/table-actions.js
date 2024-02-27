@@ -263,7 +263,7 @@ $(function () {
             },
             {data: 'status', "width": "10%", name: 'status', orderable: false},
             {data: 'created_at', "width": "15%", name: 'created_at', orderable: false},
-            {data: 'received_at', "width": "20%", name: 'received_at'},
+            {data: 'received_at', "width": "15%", name: 'received_at', orderable: false},
         ],
         "order": [[0, "DESC"]]
     });

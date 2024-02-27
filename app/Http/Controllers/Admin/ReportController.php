@@ -26,7 +26,7 @@ class ReportController extends Controller
                 ->select('stock_orders.*', 'suppliers.name as supplier_full_name', 'suppliers.email as supplier_email')
                 ->leftJoin('suppliers', 'stock_orders.supplier_id', '=', 'suppliers.id')
                 ->when($request->input('status'), function ($query, $status) {
-                    return $query->where('status', $status);
+                    return $query->where('stock_orders.status', $status);
                 })
                 ->when($request->input('brand_id'), function ($query, $brand_id) {
                     return $query->where('brand_id', $brand_id);
@@ -78,7 +78,7 @@ class ReportController extends Controller
     public function export(Request $request){
         $orders = StockOrder::with(['supplier', 'brand', 'practice', 'stock_order_multi_receive'])
             ->when($request->input('status'), function ($query, $status) {
-                return $query->where('status', $status);
+                return $query->where('stock_orders.status', $status);
             })
             ->when($request->input('brand_id'), function ($query, $brand_id) {
                 return $query->where('brand_id', $brand_id);
@@ -89,11 +89,18 @@ class ReportController extends Controller
             ->when($request->input('practice_id'), function ($query, $practice_id) {
                 return $query->where('practice_id', $practice_id);
             })
-            ->when($request->input('daterange'), function ($query, $daterange) {
-                $start_date = explode("-", $daterange)[0];
-                $end_date = date('Y-m-d', strtotime(explode("-", $daterange)[1] . ' +1 day')); // Increment end date by one day
-                return $query->whereDate('created_at', '>=', $start_date)
-                    ->whereDate('created_at', '<', $end_date); // Use < instead of <=
+            ->when($request->input('daterange'), function ($query, $daterange) use ($request) {
+                if ($request->input('datetype') === 'date-created') {
+                    $start_date = explode("-", $daterange)[0];
+                    $end_date = date('Y-m-d', strtotime(explode("-", $daterange)[1] . ' +1 day'));
+                    return $query->whereDate('stock_orders.created_at', '>=', $start_date)
+                                 ->whereDate('stock_orders.created_at', '<', $end_date);
+                } elseif ($request->input('datetype') === 'date-received') {
+                    $start_date = explode("-", $daterange)[0];
+                    $end_date = date('Y-m-d', strtotime(explode("-", $daterange)[1] . ' +1 day'));
+                    return $query->whereDate('received_at', '>=', $start_date)
+                                 ->whereDate('received_at', '<', $end_date);
+                }
             })->get();
 
         $data = [];
@@ -103,7 +110,7 @@ class ReportController extends Controller
                 $so_id = env('ORDER_PREFIX').'-'.date("Y", strtotime($order->created_at)).'-'.$order->id;
                 $oDate = $order['created_at']->format('Y-m-d h:i:s');
                 $sName = $order['supplier']['name'].' ('.$order['supplier']['email'].')';
-                $bName = $order['brand']['name'].' ('.$order['brand']['email'].')';
+                $bName = $order['brand']['name'];
                 $pName = $order['practice']['name'].' ('.$order['practice']['email'].')';
                 $oStatus = $this->getStatus($order['status']);
 
