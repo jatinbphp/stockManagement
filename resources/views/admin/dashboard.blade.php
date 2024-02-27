@@ -83,6 +83,7 @@
                                                 <th>Practice Information</th>
                                                 <th>Status</th>
                                                 <th>Date Created</th>
+                                                <th>Date Received</th>
                                             </tr>
                                         </thead>
                                         <tbody>

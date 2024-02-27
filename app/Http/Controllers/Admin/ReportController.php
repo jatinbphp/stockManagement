@@ -41,16 +41,13 @@ class ReportController extends Controller
                     if ($request->input('datetype') === 'date-created') {
                         $start_date = explode("-", $daterange)[0];
                         $end_date = date('Y-m-d', strtotime(explode("-", $daterange)[1] . ' +1 day'));
-                        return $query->whereDate('created_at', '>=', $start_date)
-                                     ->whereDate('created_at', '<', $end_date);
+                        return $query->whereDate('stock_orders.created_at', '>=', $start_date)
+                                     ->whereDate('stock_orders.created_at', '<', $end_date);
                     } elseif ($request->input('datetype') === 'date-received') {
                         $start_date = explode("-", $daterange)[0];
                         $end_date = date('Y-m-d', strtotime(explode("-", $daterange)[1] . ' +1 day'));
-                        // Assuming 'stock_order_receive' is a relationship, adjust this according to your actual relationship structure
-                        return $query->whereHas('stock_order_receive', function ($subquery) use ($start_date, $end_date) {
-                            $subquery->whereDate('created_at', '>=', $start_date)
-                                     ->whereDate('created_at', '<', $end_date);
-                        });
+                        return $query->whereDate('received_at', '>=', $start_date)
+                                     ->whereDate('received_at', '<', $end_date);
                     }
                 });
                 

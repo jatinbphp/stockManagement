@@ -175,7 +175,7 @@ $(function () {
             },
             {data: 'status', "width": "10%", name: 'status', orderable: false},
             {data: 'created_at', "width": "20%", name: 'created_at'},
-            {data: 'stock_order_receive_created_at', "width": "20%", name: 'stock_order_receive_created_at'},
+            {data: 'received_at', "width": "20%", name: 'received_at'},
             {data: 'action', orderable: false},
         ],
         "order": [[0, "DESC"]]
@@ -226,7 +226,7 @@ $(function () {
             },
             {data: 'status', "width": "10%", name: 'status', orderable: false},
             {data: 'created_at', "width": "15%", name: 'created_at'},
-            {data: 'stock_order_receive_created_at', "width": "20%", name: 'stock_order_receive_created_at'},
+            {data: 'received_at', "width": "20%", name: 'received_at'},
         ],
         "order": [[0, "DESC"]]
     });
@@ -263,6 +263,7 @@ $(function () {
             },
             {data: 'status', "width": "10%", name: 'status', orderable: false},
             {data: 'created_at', "width": "15%", name: 'created_at', orderable: false},
+            {data: 'received_at', "width": "20%", name: 'received_at'},
         ],
         "order": [[0, "DESC"]]
     });

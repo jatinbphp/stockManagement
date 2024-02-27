@@ -26,8 +26,8 @@ class StockOrderController extends Controller
         $data['menu'] = 'Stock Orders';
         if ($request->ajax()) {
             $collection = StockOrder::with(['supplier', 'brand', 'practice', 'stock_order_receive'])
-                    ->select('stock_orders.*', 'suppliers.name as supplier_full_name', 'suppliers.email as supplier_email')
-                    ->leftJoin('suppliers', 'stock_orders.supplier_id', '=', 'suppliers.id')
+                ->select('stock_orders.*', 'suppliers.name as supplier_full_name', 'suppliers.email as supplier_email')
+                ->leftJoin('suppliers', 'stock_orders.supplier_id', '=', 'suppliers.id')
                 ->when($request->input('status'), function ($query, $status) {
                     return $query->where('status', $status);
                 })
@@ -44,16 +44,13 @@ class StockOrderController extends Controller
                     if ($request->input('datetype') === 'date-created') {
                         $start_date = explode("-", $daterange)[0];
                         $end_date = date('Y-m-d', strtotime(explode("-", $daterange)[1] . ' +1 day'));
-                        return $query->whereDate('created_at', '>=', $start_date)
-                                     ->whereDate('created_at', '<', $end_date);
+                        return $query->whereDate('stock_orders.created_at', '>=', $start_date)
+                                     ->whereDate('stock_orders.created_at', '<', $end_date);
                     } elseif ($request->input('datetype') === 'date-received') {
                         $start_date = explode("-", $daterange)[0];
                         $end_date = date('Y-m-d', strtotime(explode("-", $daterange)[1] . ' +1 day'));
-                        // Assuming 'stock_order_receive' is a relationship, adjust this according to your actual relationship structure
-                        return $query->whereHas('stock_order_receive', function ($subquery) use ($start_date, $end_date) {
-                            $subquery->whereDate('created_at', '>=', $start_date)
-                                     ->whereDate('created_at', '<', $end_date);
-                        });
+                        return $query->whereDate('received_at', '>=', $start_date)
+                                     ->whereDate('received_at', '<', $end_date);
                     }
                 });
 
@@ -206,6 +203,7 @@ class StockOrderController extends Controller
         if (!empty($input['stock_order_status'])) {
             $stockOrder = StockOrder::findOrFail($input['stock_order_id']);
             $input['status'] = $input['stock_order_status'];
+            $input['received_at'] = date("Y-m-d H:i:s");
             $stockOrder->update($input);
         }
 

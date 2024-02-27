@@ -11,7 +11,7 @@ class StockOrder extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['brand_id', 'supplier_id', 'practice_id', 'instructions', 'order_copy', 'status'];
+    protected $fillable = ['brand_id', 'supplier_id', 'practice_id', 'instructions', 'order_copy', 'status', 'received_at'];
 
     const STATUS_NEW_ONE     = 'newone';
     const STATUS_OPEN     = 'open';
