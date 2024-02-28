@@ -46,7 +46,7 @@
                             <h3 class="card-title">Manage {{$menu}}</h3>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <a href="{{ route('stock-orders.create') }}" class="btn btn-sm btn-info float-right">Add New</a>
+                                    <a href="{{ route('stock-orders.create') }}" class="btn btn-sm btn-info float-right"><i class="fa fa-plus pr-1"></i></i> Add New</a>
                                 </div>
                             </div>
                         </div>

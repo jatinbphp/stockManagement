@@ -43,7 +43,7 @@
                                                                     $access_rights = json_decode($section_info[$key]);
                                                                 @endphp
                                                                 @foreach($access_rights as $accessRight)
-                                                                    <span class="badge badge-success p-2">{{ ucfirst($accessRight) }}</span>
+                                                                    <span class="badge badge-success">{{ ucfirst($accessRight) }}</span>
                                                                 @endforeach
                                                             @endif
                                                             @break
@@ -73,7 +73,7 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal"><i class="fa fa-times pr-1"></i></i> Close</button>
 </div>
 
 @php

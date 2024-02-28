@@ -29,8 +29,7 @@
                             @include ('admin.stock-order.form')
                         </div>
                         <div class="card-footer">
-                            <a href="{{ route('stock-orders.index') }}" class="btn btn-default">Back</a>
-                            <button class="btn btn-info float-right" type="submit">Update</button>
+                            @include('admin.common.footer-buttons', ['route' => 'stock-orders.index', 'type' => 'update'])
                         </div>
                         {!! Form::close() !!}
                     </div>

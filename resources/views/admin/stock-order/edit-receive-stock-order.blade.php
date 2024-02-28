@@ -152,8 +152,8 @@ $documentCounter = 1;
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <a href="{{ url('admin/stock-orders/'.$receiveStockOrder->stock_order->id.'/receive') }}" class="btn btn-default">Back</a>
-                                <button class="btn btn-info float-right" type="submit">Update</button>
+                                <a href="{{ url('admin/stock-orders/'.$receiveStockOrder->stock_order->id.'/receive') }}" class="btn btn-sm btn-default"><i class="fa fa-arrow-left pr-1"></i> Back</a>
+                                <button class="btn btn-sm btn-info float-right" type="submit"><i class="fa fa-edit pr-1"></i> Update</button>
                             </div>
                         {!! Form::close() !!}
                     </div>
@@ -183,8 +183,8 @@ $documentCounter = 1;
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <a href="{{ route('stock-orders.index') }}" class="btn btn-default">Back</a>
-                                <button class="btn btn-info float-right" type="submit">Save</button>
+                                <a href="{{ route('stock-orders.index') }}" class="btn btn-sm btn-default"><i class="fa fa-arrow-left pr-1"></i> Back</a>
+                                <button class="btn btn-sm btn-info float-right" type="submit"><i class="fa fa-edit pr-1"></i> Update</button>
                             </div>
                         {!! Form::close() !!}
                     </div>

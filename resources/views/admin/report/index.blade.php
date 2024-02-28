@@ -39,7 +39,7 @@
                             <h3 class="card-title">Manage {{$menu}}</h3>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <a href="javascript:void(0)" class="btn btn-sm btn-info float-right" id="reportExport">Export</a>
+                                    <a href="javascript:void(0)" class="btn btn-sm btn-info float-right" id="reportExport"><i class="fa fa-download pr-1"></i> Export</a>
                                 </div>
                             </div>
                         </div>

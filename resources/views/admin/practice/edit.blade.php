@@ -29,8 +29,7 @@
                             @include ('admin.practice.form')
                         </div>
                         <div class="card-footer">
-                            <a href="{{ route('practices.index') }}" class="btn btn-default">Back</a>
-                            <button class="btn btn-info float-right" type="submit">Update</button>
+                            @include('admin.common.footer-buttons', ['route' => 'practices.index', 'type' => 'update'])
                         </div>
                         {!! Form::close() !!}
                     </div>
