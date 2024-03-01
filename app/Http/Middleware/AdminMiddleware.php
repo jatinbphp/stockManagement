@@ -20,6 +20,6 @@ class AdminMiddleware
         }
 
         \Session::flash('danger', 'You cannot log in!');
-        return redirect('admin.login');
+        return redirect()->route('admin.login');
     }
 }

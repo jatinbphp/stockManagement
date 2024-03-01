@@ -25,7 +25,7 @@
     </div>
     <div class="col-md-3">
         <div class="form-group">
-            <label class="control-label" for="daterange">Date Created :<span class="text-red d-none">*</span></label>
+            <label class="control-label" for="daterange">Date Range :<span class="text-red d-none">*</span></label>
             <input class="form-control" type="text" name="daterange" placeholder="Please select" />
         </div>
     </div>
