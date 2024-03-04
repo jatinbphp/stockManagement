@@ -27,7 +27,7 @@ class UserRequest extends FormRequest
             'name' => 'required',
             'password' => 'confirmed|min:6',
             'phone' =>'required|numeric',
-            'image' => 'required|mimes:jpeg,jpg,png,bmp',
+            'image' => 'mimes:jpeg,jpg,png,bmp',
             'status' => 'required',
             'email' => [
                 'required', // Make the email field optional
@@ -39,7 +39,6 @@ class UserRequest extends FormRequest
         // Check if it's an edit scenario
         if ($this->isMethod('patch')) {
             $rules['password'] = 'nullable|confirmed|min:6';
-            $rules['image'] = 'mimes:jpeg,jpg,png,bmp';
         }
 
         return $rules;

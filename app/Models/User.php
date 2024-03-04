@@ -51,8 +51,10 @@ class User extends Authenticatable
     const STOCK_CLERK   = "stock_clerk";
     const ACCOUNTANT    = "accountant";
     const MAIN_ADMIN    = "admin";
+    const SUPER_ADMIN    = "super_admin";
     public static $roles = [
         self::STOCK_CLERK   => "Stock Clerk",
         self::ACCOUNTANT    => "Accountant",
+        self::MAIN_ADMIN    => "Admin",
     ];
 }

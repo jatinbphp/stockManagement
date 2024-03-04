@@ -22,18 +22,24 @@ return new class extends Migration
 
         \Illuminate\Support\Facades\DB::table('roles')->insert([
             'id' => '1',
+            'name' => 'Super Admin',
+            'alias' => 'super_admin',
+        ]);
+
+        \Illuminate\Support\Facades\DB::table('roles')->insert([
+            'id' => '2',
             'name' => 'Admin',
             'alias' => 'admin',
         ]);
 
         \Illuminate\Support\Facades\DB::table('roles')->insert([
-            'id' => '2',
+            'id' => '3',
             'name' => 'Stock Clerk',
             'alias' => 'stock_clerk',
         ]);
 
         \Illuminate\Support\Facades\DB::table('roles')->insert([
-            'id' => '3',
+            'id' => '4',
             'name' => 'Accountant',
             'alias' => 'accountant',
         ]);

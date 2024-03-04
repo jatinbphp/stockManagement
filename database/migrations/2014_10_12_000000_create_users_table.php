@@ -31,7 +31,7 @@ return new class extends Migration
             'phone' => '0123456789',
             'password' => bcrypt('123456'),
             'status' =>'active',
-            'role' => 'admin'
+            'role' => 'super_admin'
         ]);
     }
 

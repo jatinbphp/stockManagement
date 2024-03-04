@@ -18,7 +18,7 @@ class UserController extends Controller
     public function index(Request $request){
         $data['menu'] = 'Users';
         if ($request->ajax()) {
-            return Datatables::of(User::select()->where('role', '!=', 'admin'))
+            return Datatables::of(User::select()->where('role', '!=', 'super_admin'))
                 ->addIndexColumn()
                 ->editColumn('created_at', function($row) {
                     return date("Y-m-d H:i:s", strtotime($row->created_at)); 

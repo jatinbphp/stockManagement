@@ -68,7 +68,7 @@
     </div>
     <div class="col-md-6">
         <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
-            <label class="control-label" for="image">Image<span class="text-red">*</span></label>
+            <label class="control-label" for="image">Image :</label>
             <div class="">
                 <div class="fileError">
                     {!! Form::file('image', ['class' => '', 'id'=> 'image','accept'=>'image/*', 'onChange'=>'AjaxUploadImage(this)']) !!}

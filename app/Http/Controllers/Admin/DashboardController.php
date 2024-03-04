@@ -21,7 +21,7 @@ class DashboardController extends Controller
 
         $login_user_role = Auth::user()->role;
         $role_rights = Role::where('alias', $login_user_role)->first();
-        $data['access_rights'] = array();
+        $data['access_rights'] = [];
         if (!empty($role_rights)) {
             $data['access_rights'] = json_decode($role_rights->access_rights);
         }

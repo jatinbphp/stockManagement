@@ -33,14 +33,19 @@ class RoleController extends Controller
                 })
                 ->editColumn('status', function ($row) {
                     $row['table_name'] = 'roles';
+
+                    if($row->alias == 'super_admin'){
+                        $row['login_user'] = 'Super Admin';
+                    }
+
                     return view('admin.common.status-buttons', $row);
                 })
                 ->addColumn('action', function($row){
                     $row['section_name'] = 'roles';
                     $row['section_title'] = 'Role';
 
-                    if($row->alias == 'admin'){
-                        $row['login_user'] = 'Admin';
+                    if($row->alias == 'super_admin'){
+                        $row['login_user'] = 'Super Admin';
                     }
                     return view('admin.common.action-buttons', $row);
                 })
@@ -91,7 +96,7 @@ class RoleController extends Controller
      */
     public function update(RoleRequest $request, string $id){
         if($id==1){
-            \Session::flash('danger','There is no possibility of editing the admin role!');
+            \Session::flash('danger','There is no possibility of editing the super admin role!');
             return redirect()->route('roles.index');
         }
 
