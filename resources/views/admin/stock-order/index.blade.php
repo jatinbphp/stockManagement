@@ -44,11 +44,13 @@
                     <div class="card card-info card-outline">
                         <div class="card-header">
                             <h3 class="card-title">Manage {{$menu}}</h3>
+                            @if(in_array('stock-orders-add', getAccessRights()))
                             <div class="row">
                                 <div class="col-md-12">
                                     <a href="{{ route('stock-orders.create') }}" class="btn btn-sm btn-info float-right"><i class="fa fa-plus pr-1"></i></i> Add New</a>
                                 </div>
                             </div>
+                            @endif
                         </div>
                         <div class="card-body table-responsive">
                             <input type="hidden" id="order_update" value="{{ route('stock-orders.update_status')}}">

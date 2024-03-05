@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('stock_orders', function (Blueprint $table) {
-            $table->string('status')->default('inprogress')->change();
+        Schema::table('users', function (Blueprint $table) {
+            $table->longText('practice_ids')->after('status')->nullable();
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('stock_orders', function (Blueprint $table) {
-            $table->string('status')->default('open')->change();
+        Schema::table('users', function (Blueprint $table) {
+            //
         });
     }
 };

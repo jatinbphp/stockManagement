@@ -17,7 +17,7 @@ class AccessRight
     public function handle($request, Closure $next, $access)
     {
         $role = Auth::user()->role;
-        if($role == 'admin'){
+        if($role == 'super_admin'){
             return $next($request);
         }
 

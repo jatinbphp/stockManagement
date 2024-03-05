@@ -19,13 +19,6 @@ class DashboardController extends Controller
         $data['total_suppliers'] = Supplier::count();
         $data['total_stock_orders'] = StockOrder::count();
 
-        $login_user_role = Auth::user()->role;
-        $role_rights = Role::where('alias', $login_user_role)->first();
-        $data['access_rights'] = [];
-        if (!empty($role_rights)) {
-            $data['access_rights'] = json_decode($role_rights->access_rights);
-        }
-        
         return view('admin.dashboard', $data);
     }
 }

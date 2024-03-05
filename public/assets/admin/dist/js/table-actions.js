@@ -38,7 +38,7 @@ $(function () {
             },
             {data: 'name', name: 'name'},
             {data: 'email',  name: 'email'},
-            {data: 'role',  name: 'role'},
+            {data: 'role.name',  name: 'role.name'},
             /*{data: 'image', "width": "10%",  name: 'image', orderable: false, searchable: false, render: function (data,type,row){
                     return '<img src="'+data+'" height="50" alt="Image"/>';
                 }
@@ -563,6 +563,18 @@ $(function () {
             stock_orders_table.ajax.reload(null, false);
         } else if(dataType=='reports'){
             reports_table.ajax.reload(null, false);
+        }
+    });
+
+    $('#usersForm').on('change', '#role', function (event) {
+        event.preventDefault();
+
+        var role = $(this).val();
+
+        if (role === 'shop_manager') {
+            $('#practice-div').css('display', '');
+        } else {
+            $('#practice-div').css('display', 'none');
         }
     });
 });

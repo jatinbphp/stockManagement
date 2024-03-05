@@ -63,6 +63,8 @@
                                                 <span class="badge badge-primary">Dispatched</span>
                                             @elseif($stock_order->status == 'newone')
                                                 <span class="badge badge-secondary">Displayed</span>
+                                            @elseif($stock_order->status == 'inprogress')
+                                                <span class="badge badge-light">In Progress</span>
                                             @endif
                                         </td>
                                     </tr>

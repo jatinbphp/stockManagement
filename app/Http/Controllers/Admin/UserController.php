@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DataTables;
 use App\Models\User;
+use App\Models\Practice;
 use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
@@ -18,7 +19,7 @@ class UserController extends Controller
     public function index(Request $request){
         $data['menu'] = 'Users';
         if ($request->ajax()) {
-            return Datatables::of(User::select()->where('role', '!=', 'super_admin'))
+            return Datatables::of(User::with('role')->where('role', '!=', 'super_admin'))
                 ->addIndexColumn()
                 ->editColumn('created_at', function($row) {
                     return date("Y-m-d H:i:s", strtotime($row->created_at)); 
@@ -47,6 +48,8 @@ class UserController extends Controller
 
     public function create(){
         $data['menu'] = 'Users';
+        $data['practice_ids'] = [];
+        $data['practice'] = Practice::where('status', 'active')->orderBy('name', 'ASC')->get()->pluck('full_name', 'id');
         return view("admin.user.create",$data);
     }
 
@@ -55,6 +58,11 @@ class UserController extends Controller
         if($file = $request->file('image')){
             $input['image'] = $this->fileMove($file,'users');
         }
+
+        if(!empty($input['practice_ids'])){
+            $input['practice_ids'] = implode(",", $input['practice_ids']);
+        }
+
         $user = User::create($input);
 
         \Session::flash('success', 'User has been inserted successfully!');
@@ -74,6 +82,8 @@ class UserController extends Controller
     public function edit($id){
         $data['menu'] = 'Users';
         $data['user'] = User::where('id',$id)->first();
+        $data['practice'] = Practice::where('status', 'active')->orderBy('name', 'ASC')->get()->pluck('full_name', 'id');
+        $data['practice_ids'] = !empty($data['user']['practice_ids']) ? explode(",", $data['user']['practice_ids']) : [];
         return view('admin.user.edit',$data);
     }
 
@@ -82,6 +92,11 @@ class UserController extends Controller
             unset($request['password']);
         }
         $input = $request->all();
+
+        if(!empty($input['practice_ids'])){
+            $input['practice_ids'] = implode(",", $input['practice_ids']);
+        }
+
         $user = User::findorFail($id);
 
         if($file = $request->file('image')){

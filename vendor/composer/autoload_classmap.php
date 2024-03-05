@@ -12,7 +12,6 @@ return array(
     'App\\Http\\Controllers\\Admin\\AuthorizationController' => $baseDir . '/app/Http/Controllers/Admin/AuthorizationController.php',
     'App\\Http\\Controllers\\Admin\\BrandController' => $baseDir . '/app/Http/Controllers/Admin/BrandController.php',
     'App\\Http\\Controllers\\Admin\\CommonController' => $baseDir . '/app/Http/Controllers/Admin/CommonController.php',
-    'App\\Http\\Controllers\\Admin\\DashboardController' => $baseDir . '/app/Http/Controllers/Admin/DashboardController.php',
     'App\\Http\\Controllers\\Admin\\PracticeController' => $baseDir . '/app/Http/Controllers/Admin/PracticeController.php',
     'App\\Http\\Controllers\\Admin\\ProfileUpdateController' => $baseDir . '/app/Http/Controllers/Admin/ProfileUpdateController.php',
     'App\\Http\\Controllers\\Admin\\ReportController' => $baseDir . '/app/Http/Controllers/Admin/ReportController.php',

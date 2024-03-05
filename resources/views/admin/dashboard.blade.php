@@ -6,7 +6,7 @@
                 @include ('admin.common.error')
 
                 <div class="row">
-                    @if(in_array('users', $access_rights))
+                    @if(in_array('users', getAccessRights()))
                         <div class="col-12 col-sm-6 col-md-3 mt-2">
                             <div class="info-box">
                                 <span class="info-box-icon bg-info elevation-1">
@@ -34,7 +34,7 @@
                         </div>
                     @endif
 
-                    @if(in_array('suppliers', $access_rights))
+                    @if(in_array('suppliers', getAccessRights()))
                         <div class="col-12 col-sm-6 col-md-3 mt-2">
                             <div class="info-box mb-3">
                                 <span class="info-box-icon bg-success elevation-1">
@@ -49,7 +49,7 @@
                         </div>
                     @endif
 
-                    @if(in_array('stock-orders', $access_rights))
+                    @if(in_array('stock-orders', getAccessRights()))
                         <div class="col-12 col-sm-6 col-md-3 mt-2">
                             <div class="info-box mb-3">
                                 <span class="info-box-icon bg-warning elevation-1">
@@ -65,7 +65,7 @@
                     @endif
                 </div>
 
-                @if(in_array('stock-orders', $access_rights))
+                @if(in_array('stock-orders', getAccessRights()))
                     <div class="row">
                         <div class="col-12">
                             <div class="card card-info card-outline">

@@ -13,10 +13,10 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
    
-    protected $fillable = ['name', 'email', 'password', 'role', 'image', 'phone', 'status'];
+    protected $fillable = ['name', 'email', 'password', 'role', 'image', 'phone', 'status', 'practice_ids'];
 
     public function role(){
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class, 'role', 'alias');
     }
    
     /**
@@ -48,13 +48,18 @@ class User extends Authenticatable
     ];
 
     /* user roles */
-    const STOCK_CLERK   = "stock_clerk";
-    const ACCOUNTANT    = "accountant";
-    const MAIN_ADMIN    = "admin";
-    const SUPER_ADMIN    = "super_admin";
+    const STOCK_CLERK = "stock_clerk";
+    const ACCOUNTANT = "accountant";
+    const MAIN_ADMIN = "admin";
+    const SUPER_ADMIN = "super_admin";
+    const GENERAL_ADMIN = "general_admin";
+    const SHOP_MANAGER  = "shop_manager";
+
     public static $roles = [
-        self::STOCK_CLERK   => "Stock Clerk",
-        self::ACCOUNTANT    => "Accountant",
-        self::MAIN_ADMIN    => "Admin",
+        self::ACCOUNTANT => "Accountant",
+        self::MAIN_ADMIN => "Receiving Admin",
+        self::GENERAL_ADMIN => "General Admin",
+        self::STOCK_CLERK => "Stock Clerk",
+        self::SHOP_MANAGER => "Shop Manager",
     ];
 }

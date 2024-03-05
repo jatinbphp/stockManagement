@@ -13,10 +13,11 @@ class StockOrder extends Model
 
     protected $fillable = ['brand_id', 'supplier_id', 'practice_id', 'instructions', 'order_copy', 'status', 'received_at'];
 
-    const STATUS_NEW_ONE     = 'newone';
-    const STATUS_OPEN     = 'open';
-    const STATUS_IN_COMPLETE   = 'incomplete';
-    const STATUS_COMPLETED   = 'completed';
+    const STATUS_IN_PROGRESS = 'inprogress';
+    const STATUS_NEW_ONE = 'newone';
+    const STATUS_OPEN = 'open';
+    const STATUS_IN_COMPLETE = 'incomplete';
+    const STATUS_COMPLETED = 'completed';
 
     public static $status = [
         self::STATUS_NEW_ONE => 'Displayed',

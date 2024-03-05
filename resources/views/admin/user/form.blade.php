@@ -14,10 +14,24 @@
     <div class="col-md-6">
         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
             <label class="control-label" for="email">Select Role :<span class="text-red">*</span></label>
-            {!! Form::select('role', \App\Models\User::$roles, null, ['class' => 'form-control', 'placeholder' => 'Please Select', 'id' => 'role']) !!}
+            {!! Form::select('role', \App\Models\User::$roles, null, ['class' => 'form-control select2', 'placeholder' => 'Please Select', 'id' => 'role']) !!}
             @if ($errors->has('role'))
                 <span class="text-danger">
                     <strong>{{ $errors->first('role') }}</strong>
+                </span>
+            @endif
+        </div>
+    </div>
+
+    @php $div = isset($user) && $user->role == 'shop_manager'?'block':'none'; @endphp
+
+    <div class="col-md-12" id="practice-div" style="display:{{$div}}">
+        <div class="form-group{{ $errors->has('practice_ids') ? ' has-error' : '' }}">
+            <label class="control-label w-100" for="practice_ids">Select Practice :<span class="text-red">*</span></label>
+            {!! Form::select('practice_ids[]', $practice ?? [], $practice_ids, ['class' => 'form-control select2 w-100', 'id' => 'practice_ids', 'multiple' => 'true']) !!}
+            @if ($errors->has('practice_ids'))
+                <span class="text-danger">
+                    <strong>{{ $errors->first('practice_ids') }}</strong>
                 </span>
             @endif
         </div>
@@ -139,5 +153,11 @@ function readURL(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+$(document).ready(function() {
+    $('#practice_ids').select2({
+        width: '100%'
+    });
+});
 </script>
 @endsection

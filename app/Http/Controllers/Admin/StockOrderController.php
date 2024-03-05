@@ -23,6 +23,9 @@ class StockOrderController extends Controller
     }
 
     public function index(Request $request){
+
+        $loginUserRole = Auth::user()->role;
+
         $data['menu'] = 'Stock Orders';
         if ($request->ajax()) {
             $collection = StockOrder::with(['supplier', 'brand', 'practice'])
@@ -52,6 +55,9 @@ class StockOrderController extends Controller
                         return $query->whereDate('received_at', '>=', $start_date)
                                      ->whereDate('received_at', '<', $end_date);
                     }
+                })
+                ->when($loginUserRole == 'shop_manager', function ($query) {
+                    return $query->whereIn('stock_orders.practice_id', [Auth::user()->practice_ids]);
                 });
 
             return datatables()->of($collection)
@@ -78,13 +84,26 @@ class StockOrderController extends Controller
 
         //$data['brand'] = Brand::where('status', 'active')->orderBy('name', 'ASC')->pluck('name', 'id');
         $data['supplier'] = Supplier::where('status', 'active')->orderBy('name', 'ASC')->get()->pluck('full_name', 'id');
-        $data['practice'] = Practice::where('status', 'active')->orderBy('name', 'ASC')->get()->pluck('full_name', 'id');
+
+        if($loginUserRole=='shop_manager'){
+            $data['practice'] = Practice::where('status', 'active')->whereIn('id', [Auth::user()->practice_ids])->orderBy('name', 'ASC')->get()->pluck('full_name', 'id');
+        } else {
+            $data['practice'] = Practice::where('status', 'active')->orderBy('name', 'ASC')->get()->pluck('full_name', 'id');
+        }
+
+        
         $data['status'] = StockOrder::$status;
 
         return view('admin.stock-order.index', $data);
     }
 
     public function create(){
+
+        if(!in_array('stock-orders-add', getAccessRights())){
+            \Session::flash('danger', 'Access Denied: You are not authorized to access this section. Please contact your administrator for assistance!');
+            return redirect()->route('admin.dashboard');
+        }
+
         $data['menu'] = 'Stock Orders';
         $data['brand'] = Brand::where('status', 'active')->orderBy('name', 'ASC')->pluck('name', 'id');
         $data['supplier'] = Supplier::where('status', 'active')->orderBy('name', 'ASC')->get()->pluck('full_name', 'id');
@@ -318,8 +337,19 @@ class StockOrderController extends Controller
     }
 
     public function index_stock_order_dashborad(Request $request){
+
+        $loginUserRole = Auth::user()->role;
+
         if ($request->ajax()) {
-            return datatables()->of(StockOrder::with(['supplier', 'brand', 'practice'])->orderBy('id', 'DESC')->take(5))
+            $query = StockOrder::with(['supplier', 'brand', 'practice'])
+                ->orderBy('id', 'DESC')
+                ->take(5);
+
+            if ($loginUserRole == 'shop_manager') {
+                $query->whereIn('practice_id', [Auth::user()->practice_ids]);
+            }
+
+            return datatables()->of($query)
                 ->addIndexColumn()
                 ->addColumn('so_id', function($order) {
                     return env('ORDER_PREFIX').'-'.date("Y", strtotime($order->created_at)).'-'.$order->id;
@@ -329,10 +359,11 @@ class StockOrderController extends Controller
                 })
                 ->editColumn('status', function($row){
                     $status = $this->statusArray();
-                   return $status[$row->status] ?? null;
+                    return $status[$row->status] ?? null;
                 })
                 ->rawColumns(['status'])
                 ->make(true);
+
         }
     }
 }

@@ -41,6 +41,7 @@ class Controller extends BaseController
 
     public function statusArray(){
         $status = [
+            'inprogress' => '<span class="badge badge-light">In Progress</span>',
             'newone' => '<span class="badge badge-secondary">Displayed</span>',
             'open' => '<span class="badge badge-primary">Dispatched</span>',
             'incomplete'  => '<span class="badge badge-warning">Order Received Incomplete</span>',

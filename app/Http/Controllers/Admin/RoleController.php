@@ -26,7 +26,7 @@ class RoleController extends Controller
                     // Map each access right to its corresponding HTML button
                     $buttonsHtml = collect($accessRights)->map(function ($accessRight) {
                         // Create and return the HTML button for each access right
-                        return '<span class="badge badge-success p-2">' . ucfirst($accessRight) . '</span>';
+                        return '<span class="badge badge-success p-2 mb-2">' . ucfirst($accessRight) . '</span>';
                     })->implode(' '); // Implode the HTML buttons with a space separator
 
                     return $buttonsHtml;

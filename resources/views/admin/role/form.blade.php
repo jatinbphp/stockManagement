@@ -23,11 +23,14 @@
                     $checked = (isset($role) && !empty($role->access_rights) && in_array($key, json_decode($role->access_rights))) ? 'checked' : ''; 
                     @endphp
 
-                    <label class="checkbox-label">
-                        {!! Form::checkbox('access_rights[]', $key, $checked, ['class' => 'access-checkbox']) !!}
-                        <span class="checkmark"></span>
-                        <span>{{ $value }}</span>
-                    </label>
+                    <div class="col-md-3">
+                        <label class="checkbox-label">
+                            {!! Form::checkbox('access_rights[]', $key, $checked, ['class' => 'access-checkbox']) !!}
+                            <span class="checkmark"></span>
+                            <span>{{ $value }}</span>
+                        </label>
+                    </div>
+
                 @endforeach
                 <br class="access_rightsError">
                 @if ($errors->has('access_rights'))
