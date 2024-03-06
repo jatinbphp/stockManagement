@@ -22,7 +22,7 @@
         @endif
 
         @if(in_array('stock-orders-displayed', getAccessRights()))
-            <a class="dropdown-item" href="javascript:void(0)" title="Recive Documents" data-id="{{$id}}">Stock Displayed</a>
+            <a class="dropdown-item" href="{{ url('admin/stock-orders/'.$id.'/stock-displayed') }}" title="Recive Documents" data-id="{{$id}}">Stock Displayed</a>
         @endif
     </div>
 </div>

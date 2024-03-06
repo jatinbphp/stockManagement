@@ -64,4 +64,14 @@ class Controller extends BaseController
 
         return $status;
     }
+
+    public function displayedStatusArray(){
+        $displayed_status = [
+            'complete' => '<span class="badge badge-light">Order Received Complete</span>',
+            'complete_dispatched' => '<span class="badge badge-secondary">Order Received Complete - Dispatched</span>',
+            'incomplete' => '<span class="badge badge-primary">Order Received Incomplete</span>',
+            'incomplete_dispatched'  => '<span class="badge badge-warning">Order Received Incomplete - Dispatched</span>',
+        ];
+        return $displayed_status;
+    }
 }

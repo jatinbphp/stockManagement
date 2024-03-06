@@ -60,10 +60,14 @@ class ReportController extends Controller
                     return date("Y-m-d H:i:s", strtotime($row->created_at));
                 })
                 ->editColumn('status', function($row){
-                   $status = $this->statusArray();
-                   return $status[$row->status] ?? null;
+                    $status = $this->statusArray();
+                    return $status[$row->status] ?? null;
                 })
-                ->rawColumns(['status'])
+                ->editColumn('displayed_status', function($row){
+                    $displayed_status = $this->displayedStatusArray();
+                    return $displayed_status[$row->displayed_status] ?? null;
+                })
+                ->rawColumns(['status', 'displayed_status'])
                 ->make(true);
         }
 

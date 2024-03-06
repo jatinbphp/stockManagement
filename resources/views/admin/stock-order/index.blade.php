@@ -64,8 +64,10 @@
                                         <th>Brand</th>
                                         <th>Practice Information</th>
                                         <th>Status</th>
+                                        <th>Stock Displayed</th>
                                         <th>Date Created</th>
                                         <th>Date Received</th>
+                                        <th>Date Displayed</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>

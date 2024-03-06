@@ -174,8 +174,10 @@ $(function () {
                 }
             },
             {data: 'status', "width": "10%", name: 'status', orderable: false},
+            {data: 'displayed_status', "width": "10%", name: 'displayed_status', orderable: false},
             {data: 'created_at', "width": "20%", name: 'created_at'},
             {data: 'received_at', "width": "20%", name: 'received_at'},
+            {data: 'displayed_status_date', "width": "20%", name: 'displayed_status_date'},
             {data: 'action', orderable: false},
         ],
         "order": [[0, "DESC"]]
@@ -225,8 +227,10 @@ $(function () {
                 }
             },
             {data: 'status', "width": "10%", name: 'status', orderable: false},
+            {data: 'displayed_status', "width": "10%", name: 'displayed_status', orderable: false},
             {data: 'created_at', "width": "15%", name: 'created_at'},
             {data: 'received_at', "width": "20%", name: 'received_at'},
+            {data: 'displayed_status_date', "width": "20%", name: 'displayed_status_date'},
         ],
         "order": [[0, "DESC"]]
     });
@@ -262,8 +266,10 @@ $(function () {
                 }
             },
             {data: 'status', "width": "10%", name: 'status'},
+            {data: 'displayed_status', "width": "10%", name: 'displayed_status', orderable: false},
             {data: 'created_at', "width": "15%", name: 'created_at'},
             {data: 'received_at', "width": "15%", name: 'received_at'},
+            {data: 'displayed_status_date', "width": "20%", name: 'displayed_status_date'},
         ],
         "columnDefs": [
             { "orderable": false, "targets": "_all" } // Disable sorting only for the first column

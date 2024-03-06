@@ -70,7 +70,11 @@ class StockOrderController extends Controller
                 })
                 ->editColumn('status', function($row){
                     $status = $this->statusArray();
-                   return $status[$row->status] ?? null;
+                    return $status[$row->status] ?? null;
+                })
+                ->editColumn('displayed_status', function($row){
+                    $displayed_status = $this->displayedStatusArray();
+                    return $displayed_status[$row->displayed_status] ?? null;
                 })
                 ->addColumn('action', function($row){
                     $row['section_name'] = 'stock-orders';
@@ -78,7 +82,7 @@ class StockOrderController extends Controller
                     $row['order_status'] = $row->status;
                     return view('admin.common.stock-orders-buttons', $row);
                 })
-                ->rawColumns(['status'])
+                ->rawColumns(['status', 'displayed_status'])
                 ->make(true);
         }
 
@@ -361,9 +365,37 @@ class StockOrderController extends Controller
                     $status = $this->statusArray();
                     return $status[$row->status] ?? null;
                 })
-                ->rawColumns(['status'])
+                ->editColumn('displayed_status', function($row){
+                    $displayed_status = $this->displayedStatusArray();
+                    return $displayed_status[$row->displayed_status] ?? null;
+                })
+                ->rawColumns(['status', 'displayed_status'])
                 ->make(true);
 
         }
+    }
+
+    public function stockDisplayedStockOrder(string $id){
+        $data['menu'] = 'Stock Orders';
+        $data['stockOrder'] = StockOrder::findOrFail($id);
+        $data['stock_order_status'] = StockOrder::$status;
+        $data['stock_displayed_status'] = StockOrder::$status_stock_displayed;
+        return view('admin.stock-order.stock-displayed', $data);
+    }
+
+    public function updateStockOrderDisplayedStatus(Request $request){
+
+        $order = StockOrder::findOrFail($request->id);
+        $input = $request->all();
+
+        if(empty($request->displayed_status)){
+            \Session::flash('danger', 'Please select Stock Order Status Part 2.');
+            return redirect()->route('stock-orders.stock-displayed', [$input['id']]);
+        }
+
+        $order->update(['displayed_status' => $request->displayed_status, 'displayed_status_date' => date('Y-m-d H:i:s')]);
+
+        \Session::flash('success','Stock Order Status Part 2 has been updated successfully!');
+        return redirect()->route('stock-orders.stock-displayed', [$input['id']]);
     }
 }
