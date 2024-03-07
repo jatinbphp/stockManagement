@@ -59,10 +59,10 @@
                                                 <span class="badge badge-warning">Order Received Incomplete</span>
                                             @elseif($stock_order->status == 'completed')
                                                 <span class="badge badge-success">Order Received Complete</span>
-                                            @elseif($stock_order->status == 'open')
-                                                <span class="badge badge-primary">Dispatched</span>
-                                            @elseif($stock_order->status == 'newone')
-                                                <span class="badge badge-secondary">Displayed</span>
+                                            @elseif($stock_order->status == 'completed_dispatched')
+                                                <span class="badge badge-primary">Order Received Complete - Dispatched</span>
+                                            @elseif($stock_order->status == 'incompleted_dispatched')
+                                                <span class="badge badge-secondary">Order Received Incomplete - Dispatched</span>
                                             @elseif($stock_order->status == 'inprogress')
                                                 <span class="badge badge-light">In Progress</span>
                                             @endif

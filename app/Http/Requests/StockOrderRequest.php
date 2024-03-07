@@ -20,11 +20,11 @@ class StockOrderRequest extends FormRequest
             'brand_id'      => 'required|exists:brands,id',
             'supplier_id'   => 'required|exists:suppliers,id',
             'practice_id'   => 'required|exists:practices,id',
-            'order_copy'    => 'required|file|mimes:jpg,pdf,doc,docx|max:10240', 
+            'order_copy'    => 'required|file|mimes:jpg,pdf,doc,docx,png|max:10240', 
         ];
 
         if ($this->isMethod('patch')) {
-            $rules['order_copy'] = 'nullable|file|mimes:pdf,doc,docx|max:10240';
+            $rules['order_copy'] = 'nullable|file|mimes:pdf,doc,docx,png|max:10240';
         }
 
         return $rules;

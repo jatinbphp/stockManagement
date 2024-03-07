@@ -13,7 +13,7 @@ class StockOrder extends Model
 
     protected $fillable = ['brand_id', 'supplier_id', 'practice_id', 'instructions', 'order_copy', 'status', 'received_at', 'displayed_status', 'displayed_status_date'];
 
-    const STATUS_IN_PROGRESS = 'inprogress';
+    /*const STATUS_IN_PROGRESS = 'inprogress';
     const STATUS_NEW_ONE = 'newone';
     const STATUS_OPEN = 'open';
     const STATUS_IN_COMPLETE = 'incomplete';
@@ -24,6 +24,18 @@ class StockOrder extends Model
         self::STATUS_OPEN => 'Dispatched',
         self::STATUS_IN_COMPLETE => 'Order Received Incomplete',
         self::STATUS_COMPLETED => 'Order Received Complete',
+    ];*/
+
+    const STATUS_COMPLETED = 'completed';
+    const STATUS_COMPLETED_DISPATCHED = 'completed_dispatched';
+    const STATUS_IN_COMPLETE = 'incomplete';
+    const STATUS_IN_COMPLETE_DISPATCHED = 'incompleted_dispatched';
+
+    public static $status = [
+        self::STATUS_COMPLETED => 'Order Received Complete',
+        self::STATUS_COMPLETED_DISPATCHED => 'Order Received Complete - Dispatched',
+        self::STATUS_IN_COMPLETE => 'Order Received Incomplete',
+        self::STATUS_IN_COMPLETE_DISPATCHED => 'Order Received Incomplete - Dispatched',
     ];
 
     public function brand(){
@@ -47,14 +59,8 @@ class StockOrder extends Model
     }
 
     const STATUS_SD_COMPLET = 'complete';
-    const STATUS_SD_COMPLET_DISPATCHED = 'complete_dispatched';
-    const STATUS_SD_IN_COMPLETE = 'incomplete';
-    const STATUS_SD_IN_COMPLETE_DISPATCHED = 'incomplete_dispatched';
 
     public static $status_stock_displayed = [
-        self::STATUS_SD_COMPLET => 'Order Received Complete',
-        self::STATUS_SD_COMPLET_DISPATCHED => 'Order Received Complete - Dispatched',
-        self::STATUS_SD_IN_COMPLETE => 'Order Received Incomplete',
-        self::STATUS_SD_IN_COMPLETE_DISPATCHED => 'Order Received Incomplete - Dispatched',
+        self::STATUS_SD_COMPLET => 'Display in Practice',
     ];
 }

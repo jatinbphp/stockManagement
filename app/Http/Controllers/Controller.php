@@ -42,24 +42,24 @@ class Controller extends BaseController
     public function statusArray(){
         $status = [
             'inprogress' => '<span class="badge badge-light">In Progress</span>',
-            'newone' => '<span class="badge badge-secondary">Displayed</span>',
-            'open' => '<span class="badge badge-primary">Dispatched</span>',
+            'completed' => '<span class="badge badge-success">Order Received Complete</span>',
+            'completed_dispatched' => '<span class="badge badge-primary">Order Received Complete - Dispatched</span>',
             'incomplete'  => '<span class="badge badge-warning">Order Received Incomplete</span>',
-            'completed'=> '<span class="badge badge-success">Order Received Complete</span>',
+            'incompleted_dispatched'=> '<span class="badge badge-secondary">Order Received Incomplete - Dispatched</span>',
         ];
         return $status;
     }
 
     public function getStatus($oStatus){
-        $status = 'Displayed';
-        if($oStatus == 'open'){
-            $status = 'Dispatched';
-        }elseif($oStatus == 'incomplete'){
+        $status = 'In Progress';
+        if($oStatus == 'completed'){
             $status = 'Order Received Complete';
+        }elseif($oStatus == 'completed_dispatched'){
+            $status = 'Order Received Complete - Dispatched';
         }elseif($oStatus == 'incomplete'){
-            $status = 'Order Received Complete';
-        }elseif($oStatus == 'completed'){
             $status = 'Order Received Incomplete';
+        }elseif($oStatus == 'incompleted_dispatched'){
+            $status = 'Order Received Incomplete - Dispatched';
         }
 
         return $status;
@@ -67,10 +67,7 @@ class Controller extends BaseController
 
     public function displayedStatusArray(){
         $displayed_status = [
-            'complete' => '<span class="badge badge-light">Order Received Complete</span>',
-            'complete_dispatched' => '<span class="badge badge-secondary">Order Received Complete - Dispatched</span>',
-            'incomplete' => '<span class="badge badge-primary">Order Received Incomplete</span>',
-            'incomplete_dispatched'  => '<span class="badge badge-warning">Order Received Incomplete - Dispatched</span>',
+            'complete' => '<span class="badge badge-success">Display in Practice</span>',
         ];
         return $displayed_status;
     }
