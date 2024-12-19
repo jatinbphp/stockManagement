@@ -11,7 +11,7 @@ class StockOrder extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['brand_id', 'supplier_id', 'practice_id', 'instructions', 'order_copy', 'status', 'received_at', 'displayed_status', 'displayed_status_date'];
+    protected $fillable = ['brand_id', 'supplier_id', 'practice_id', 'instructions', 'order_copy', 'status', 'received_at', 'displayed_status', 'displayed_status_date','is_delivered','order_delivey_date','courier_tracking_number'];
 
     /*const STATUS_IN_PROGRESS = 'inprogress';
     const STATUS_NEW_ONE = 'newone';
@@ -26,12 +26,14 @@ class StockOrder extends Model
         self::STATUS_COMPLETED => 'Order Received Complete',
     ];*/
 
+    const STATUS_BLANK = '';
     const STATUS_COMPLETED = 'completed';
     const STATUS_COMPLETED_DISPATCHED = 'completed_dispatched';
     const STATUS_IN_COMPLETE = 'incomplete';
     const STATUS_IN_COMPLETE_DISPATCHED = 'incompleted_dispatched';
 
     public static $status = [
+        self::STATUS_BLANK => 'Please Select',
         self::STATUS_COMPLETED => 'Order Received Complete',
         self::STATUS_COMPLETED_DISPATCHED => 'Order Received Complete - Dispatched',
         self::STATUS_IN_COMPLETE => 'Order Received Incomplete',

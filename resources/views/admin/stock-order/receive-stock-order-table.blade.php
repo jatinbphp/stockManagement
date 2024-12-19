@@ -4,6 +4,7 @@
 <th>#</th>
 <th>Invoice Number</th>
 <th>GRV Number</th>
+<th>Courier & Tracking Np.</th>
 <th>Notes</th>
 <th>Date Received</th>
 <th>Action</th>

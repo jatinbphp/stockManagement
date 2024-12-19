@@ -23,7 +23,7 @@ class ReportController extends Controller
         $data['menu'] = 'Reports';
         if ($request->ajax()) {
             $collection = StockOrder::with(['supplier', 'brand', 'practice'])
-                ->select('stock_orders.*', 'suppliers.name as supplier_full_name', 'suppliers.email as supplier_email')
+                ->select('stock_orders.*', 'suppliers.name', 'suppliers.email as supplier_email')
                 ->leftJoin('suppliers', 'stock_orders.supplier_id', '=', 'suppliers.id')
                 ->when($request->input('status'), function ($query, $status) {
                     return $query->where('stock_orders.status', $status);

@@ -40,7 +40,7 @@
                                         <th>Order Copy:</th>
                                         <td>
                                             @if (!empty($stock_order->order_copy) && file_exists($stock_order->order_copy))
-                                                <a target="_blank" href="{{ $stock_order->order_copy }}" download>
+                                                <a target="_blank" href="{{ url($stock_order->order_copy) }}" download>
                                                     <i class="fas fa-download"></i> Download
                                                 </a>
                                             @else

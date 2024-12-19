@@ -65,7 +65,8 @@
                                         <th>Practice Information</th>
                                         <th>Status</th>
                                         <th>Stock Displayed</th>
-                                        <th>Date Created</th>
+                                        <th>Order Date</th>
+                                        <th>Delivery Date</th>                                        
                                         <th>Date Received</th>
                                         <th>Date Displayed</th>
                                         <th>Action</th>
@@ -213,6 +214,7 @@ function reloadStockOrdersTable() {
             },
             {data: 'inv_number', name: 'inv_number'},
             {data: 'grv_number', name: 'grv_number'},
+            {data: 'stock_order.courier_tracking_number', name: 'stock_order.courier_tracking_number'},
             {data: 'notes', name: 'notes'},
             {data: 'created_at', "width": "18%", name: 'created_at'},
             {data: 'action', "width": "15%", orderable: false},

@@ -39,7 +39,7 @@ $documentCounter = 1;
 
                                     <div class="col-md-6">
                                         <div class="form-group{{ $errors->has('inv_number') ? ' has-error' : '' }}">
-                                            <label class="control-label" for="inv_number">Invoice Number : <span class="text-red">*</span></label>
+                                            <label class="control-label" for="inv_number">Invoice Number : <span class="text-red"></span></label>
                                             {!! Form::text('inv_number', $receiveStockOrder->inv_number, ['class' => 'form-control', 'placeholder' => 'Enter Invoice Number', 'id' => 'inv_number']) !!}
                                             @if ($errors->has('inv_number'))
                                                 <span class="text-danger">
@@ -51,7 +51,7 @@ $documentCounter = 1;
 
                                     <div class="col-md-6">
                                         <div class="form-group{{ $errors->has('grv_number') ? ' has-error' : '' }}">
-                                            <label class="control-label" for="grv_number">GRV Number : <span class="text-red">*</span></label>
+                                            <label class="control-label" for="grv_number">GRV Number : <span class="text-red"></span></label>
                                             {!! Form::text('grv_number', $receiveStockOrder->grv_number, ['class' => 'form-control', 'placeholder' => 'Enter GRV Number', 'id' => 'grv_number']) !!}
                                             @if ($errors->has('grv_number'))
                                                 <span class="text-danger">
@@ -77,7 +77,7 @@ $documentCounter = 1;
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-4">
                                         <div class="form-group{{ $errors->has('stock_order_status') ? ' has-error' : '' }}">
                                             <label class="control-label" for="stock_order_status">Stock Order Status :</label>
                                             <select class="form-control" name="stock_order_status" id="stock_order_status">
@@ -87,6 +87,41 @@ $documentCounter = 1;
                                                 @endforeach
                                             </select>
                                         </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group{{ $errors->has('courier_tracking_number') ? ' has-error' : '' }}">
+                                            <label class="control-label" for="courier_tracking_number">Courier & Tracking Number :</label>
+
+                                            @php 
+                                              $courier = null; 
+                                              
+                                              if(isset($receiveStockOrder['stock_order']) && !empty($receiveStockOrder['stock_order']['courier_tracking_number'])){
+                                                $courier = $receiveStockOrder['stock_order']['courier_tracking_number'];
+                                              }                                                
+                                            @endphp
+
+                                            {!! Form::text('courier_tracking_number', $courier, ['class' => 'form-control', 'placeholder' => 'Enter Courier & Tracking Number', 'id' => 'courier_tracking_number']) !!}
+                                            @if ($errors->has('courier_tracking_number'))
+                                            <span class="text-danger">
+                                              <strong>{{ $errors->first('courier_tracking_number') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="control-label" for="is_delivered">Stock Delivered :</label>
+                                        <label class="checkbox-label">
+                                            @php 
+                                              $checked = ''; 
+                                              $disabled = ''; 
+                                              if(isset($receiveStockOrder['stock_order']) && !empty($receiveStockOrder['stock_order']['is_delivered']) && $receiveStockOrder['stock_order']['is_delivered'] == 1){
+                                                $checked = 'checked';
+                                                $disabled = 'disabled';
+                                              }                                                
+                                            @endphp
+                                            {!! Form::checkbox('is_delivered', null, $checked, [$disabled, 'class' => 'access-checkbox']) !!}
+                                            <span class="checkmark"></span>
+                                        </label>
                                     </div>
                                 </div>
 

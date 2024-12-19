@@ -159,23 +159,26 @@ $(function () {
             },            
             {
                 data: null,
-                name: 'supplier_full_name',
+                name: 'supplier.name',
                 render: function(data, type, row) {
-                    var fullName = data.supplier_full_name || '';
-                    var email = data.supplier_email || '';
-                    return fullName + "<br>" + email;
+                    var fullName = data.supplier.name || '';
+                    var email = data.supplier.email || '';
+                    //return fullName + "<br>" + email;
+                    return fullName;
                 }
             },
             {data: 'brand.name', name: 'brand.name'},
             {data: 'practice.full_name', name: 'practice.name',
                 render: data => {
                     const [name, email] = data.split(' (');
-                    return `${name}<br>${email.slice(0, -1)}`;
+                    // return `${name}<br>${email.slice(0, -1)}`;
+                    return `${name}`;
                 }
             },
             {data: 'status', "width": "10%", name: 'status', orderable: false},
             {data: 'displayed_status', "width": "10%", name: 'displayed_status', orderable: false},
             {data: 'created_at', "width": "20%", name: 'created_at'},
+            {data: 'order_delivey_date', "width": "20%", name: 'order_delivey_date'},
             {data: 'received_at', "width": "20%", name: 'received_at'},
             {data: 'displayed_status_date', "width": "20%", name: 'displayed_status_date'},
             {data: 'action', orderable: false},
@@ -212,23 +215,26 @@ $(function () {
             },            
             {
                 data: null,
-                name: 'supplier_full_name',
+                name: 'supplier.name',
                 render: function(data, type, row) {
-                    var fullName = data.supplier_full_name || '';
-                    var email = data.supplier_email || '';
-                    return fullName + "<br>" + email;
+                    var fullName = data.supplier.name || '';
+                    var email = data.supplier.email || '';
+                    // return fullName + "<br>" + email;
+                    return fullName;
                 }
             },
             {data: 'brand.name', name: 'brand.name'},
             {data: 'practice.full_name', name: 'practice.name',
                 render: data => {
                     const [name, email] = data.split(' (');
-                    return `${name}<br>${email.slice(0, -1)}`;
+                    //return `${name}<br>${email.slice(0, -1)}`;
+                    return `${name}`;
                 }
             },
             {data: 'status', "width": "10%", name: 'status', orderable: false},
             {data: 'displayed_status', "width": "10%", name: 'displayed_status', orderable: false},
             {data: 'created_at', "width": "15%", name: 'created_at'},
+            {data: 'order_delivey_date', "width": "15%", name: 'order_delivey_date'},
             {data: 'received_at', "width": "20%", name: 'received_at'},
             {data: 'displayed_status_date', "width": "20%", name: 'displayed_status_date'},
         ],
@@ -255,14 +261,16 @@ $(function () {
             {data: 'supplier.full_name', name: 'supplier.full_name',
                 render: data => {
                     const [name, email] = data.split(' (');
-                    return `${name}<br>${email.slice(0, -1)}`;
+                    //return `${name}<br>${email.slice(0, -1)}`;
+                    return `${name}`;
                 }
             },
             {data: 'brand.name', name: 'brand'},
             {data: 'practice.full_name', name: 'practice.full_name',
                 render: data => {
                     const [name, email] = data.split(' (');
-                    return `${name}<br>${email.slice(0, -1)}`;
+                    // return `${name}<br>${email.slice(0, -1)}`;
+                    return `${name}`;
                 }
             },
             {data: 'status', "width": "10%", name: 'status'},

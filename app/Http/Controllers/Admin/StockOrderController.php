@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StockOrderRequest;
 use App\Http\Requests\StockOrderReceiveRequest;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class StockOrderController extends Controller
 {
@@ -29,7 +30,7 @@ class StockOrderController extends Controller
         $data['menu'] = 'Stock Orders';
         if ($request->ajax()) {
             $collection = StockOrder::with(['supplier', 'brand', 'practice'])
-                ->select('stock_orders.*', 'suppliers.name as supplier_full_name', 'suppliers.email as supplier_email')
+                ->select('stock_orders.*', 'suppliers.name', 'suppliers.email as supplier_email')
                 ->leftJoin('suppliers', 'stock_orders.supplier_id', '=', 'suppliers.id')
                 ->when($request->input('status'), function ($query, $status) {
                     return $query->where('stock_orders.status', $status);
@@ -220,14 +221,32 @@ class StockOrderController extends Controller
             $this->addDocumentAddUpdate($input);
         }
 
-        if (!empty($input['stock_order_status'])) {
-            $stockOrder = StockOrder::findOrFail($input['stock_order_id']);
+        $stockOrder = StockOrder::findOrFail($input['stock_order_id']);
+
+        if (!empty($input['stock_order_status'])){
             $input['status'] = $input['stock_order_status'];
-            $input['received_at'] = date("Y-m-d H:i:s");
-            $stockOrder->update($input);
         }
 
-        \Session::flash('success', 'Stock Order Docuement has been inserted successfully!');
+        if (!empty($input['inv_number']) && !empty($input['grv_number'])){
+            $input['received_at'] = date("Y-m-d H:i:s");
+        }
+
+        if(isset($request['is_delivered'])){
+            $input['is_delivered'] = 1;
+            $input['order_delivey_date'] = Carbon::now();
+        }
+
+        $stockOrder->update($input);
+
+        if(isset($request['is_delivered']) && !empty($input['courier_tracking_number'])){
+            \Session::flash('success', 'Order successfully delivered');
+        }elseif(!empty($input['inv_number']) && !empty($input['grv_number']) && !empty($input['documents'])){
+            \Session::flash('success', 'Documents successfully uploaded');
+        }else{
+            \Session::flash('success', 'Order successfully updated');
+        }
+
+        //\Session::flash('success', 'Stock Order Docuement has been inserted successfully!');    
         return redirect()->route('stock-orders.receive', [$input['stock_order_id']]);
     }
 
@@ -304,13 +323,32 @@ class StockOrderController extends Controller
             StockOrderReceiveDocument::where('stock_order_receive_id', $input['stock_order_receive_id'])->delete();
         }
 
-        if (!empty($input['stock_order_status'])) {
-            $stockOrder = StockOrder::findOrFail($input['stock_order_id']);
+        $stockOrder = StockOrder::findOrFail($input['stock_order_id']);
+
+        if (!empty($input['stock_order_status'])) {            
             $input['status'] = $input['stock_order_status'];
-            $stockOrder->update($input);
         }
 
-        \Session::flash('success', 'Stock Order Docuement has been updated successfully!!');
+        if (!empty($input['inv_number']) && !empty($input['grv_number'])){
+            $input['received_at'] = date("Y-m-d H:i:s");
+        }
+
+        if(isset($request['is_delivered']) && !empty($stockOrder['order_delivey_date'])){
+            $input['is_delivered'] = 1;
+            $input['order_delivey_date'] = Carbon::now();
+        }
+
+        $stockOrder->update($input);
+
+        if(isset($request['is_delivered']) && !empty($input['courier_tracking_number'])){
+            \Session::flash('success', 'Order successfully delivered');
+        }elseif(!empty($input['inv_number']) && !empty($input['grv_number']) && !empty($input['documents'])){
+            \Session::flash('success', 'Documents successfully uploaded');
+        }else{
+            \Session::flash('success', 'Order successfully updated');
+        }
+
+        //\Session::flash('success', 'Stock Order Docuement has been updated successfully!!');
         return redirect()->route('stock-orders.receive', [$input['stock_order_id']]);
     }
 

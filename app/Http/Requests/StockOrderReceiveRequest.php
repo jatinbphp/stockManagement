@@ -22,8 +22,8 @@ class StockOrderReceiveRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'inv_number' => 'required',
-            'grv_number' => 'required',
+            //'inv_number' => 'required',
+            //'grv_number' => 'required',
         ];
 
         return $rules;

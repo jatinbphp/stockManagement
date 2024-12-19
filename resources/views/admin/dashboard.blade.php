@@ -83,7 +83,7 @@
                                                 <th>Practice Information</th>
                                                 <th>Status</th>
                                                 <th>Stock Displayed</th>
-                                                <th>Date Created</th>
+                                                <th>Order Date</th>
                                                 <th>Date Received</th>
                                                 <th>Date Displayed</th>
                                             </tr>
